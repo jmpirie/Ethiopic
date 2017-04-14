@@ -3,8 +3,11 @@ package com.hundaol.ethiocal;
 import android.app.Application;
 
 import com.google.firebase.analytics.FirebaseAnalytics;
+import com.hundaol.ethiocal.logging.EthioTree;
 
 import javax.inject.Inject;
+
+import timber.log.Timber;
 
 /**
  * Created by john.pirie on 2017-04-14.
@@ -24,6 +27,10 @@ public class App extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+
+        Timber.plant(!BuildConfig.DEBUG
+                ? new Timber.DebugTree()
+                : new EthioTree());
 
         appComponent = DaggerAppComponent.builder()
                 .appModule(new AppModule(this))
