@@ -1,8 +1,11 @@
 package com.hundaol.ethiocal;
 
-import android.content.Context;
+import com.google.firebase.analytics.FirebaseAnalytics;
+
+import javax.inject.Singleton;
 
 import dagger.Module;
+import dagger.Provides;
 
 /**
  * Created by john.pirie on 2017-04-14.
@@ -10,9 +13,21 @@ import dagger.Module;
 @Module
 public class AppModule {
 
-    private final Context context;
+    private final App app;
 
-    public AppModule(Context context) {
-        this.context = context;
+    public AppModule(App app) {
+        this.app = app;
+    }
+
+    @Singleton
+    @Provides
+    public App provideApp() {
+        return app;
+    }
+
+    @Singleton
+    @Provides
+    public FirebaseAnalytics provideFirebaseAnalytics(App app) {
+        return FirebaseAnalytics.getInstance(app);
     }
 }
