@@ -95,4 +95,15 @@ public abstract class AbstractCal implements ICal {
     public int getDayOfWeek(int jdn) {
         return (((jdn - 2456775) % 7) + 7) % 7;
     }
+
+    @Override
+    public int getFirstDayOfWeek(int jdn){
+        return jdn - getDayOfWeek(jdn);
+    }
+
+    @Override
+    public int getLastDayOfWeek(int jdn){
+        return getFirstDayOfWeek(jdn) + 6;
+    }
+
 }

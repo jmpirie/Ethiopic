@@ -2,11 +2,19 @@ package com.hundaol.ethiopic.views;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Rect;
 import android.util.AttributeSet;
+import android.util.DisplayMetrics;
+import android.util.TypedValue;
 import android.view.View;
 
-import com.hundaol.ethiopic.cal.ICal;
+import com.hundaol.ethiopic.App;
 import com.hundaol.ethiopic.cal.GregorianCal;
+import com.hundaol.ethiopic.cal.ICal;
+
+import javax.inject.Inject;
 
 /**
  * Created by jmpirie on 2017-04-14
@@ -23,8 +31,14 @@ public class CalendarView extends View {
     private int viewWidth;
     private int viewHeight;
 
-    private float jdn;
+    private float jdv;
+
     private int offset;
+    private Paint offsetPaint;
+    private Rect offsetRect;
+
+    @Inject
+    DisplayMetrics displayMetrics;
 
     public CalendarView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -37,10 +51,22 @@ public class CalendarView extends View {
     }
 
     private void init() {
+        App.getAppComponent().inject(this);
+
         calendarViewAdapter = new CalendarViewAdapter(getContext());
         setCal(GregorianCal.INSTANCE);
-        setJdn(GregorianCal.INSTANCE.today());
-        setOffset(200);
+        setJdv(GregorianCal.INSTANCE.today());
+
+        offsetPaint = new Paint();
+        offsetPaint.setColor(Color.argb(54, 0, 0, 0));
+        offsetPaint.setStyle(Paint.Style.FILL_AND_STROKE);
+        offsetPaint.setStrokeWidth(dpToPx(2));
+
+        offsetRect = new Rect();
+    }
+
+    private float dpToPx(int dp) {
+        return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, displayMetrics);
     }
 
     public void setCal(ICal cal) {
@@ -48,12 +74,8 @@ public class CalendarView extends View {
         calendarViewAdapter.setCal(cal);
     }
 
-    public void setJdn(float jdn) {
-        this.jdn = jdn;
-    }
-
-    public void setOffset(int offset) {
-        this.offset = offset;
+    public void setJdv(float jdv) {
+        this.jdv = jdv;
     }
 
     @Override
@@ -65,43 +87,52 @@ public class CalendarView extends View {
 
         cellWidth = viewWidth / 8;
         calendarViewAdapter.setCellWidth(cellWidth);
+
+        offset = 3 * cellWidth;
+        offsetRect.set(0, offset, viewWidth, offset + cellWidth);
     }
 
     @Override
     public void draw(Canvas canvas) {
         super.draw(canvas);
 
-        int firstOfMonth = cal.firstOfMonth((int) jdn);
-        int firstOfPrevMonth = cal.prevMonth(firstOfMonth);
+        int jdn = (int) jdv;
 
-        int anchorJdn = firstOfPrevMonth;
-        int anchorWeek = cal.getWeekNumber(anchorJdn);
-        float anchorOffset = -(jdn - anchorJdn) / (7.0f * cellWidth);
+        int weekNumber = cal.getWeekNumber(jdn);
+        int firstDayOfWeek = cal.getFirstDayOfWeek(jdn);
+        int weeksInView = (viewHeight / cellWidth) + 2;
+        int daysInView = weeksInView * 7;
 
-        for (int jdn=anchorJdn; true; jdn++) {
-            float dx = cal.getDayOfWeek(jdn) * cellWidth;
-            float dy = anchorOffset + (cal.getWeekNumber(jdn) - anchorWeek) * cellWidth;
-            View dayView = calendarViewAdapter.getDayView(jdn);
+        canvas.translate(0, -weekNumber * cellWidth);
+        canvas.translate(0, 3 * cellWidth);
+        canvas.translate(0, -(jdv - firstDayOfWeek) * cellWidth / 7.0f);
 
-            canvas.translate(dx, dy);
-            dayView.draw(canvas);
-            canvas.translate(-dx, -dy);
-
-            if (cal.getDay(jdn) == 1) {
-                dx = 7 * cellWidth;
-                View labelView = calendarViewAdapter.getLabelView(jdn);
-
-                canvas.translate(dx+ cellWidth, dy);
-                canvas.rotate(90.0f);
-                labelView.draw(canvas);
-                canvas.rotate(-90.0f);
-                canvas.translate(-dx- cellWidth, -dy);
-            }
-
-            if (dy > viewHeight) {
-                break;
-            }
+        for (int d = firstDayOfWeek - 21, D = d + daysInView; d<D; d++) {
+            stampJdn(canvas, d);
         }
+
+        canvas.translate(0, (jdv - firstDayOfWeek) * cellWidth / 7.0f);
+        canvas.translate(0, -3 * cellWidth);
+        canvas.translate(0, weekNumber * cellWidth);
+
+        canvas.drawRect(offsetRect, offsetPaint);
     }
+
+    public void stampJdn(Canvas canvas, int jdn) {
+        int dayOfWeek = cal.getDayOfWeek(jdn);
+        int weekNumber = cal.getWeekNumber(jdn);
+
+        float x = dayOfWeek * cellWidth;
+        float y = weekNumber * cellWidth;
+
+        View dayView = calendarViewAdapter.getDayView(jdn);
+        canvas.translate(x, y);
+        dayView.draw(canvas);
+        if (jdn == (int)jdv) {
+            canvas.drawCircle(cellWidth / 2.0f, cellWidth / 2.0f, cellWidth / 2.0f, offsetPaint);
+        }
+        canvas.translate(-x, -y);
+    }
+
 }
 

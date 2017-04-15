@@ -49,5 +49,9 @@ public interface ICal {
 
     public int getDaysInMonth(int jdn);
 
+    public int getFirstDayOfWeek(int jdn);
+
+    public int getLastDayOfWeek(int jdn);
+
     public int getMonthsInYear();
 }

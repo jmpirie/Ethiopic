@@ -1,5 +1,7 @@
 package com.hundaol.ethiopic;
 
+import android.util.DisplayMetrics;
+
 import com.google.firebase.analytics.FirebaseAnalytics;
 
 import javax.inject.Singleton;
@@ -29,5 +31,11 @@ public class AppModule {
     @Provides
     public FirebaseAnalytics provideFirebaseAnalytics(App app) {
         return FirebaseAnalytics.getInstance(app);
+    }
+
+    @Singleton
+    @Provides
+    public DisplayMetrics provideDisplayMetrics(App app) {
+        return app.getResources().getDisplayMetrics();
     }
 }
