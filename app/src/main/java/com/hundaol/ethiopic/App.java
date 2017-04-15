@@ -1,9 +1,10 @@
-package com.hundaol.ethiocal;
+package com.hundaol.ethiopic;
 
 import android.app.Application;
 
 import com.google.firebase.analytics.FirebaseAnalytics;
-import com.hundaol.ethiocal.logging.EthioTree;
+import com.hundaol.ethiocal.BuildConfig;
+import com.hundaol.ethiopic.logging.EthioTree;
 
 import javax.inject.Inject;
 

@@ -1,11 +1,11 @@
-package com.hundaol.ethiocal.views;
+package com.hundaol.ethiopic.views;
 
 import android.content.Context;
 import android.view.View;
 import android.widget.TextView;
 
 import com.hundaol.ethiocal.R;
-import com.hundaol.ethiocal.cal.ICal;
+import com.hundaol.ethiopic.cal.ICal;
 
 /**
  * Created by jmpirie on 2017-04-14

@@ -1,4 +1,4 @@
-package com.hundaol.ethiocal.logging;
+package com.hundaol.ethiopic.logging;
 
 import android.util.Log;
 
