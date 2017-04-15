@@ -1,4 +1,4 @@
-package com.hundaol.ethiocal.cal;
+package com.hundaol.ethiopic.cal;
 
 /**
  * Created by jmpirie on 2017-04-14.

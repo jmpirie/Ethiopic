@@ -1,4 +1,4 @@
-package com.hundaol.ethiocal;
+package com.hundaol.ethiopic;
 
 import com.google.firebase.analytics.FirebaseAnalytics;
 

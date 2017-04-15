@@ -1,12 +1,12 @@
-package com.hundaol.ethiocal.views;
+package com.hundaol.ethiopic.views;
 
 import android.content.Context;
 import android.graphics.Canvas;
 import android.util.AttributeSet;
 import android.view.View;
 
-import com.hundaol.ethiocal.cal.ICal;
-import com.hundaol.ethiocal.cal.GregorianCal;
+import com.hundaol.ethiopic.cal.ICal;
+import com.hundaol.ethiopic.cal.GregorianCal;
 
 /**
  * Created by jmpirie on 2017-04-14

@@ -1,9 +1,10 @@
-package com.hundaol.ethiocal;
+package com.hundaol.ethiopic;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
 import com.google.firebase.analytics.FirebaseAnalytics;
+import com.hundaol.ethiocal.R;
 
 import javax.inject.Inject;
 

@@ -1,4 +1,4 @@
-package com.hundaol.ethiocal.cal;
+package com.hundaol.ethiopic.cal;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
