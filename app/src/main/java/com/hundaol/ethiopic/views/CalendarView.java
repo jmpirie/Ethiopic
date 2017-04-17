@@ -108,7 +108,10 @@ public class CalendarView extends View {
         canvas.translate(0, -(jdv - firstDayOfWeek) * cellWidth / 7.0f);
 
         for (int d = firstDayOfWeek - 21, D = d + daysInView; d<D; d++) {
-            stampJdn(canvas, d);
+            stampDay(canvas, d);
+            if (cal.getFirstWeekDayOfMonth(d) == 1) {
+                stampMonth(canvas, d);
+            }
         }
 
         canvas.translate(0, (jdv - firstDayOfWeek) * cellWidth / 7.0f);
@@ -118,7 +121,7 @@ public class CalendarView extends View {
         canvas.drawRect(offsetRect, offsetPaint);
     }
 
-    public void stampJdn(Canvas canvas, int jdn) {
+    public void stampDay(Canvas canvas, int jdn) {
         int dayOfWeek = cal.getDayOfWeek(jdn);
         int weekNumber = cal.getWeekNumber(jdn);
 
@@ -145,7 +148,24 @@ public class CalendarView extends View {
             canvas.rotate(-90.0f);
             canvas.translate(-8.0f * cellWidth, -y);
         }
+    }
 
+    public void stampMonth(Canvas canvas, int jdn) {
+        int dayOfWeek = cal.getDayOfWeek(jdn);
+        int weekNumber = cal.getWeekNumber(jdn);
+
+        float x = 8.0f * cellWidth;
+        float y = weekNumber * cellWidth;
+
+        if (cal.getDay(jdn) == 1) {
+            View labelView = calendarViewAdapter.getLabelView(jdn);
+
+            canvas.translate(x, y);
+            canvas.rotate(90.0f);
+            labelView.draw(canvas);
+            canvas.rotate(-90.0f);
+            canvas.translate(-x, -y);
+        }
     }
 
 }
