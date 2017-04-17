@@ -8,6 +8,7 @@
     android:fitsSystemWindows="true">
 
     <com.hundaol.ethiopic.views.CalendarView
+        android:id="@+id/cal"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

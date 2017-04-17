@@ -68,6 +68,10 @@ dependencies {
     compile group: "com.google.firebase", name: "firebase-analytics", version: "10.2.1"
     compile group: "com.google.firebase", name: "firebase-crash", version: "10.2.1"
 
+    // view binding - butterknife
+    compile group: "com.jakewharton", name: "butterknife", version: "8.4.0"
+    annotationProcessor group: "com.jakewharton", name: "butterknife-compiler", version: "8.4.0"
+
     // dependency injection - dagger 2
     compile group: "com.google.dagger", name: "dagger", version: "2.8"
     annotationProcessor group: "com.google.dagger", name: "dagger-compiler", version: "2.8"
