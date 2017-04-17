@@ -1,6 +1,7 @@
 package com.hundaol.ethiopic.views;
 
 import android.content.Context;
+import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.TextView;
 
@@ -61,7 +62,13 @@ public class CalendarViewAdapter {
             dayView.forceLayout();
         }
 
-        ((TextView) dayView.findViewById(R.id.day)).setText("" + cal.getDay(jdn));
+        TextView label = ((TextView) dayView.findViewById(R.id.day));
+        label.setText("" + cal.getDay(jdn));
+        if (cal.getDayOfWeek(jdn) == 0 || cal.getDayOfWeek(jdn) == 6) {
+            label.setBackgroundColor(ContextCompat.getColor(context, R.color.weekendBackground));
+        } else {
+            label.setBackgroundColor(ContextCompat.getColor(context, R.color.weekdayBackground));
+        }
         return dayView;
     }
 
@@ -72,7 +79,7 @@ public class CalendarViewAdapter {
 
         View view = labelViews[weeksInMonth];
         if (view == null) {
-            view = View.inflate(context, R.layout.layout_label, null);
+            view = View.inflate(context, R.layout.layout_month, null);
             view.measure(
                     View.MeasureSpec.makeMeasureSpec(weeksInMonth * cellWidth, View.MeasureSpec.EXACTLY),
                     View.MeasureSpec.makeMeasureSpec(cellWidth, View.MeasureSpec.EXACTLY));
@@ -80,7 +87,8 @@ public class CalendarViewAdapter {
             view.forceLayout();
             labelViews[weeksInMonth] = view;
         }
-        ((TextView) view.findViewById(R.id.label)).setText(monthName + ", " + year);
+        TextView label = ((TextView) view.findViewById(R.id.label));
+        label.setText(monthName + ", " + year);
         return view;
     }
 }

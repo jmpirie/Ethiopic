@@ -2,14 +2,15 @@ package com.hundaol.ethiopic.views;
 
 import android.content.Context;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.View;
 
+import com.hundaol.ethiocal.R;
 import com.hundaol.ethiopic.App;
 import com.hundaol.ethiopic.cal.GregorianCal;
 import com.hundaol.ethiopic.cal.ICal;
@@ -58,7 +59,7 @@ public class CalendarView extends View {
         setJdv(GregorianCal.INSTANCE.today());
 
         offsetPaint = new Paint();
-        offsetPaint.setColor(Color.argb(54, 0, 0, 0));
+        offsetPaint.setColor(ContextCompat.getColor(getContext(), R.color.black_a25));
         offsetPaint.setStyle(Paint.Style.FILL_AND_STROKE);
         offsetPaint.setStrokeWidth(dpToPx(2));
 
@@ -151,7 +152,6 @@ public class CalendarView extends View {
     }
 
     public void stampMonth(Canvas canvas, int jdn) {
-        int dayOfWeek = cal.getDayOfWeek(jdn);
         int weekNumber = cal.getWeekNumber(jdn);
 
         float x = 8.0f * cellWidth;
