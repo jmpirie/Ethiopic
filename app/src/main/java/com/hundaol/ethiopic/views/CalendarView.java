@@ -125,13 +125,27 @@ public class CalendarView extends View {
         float x = dayOfWeek * cellWidth;
         float y = weekNumber * cellWidth;
 
-        View dayView = calendarViewAdapter.getDayView(jdn);
         canvas.translate(x, y);
+
+        View dayView = calendarViewAdapter.getDayView(jdn);
         dayView.draw(canvas);
+
         if (jdn == (int)jdv) {
             canvas.drawCircle(cellWidth / 2.0f, cellWidth / 2.0f, cellWidth / 2.0f, offsetPaint);
         }
+
         canvas.translate(-x, -y);
+
+        if (cal.getDay(jdn) == 1) {
+            View labelView = calendarViewAdapter.getLabelView(jdn);
+
+            canvas.translate(8.0f * cellWidth, y);
+            canvas.rotate(90.0f);
+            labelView.draw(canvas);
+            canvas.rotate(-90.0f);
+            canvas.translate(-8.0f * cellWidth, -y);
+        }
+
     }
 
 }

@@ -29,7 +29,7 @@ public class App extends Application {
     public void onCreate() {
         super.onCreate();
 
-        Timber.plant(!BuildConfig.DEBUG
+        Timber.plant(BuildConfig.DEBUG
                 ? new Timber.DebugTree()
                 : new EthioTree());
 
