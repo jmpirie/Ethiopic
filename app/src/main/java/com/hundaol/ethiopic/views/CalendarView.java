@@ -34,7 +34,6 @@ public class CalendarView extends View {
     private float jdv;
 
     private final Paint offsetPaint;
-//    private final Rect offsetRect;
 
     private final ViewModel viewModel;
 
@@ -143,7 +142,7 @@ public class CalendarView extends View {
             dayView.draw(canvas);
 
             if (jdn == (int) jdv) {
-                canvas.drawCircle(dayBounds.width() / 2.0f, dayBounds.width() / 2.0f, dayBounds.width() / 2.0f, offsetPaint);
+                canvas.drawCircle(dayBounds.width() / 2.0f, dayBounds.width() / 2.0f, dayBounds.width() / 3.0f, offsetPaint);
             }
 
             canvas.translate(-dayBounds.left, 0.0f);
@@ -167,54 +166,10 @@ public class CalendarView extends View {
             jdn++;
         }
 
-//        canvas.drawRect(offsetRect, offsetPaint);
-
-
+        RectF offsetBounds = viewModel.boundsForOffset();
+        canvas.drawRect(offsetBounds, offsetPaint);
     }
 
-//    public void stampDay(Canvas canvas, int jdn) {
-//        viewModel.setJdn(jdn);
-//
-//        RectF dayBounds = viewPort.getBounds();
-//
-//        canvas.translate(dayBounds.left, dayBounds.top);
-//
-//        View dayView = calendarViewAdapter.getDayView(jdn);
-//        dayView.draw(canvas);
-//
-//        if (jdn == (int) jdv) {
-//            canvas.drawCircle(dayBounds.width() / 2.0f, dayBounds.width() / 2.0f, dayBounds.width() / 2.0f, offsetPaint);
-//        }
-//
-//        canvas.translate(-dayBounds.left, -dayBounds.top);
-//
-//        if (cal.getDay(jdn) == 1) {
-//            View labelView = calendarViewAdapter.getLabelView(jdn);
-//
-//            canvas.translate(8.0f * cellWidth, y);
-//            canvas.rotate(90.0f);
-//            labelView.draw(canvas);
-//            canvas.rotate(-90.0f);
-//            canvas.translate(-8.0f * cellWidth, -y);
-//        }
-//    }
-
-//    public void stampMonth(Canvas canvas, int jdn) {
-//        int weekNumber = cal.getWeekNumber(jdn);
-//
-//        float x = 8.0f * cellWidth;
-//        float y = weekNumber * cellWidth;
-//
-//        if (cal.getDay(jdn) == 1) {
-//            View labelView = calendarViewAdapter.getLabelView(jdn);
-//
-//            canvas.translate(x, y);
-//            canvas.rotate(90.0f);
-//            labelView.draw(canvas);
-//            canvas.rotate(-90.0f);
-//            canvas.translate(-x, -y);
-//        }
-//    }
 
     public static class ViewModel {
 
@@ -260,10 +215,22 @@ public class CalendarView extends View {
             this.jdv = jdv;
         }
 
+        public int getJdn() {
+            return (int)jdv;
+        }
+
         public RectF boundsFor(int jdn) {
             bounds.left = cellWidth * cal.getDayOfWeek(jdn);
             bounds.top = cellWidth * cal.getWeekNumber(jdn) + offset - (jdv * cellWidth / 7.0f);
             bounds.right = bounds.left + cellWidth;
+            bounds.bottom = bounds.top + cellWidth;
+            return bounds;
+        }
+
+        public RectF boundsForOffset() {
+            bounds.left = 0.0f;
+            bounds.top = offset;
+            bounds.right = 8 * cellWidth;
             bounds.bottom = bounds.top + cellWidth;
             return bounds;
         }
