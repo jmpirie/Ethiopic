@@ -117,7 +117,7 @@ public class CalendarView extends View {
             View dayView = calendarViewAdapter.getDayView(jdn);
             dayView.draw(canvas);
 
-            if (jdn == (int) viewModel.getJdn()) {
+            if (jdn == viewModel.getJdn()) {
                 canvas.drawCircle(dayBounds.width() / 2.0f, dayBounds.width() / 2.0f, dayBounds.width() / 3.0f, offsetPaint);
             }
 
