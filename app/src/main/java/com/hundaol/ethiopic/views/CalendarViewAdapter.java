@@ -16,7 +16,7 @@ public class CalendarViewAdapter {
     private Context context;
 
     private ICal cal;
-    private int cellWidth;
+    private float cellWidth;
 
     private View dayView;
     private View[] labelViews;
@@ -36,11 +36,11 @@ public class CalendarViewAdapter {
         }
     }
 
-    public int getCellWidth() {
+    public float getCellWidth() {
         return cellWidth;
     }
 
-    public void setCellWidth(int cellWidth) {
+    public void setCellWidth(float cellWidth) {
         if (cellWidth != this.cellWidth) {
             this.cellWidth = cellWidth;
             invalidate();
@@ -56,14 +56,15 @@ public class CalendarViewAdapter {
         if (dayView == null) {
             dayView = View.inflate(context, R.layout.layout_day, null);
             dayView.measure(
-                    View.MeasureSpec.makeMeasureSpec(cellWidth, View.MeasureSpec.EXACTLY),
-                    View.MeasureSpec.makeMeasureSpec(cellWidth, View.MeasureSpec.EXACTLY));
-            dayView.layout(0, 0, cellWidth, cellWidth);
+                    View.MeasureSpec.makeMeasureSpec((int) cellWidth, View.MeasureSpec.EXACTLY),
+                    View.MeasureSpec.makeMeasureSpec((int) cellWidth, View.MeasureSpec.EXACTLY));
+            dayView.layout(0, 0, dayView.getMeasuredWidth(), dayView.getMeasuredHeight());
             dayView.forceLayout();
         }
 
         TextView label = ((TextView) dayView.findViewById(R.id.day));
         label.setText("" + cal.getDay(jdn));
+//        label.setText("" + jdn);
         if (cal.getDayOfWeek(jdn) == 0 || cal.getDayOfWeek(jdn) == 6) {
             label.setBackgroundColor(ContextCompat.getColor(context, R.color.weekendBackground));
         } else {
@@ -72,7 +73,7 @@ public class CalendarViewAdapter {
         return dayView;
     }
 
-    public View getLabelView(int jdn) {
+    public View getMonthView(int jdn) {
         int weeksInMonth = cal.getLastFullWeek(jdn) + 1;
         String monthName = new String(cal.getMonthName(jdn));
         int year = cal.getYear(jdn);
@@ -81,9 +82,9 @@ public class CalendarViewAdapter {
         if (view == null) {
             view = View.inflate(context, R.layout.layout_month, null);
             view.measure(
-                    View.MeasureSpec.makeMeasureSpec(weeksInMonth * cellWidth, View.MeasureSpec.EXACTLY),
-                    View.MeasureSpec.makeMeasureSpec(cellWidth, View.MeasureSpec.EXACTLY));
-            view.layout(0, 0, weeksInMonth * cellWidth, cellWidth);
+                    View.MeasureSpec.makeMeasureSpec((int) (weeksInMonth * cellWidth), View.MeasureSpec.EXACTLY),
+                    View.MeasureSpec.makeMeasureSpec((int) cellWidth, View.MeasureSpec.EXACTLY));
+            view.layout(0, 0, view.getMeasuredWidth(), view.getMeasuredHeight());
             view.forceLayout();
             labelViews[weeksInMonth] = view;
         }

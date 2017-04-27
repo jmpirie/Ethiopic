@@ -1,6 +1,7 @@
 plugins {
     id 'com.gladed.androidgitversion' version '0.3.3'
 }
+apply plugin: 'me.tatarka.retrolambda'
 apply plugin: 'com.android.application'
 apply plugin: 'com.google.gms.google-services'
 
@@ -39,6 +40,11 @@ android {
         untrackedIsDirty = false
     }
 
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
     buildTypes {
         debug {
             minifyEnabled false
@@ -59,7 +65,9 @@ dependencies {
     })
     compile 'com.android.support:appcompat-v7:25.2.0'
     compile 'com.android.support:design:25.2.0'
+
     testCompile 'junit:junit:4.12'
+    testCompile group: "org.hamcrest", name: "hamcrest-library", version: "1.4-atlassian-1"
 
     // logging - timber
     compile 'com.jakewharton.timber:timber:4.5.1'
