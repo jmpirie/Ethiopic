@@ -48,12 +48,10 @@ public class CalendarView extends View {
         App.getAppComponent().inject(this);
 
         viewModel = new CalendarViewModel(GregorianCal.INSTANCE);
+        viewModel.setJdv(GregorianCal.INSTANCE.today());
 
         calendarViewAdapter = new CalendarViewAdapter(getContext());
         calendarViewAdapter.setViewModel(viewModel);
-
-        setCal(GregorianCal.INSTANCE);
-        setJdv(GregorianCal.INSTANCE.today());
 
         offsetPaint = new Paint();
         offsetPaint.setColor(ContextCompat.getColor(getContext(), R.color.black_a25));
@@ -79,13 +77,8 @@ public class CalendarView extends View {
         return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, displayMetrics);
     }
 
-    public void setCal(ICal cal) {
-        viewModel.setCal(cal);
-    }
-
-    public void setJdv(float jdv) {
-        viewModel.setJdv(jdv);
-        invalidate();
+    public CalendarView getViewModel() {
+        return getViewModel();
     }
 
     @Override
