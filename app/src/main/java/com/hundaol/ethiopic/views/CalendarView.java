@@ -31,11 +31,9 @@ public class CalendarView extends View {
     private int viewHeight;
     private float cellWidth;
 
-    private float jdv;
-
     private final Paint offsetPaint;
 
-    private final ViewModel viewModel;
+    private final CalendarViewModel viewModel;
 
     @Inject
     DisplayMetrics displayMetrics;
@@ -49,29 +47,32 @@ public class CalendarView extends View {
 
         App.getAppComponent().inject(this);
 
-        viewModel = new ViewModel(GregorianCal.INSTANCE);
+        viewModel = new CalendarViewModel(GregorianCal.INSTANCE);
 
         calendarViewAdapter = new CalendarViewAdapter(getContext());
+        calendarViewAdapter.setViewModel(viewModel);
+
         setCal(GregorianCal.INSTANCE);
         setJdv(GregorianCal.INSTANCE.today());
-//        setJdv(3);
 
         offsetPaint = new Paint();
         offsetPaint.setColor(ContextCompat.getColor(getContext(), R.color.black_a25));
         offsetPaint.setStyle(Paint.Style.FILL_AND_STROKE);
         offsetPaint.setStrokeWidth(dpToPx(2));
+    }
 
-//        offsetRect = new Rect();
+    ViewModelChangeListener<CalendarViewModel> structureChangeListener = m -> invalidate();
 
-//        final Handler handler = new Handler();
-//        handler.postDelayed(new Runnable() {
-//            @Override
-//            public void run() {
-//                setJdv(getJdv() + 100000);
-//                invalidate();
-//                handler.postDelayed(this, 1000);
-//            }
-//        }, 1000);
+    @Override
+    protected void onAttachedToWindow() {
+        super.onAttachedToWindow();
+        viewModel.structureChangeEvent.add(structureChangeListener);
+    }
+
+    @Override
+    protected void onDetachedFromWindow() {
+        super.onDetachedFromWindow();
+        viewModel.structureChangeEvent.remove(structureChangeListener);
     }
 
     private float dpToPx(int dp) {
@@ -80,20 +81,12 @@ public class CalendarView extends View {
 
     public void setCal(ICal cal) {
         viewModel.setCal(cal);
-        calendarViewAdapter.setCal(cal);
     }
 
     public void setJdv(float jdv) {
-        this.jdv = jdv;
         viewModel.setJdv(jdv);
-        validate();
         invalidate();
     }
-
-    public float getJdv() {
-        return jdv;
-    }
-
 
     @Override
     public void onLayout(boolean changed, int l, int t, int r, int b) {
@@ -103,25 +96,15 @@ public class CalendarView extends View {
         viewHeight = b - t;
 
         cellWidth = viewWidth / 8.0f;
-        calendarViewAdapter.setCellWidth(cellWidth);
         viewModel.setCellWidth(cellWidth);
-
-        float offset = 3 * cellWidth;
-        viewModel.setOffset(offset);
-
-        validate();
-    }
-
-    private void validate() {
-        //jdvViewPort.setOffset(jdv * cellWidth / 7.0f);
-        //offsetRect.set(0, offset, viewWidth, offset + cellWidth);
+        viewModel.setOffset(3 * cellWidth);
     }
 
     @Override
     public void draw(Canvas canvas) {
         super.draw(canvas);
 
-        int jdn = (int) jdv;
+        int jdn = viewModel.getJdn();
 
         jdn = viewModel.cal.firstOfMonth(jdn);
 
@@ -141,7 +124,7 @@ public class CalendarView extends View {
             View dayView = calendarViewAdapter.getDayView(jdn);
             dayView.draw(canvas);
 
-            if (jdn == (int) jdv) {
+            if (jdn == (int) viewModel.getJdn()) {
                 canvas.drawCircle(dayBounds.width() / 2.0f, dayBounds.width() / 2.0f, dayBounds.width() / 3.0f, offsetPaint);
             }
 
@@ -168,80 +151,6 @@ public class CalendarView extends View {
 
         RectF offsetBounds = viewModel.boundsForOffset();
         canvas.drawRect(offsetBounds, offsetPaint);
-    }
-
-
-    public static class ViewModel {
-
-        public ICal cal;
-        public float cellWidth;
-        public float offset;
-        public final RectF bounds = new RectF();
-        public float jdv;
-
-        public ViewModel(ICal cal) {
-            this.cal = cal;
-        }
-
-        public ICal getCal() {
-            return cal;
-        }
-
-        public void setCal(ICal cal) {
-            this.cal = cal;
-        }
-
-        public float getCellWidth() {
-            return cellWidth;
-        }
-
-        public void setCellWidth(float cellWidth) {
-            this.cellWidth = cellWidth;
-        }
-
-        public float getOffset() {
-            return offset;
-        }
-
-        public void setOffset(float offset) {
-            this.offset = offset;
-        }
-
-        public float getJdv() {
-            return jdv;
-        }
-
-        public void setJdv(float jdv) {
-            this.jdv = jdv;
-        }
-
-        public int getJdn() {
-            return (int)jdv;
-        }
-
-        public RectF boundsFor(int jdn) {
-            bounds.left = cellWidth * cal.getDayOfWeek(jdn);
-            bounds.top = cellWidth * cal.getWeekNumber(jdn) + offset - (jdv * cellWidth / 7.0f);
-            bounds.right = bounds.left + cellWidth;
-            bounds.bottom = bounds.top + cellWidth;
-            return bounds;
-        }
-
-        public RectF boundsForOffset() {
-            bounds.left = 0.0f;
-            bounds.top = offset;
-            bounds.right = 8 * cellWidth;
-            bounds.bottom = bounds.top + cellWidth;
-            return bounds;
-        }
-
-        public float jdvFor(float y) {
-            return (-1 + (y - offset) * cellWidth / 7.0f) + jdv;
-        }
-
-        public int jdnFor(float x, float y) {
-            return -1 + (int) (((y - offset) / cellWidth) + jdv) + (int) (x / cellWidth);
-        }
     }
 }
 
