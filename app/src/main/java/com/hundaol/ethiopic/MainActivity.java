@@ -15,6 +15,8 @@ import com.hundaol.ethiopic.cal.EthiopicCal;
 import com.hundaol.ethiopic.cal.GregorianCal;
 import com.hundaol.ethiopic.views.CalendarView;
 import com.hundaol.ethiopic.views.CalendarViewModel;
+import com.hundaol.ethiopic.views.DateView;
+import com.hundaol.ethiopic.views.DateViewModel;
 
 import javax.inject.Inject;
 
@@ -29,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.view_pager)
     ViewPager viewPager;
 
-    CalendarPagerAdapter pagerAdapter;
+    MainPagerAdapter pagerAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,28 +43,33 @@ public class MainActivity extends AppCompatActivity {
 
         ButterKnife.bind(this);
 
-        pagerAdapter = new CalendarPagerAdapter(this);
-        pagerAdapter.setJdv(GregorianCal.INSTANCE.today());
-
+        pagerAdapter = new MainPagerAdapter(this);
         viewPager.setAdapter(pagerAdapter);
+
+        pagerAdapter.setJdv(GregorianCal.INSTANCE.today());
     }
 
-    public static class CalendarPagerAdapter extends PagerAdapter {
+    public static class MainPagerAdapter extends PagerAdapter {
 
         private final Context context;
-        private final CalendarViewModel[] viewModels = new CalendarViewModel[]{
+        private float jdv;
+        private final Object[] viewModels = new Object[]{
+                new DateViewModel(GregorianCal.INSTANCE),
                 new CalendarViewModel(GregorianCal.INSTANCE),
-                new CalendarViewModel(EthiopicCal.INSTANCE)
+                new CalendarViewModel(EthiopicCal.INSTANCE),
+                new DateViewModel(GregorianCal.INSTANCE)
         };
 
-        public CalendarPagerAdapter(Context context) {
+        public MainPagerAdapter(Context context) {
             this.context = context;
         }
 
         public void setJdv(float jdv) {
-            for (CalendarViewModel viewModel : viewModels) {
-                viewModel.setJdv(jdv);
-            }
+            this.jdv = jdv;
+            ((DateViewModel)viewModels[0]).setJdn((int) jdv);
+            ((CalendarViewModel)viewModels[1]).setJdv(jdv);
+            ((CalendarViewModel)viewModels[2]).setJdv(jdv);
+            ((DateViewModel)viewModels[3]).setJdn((int) jdv);
         }
 
         @Override
@@ -82,16 +89,26 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public Object instantiateItem(ViewGroup container, int position) {
-            CalendarViewModel viewModel = viewModels[position];
-            CalendarView view = new CalendarView(context, null);
-            view.setViewModel(viewModel);
-            container.addView(view);
-            return view;
+            if (position == 0 || position == 3) {
+                DateViewModel viewModel = (DateViewModel) viewModels[position];
+                viewModel.setJdn((int) jdv);
+                DateView view = (DateView) LayoutInflater.from(context).inflate(R.layout.layout_date, null, false);
+                view.setViewModel(viewModel);
+                container.addView(view);
+                return view;
+            } else {
+                CalendarViewModel viewModel = (CalendarViewModel) viewModels[position];
+                viewModel.setJdv(jdv);
+                CalendarView view = (CalendarView) LayoutInflater.from(context).inflate(R.layout.layout_calendar, null, false);
+                view.setViewModel(viewModel);
+                container.addView(view);
+                return view;
+            }
         }
 
         @Override
         public void destroyItem(ViewGroup container, int position, Object object) {
-            container.removeView((CalendarView)object);
+            container.removeView((View)object);
         }
     }
 }
