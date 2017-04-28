@@ -33,7 +33,7 @@ public class CalendarView extends View {
 
     private final Paint offsetPaint;
 
-    private final CalendarViewModel viewModel;
+    private CalendarViewModel viewModel;
 
     @Inject
     DisplayMetrics displayMetrics;
@@ -77,8 +77,15 @@ public class CalendarView extends View {
         return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, displayMetrics);
     }
 
-    public CalendarView getViewModel() {
-        return getViewModel();
+    public CalendarViewModel getViewModel() {
+        return viewModel;
+    }
+
+    public void setViewModel(CalendarViewModel viewModel) {
+        this.viewModel.structureChangeEvent.remove(structureChangeListener);
+        this.viewModel = viewModel;
+        this.calendarViewAdapter.setViewModel(viewModel);
+        this.viewModel.structureChangeEvent.add(structureChangeListener);
     }
 
     @Override
