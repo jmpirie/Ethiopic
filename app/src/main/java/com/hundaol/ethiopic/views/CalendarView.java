@@ -47,11 +47,8 @@ public class CalendarView extends View {
 
         App.getAppComponent().inject(this);
 
-        viewModel = new CalendarViewModel(GregorianCal.INSTANCE);
-        viewModel.setJdv(GregorianCal.INSTANCE.today());
-
         calendarViewAdapter = new CalendarViewAdapter(getContext());
-        calendarViewAdapter.setViewModel(viewModel);
+        setViewModel(new CalendarViewModel(GregorianCal.INSTANCE));
 
         offsetPaint = new Paint();
         offsetPaint.setColor(ContextCompat.getColor(getContext(), R.color.black_a25));
@@ -59,7 +56,14 @@ public class CalendarView extends View {
         offsetPaint.setStrokeWidth(dpToPx(2));
     }
 
-    ViewModelChangeListener<CalendarViewModel> structureChangeListener = m -> invalidate();
+    ViewModelChangeListener<CalendarViewModel> structureChangeListener = m -> {
+        requestLayout();
+        invalidate();
+    };
+
+    ViewModelChangeListener<CalendarViewModel> valueChangeListener = m -> {
+        invalidate();
+    };
 
     @Override
     protected void onAttachedToWindow() {
@@ -82,10 +86,13 @@ public class CalendarView extends View {
     }
 
     public void setViewModel(CalendarViewModel viewModel) {
-        this.viewModel.structureChangeEvent.remove(structureChangeListener);
+        if (this.viewModel != null) {
+            this.viewModel.structureChangeEvent.remove(structureChangeListener);
+        }
         this.viewModel = viewModel;
         this.calendarViewAdapter.setViewModel(viewModel);
         this.viewModel.structureChangeEvent.add(structureChangeListener);
+        this.viewModel.valueChangeEvent.add(valueChangeListener);
     }
 
     @Override

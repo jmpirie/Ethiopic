@@ -27,8 +27,10 @@ public class CalendarViewModel {
     }
 
     public void setCal(ICal cal) {
-        this.cal = cal;
-        structureChangeEvent.modelChanged(this);
+        if (this.cal != cal) {
+            this.cal = cal;
+            structureChangeEvent.modelChanged(this);
+        }
     }
 
     public float getCellWidth() {
@@ -36,8 +38,10 @@ public class CalendarViewModel {
     }
 
     public void setCellWidth(float cellWidth) {
-        this.cellWidth = cellWidth;
-        structureChangeEvent.modelChanged(this);
+        if (this.cellWidth != cellWidth) {
+            this.cellWidth = cellWidth;
+            structureChangeEvent.modelChanged(this);
+        }
     }
 
     public float getOffset() {
@@ -45,8 +49,10 @@ public class CalendarViewModel {
     }
 
     public void setOffset(float offset) {
-        this.offset = offset;
-        structureChangeEvent.modelChanged(this);
+        if (this.offset != offset) {
+            this.offset = offset;
+            structureChangeEvent.modelChanged(this);
+        }
     }
 
     public float getJdv() {
@@ -54,8 +60,10 @@ public class CalendarViewModel {
     }
 
     public void setJdv(float jdv) {
-        this.jdv = jdv;
-        valueChangeEvent.modelChanged(this);
+        if (this.jdv != jdv) {
+            this.jdv = jdv;
+            valueChangeEvent.modelChanged(this);
+        }
     }
 
     public int getJdn() {
