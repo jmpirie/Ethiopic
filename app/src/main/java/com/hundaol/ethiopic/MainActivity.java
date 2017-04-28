@@ -66,6 +66,11 @@ public class MainActivity extends AppCompatActivity {
         }
 
         @Override
+        public float getPageWidth(int position) {
+            return 1.0f;
+        }
+
+        @Override
         public int getCount() {
             return viewModels.length;
         }
