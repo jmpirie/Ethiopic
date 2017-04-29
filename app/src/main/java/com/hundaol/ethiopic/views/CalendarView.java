@@ -114,6 +114,8 @@ public class CalendarView extends View {
         int jdn = viewModel.getJdn();
 
         jdn = viewModel.cal.firstOfMonth(jdn);
+        jdn = viewModel.cal.prevMonth(jdn);
+        jdn = viewModel.cal.prevMonth(jdn);
 
         while (true) {
             RectF dayBounds = viewModel.boundsFor(jdn);
