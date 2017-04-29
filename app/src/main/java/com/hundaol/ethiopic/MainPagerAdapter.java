@@ -36,6 +36,10 @@ public class MainPagerAdapter extends PagerAdapter {
     public MainPagerAdapter(Context context, Display display) {
         this.context = context;
         this.display = display;
+        ((DateViewModel) viewModels[0]).valueChangeEvent.add(m -> setJdv(m.getJdn()));
+        ((CalendarViewModel) viewModels[1]).valueChangeEvent.add(m -> setJdv(m.getJdv()));
+        ((CalendarViewModel) viewModels[2]).valueChangeEvent.add(m -> setJdv(m.getJdv()));
+        ((DateViewModel) viewModels[3]).valueChangeEvent.add(m -> setJdv(m.getJdn()));
     }
 
     public void setJdv(float jdv) {
