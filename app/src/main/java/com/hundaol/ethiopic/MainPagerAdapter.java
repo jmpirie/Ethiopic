@@ -52,7 +52,7 @@ public class MainPagerAdapter extends PagerAdapter {
         display.getMetrics(metrics);
         int width = metrics.widthPixels;
         int height = metrics.heightPixels;
-        return Math.abs(height) >= Math.abs(width) ? 1.0f : 0.5f;
+        return height >= width ? 1.0f : 0.5f;
     }
 
     @Override
