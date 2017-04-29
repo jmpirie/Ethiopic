@@ -14,6 +14,7 @@ import com.hundaol.ethiocal.R;
 import com.hundaol.ethiopic.cal.EthiopicCal;
 import com.hundaol.ethiopic.cal.GregorianCal;
 import com.hundaol.ethiopic.views.CalendarView;
+import com.hundaol.ethiopic.views.CalendarViewGestureDetector;
 import com.hundaol.ethiopic.views.CalendarViewModel;
 import com.hundaol.ethiopic.views.DateView;
 import com.hundaol.ethiopic.views.DateViewModel;
@@ -100,6 +101,7 @@ public class MainActivity extends AppCompatActivity {
                 CalendarViewModel viewModel = (CalendarViewModel) viewModels[position];
                 viewModel.setJdv(jdv);
                 CalendarView view = (CalendarView) LayoutInflater.from(context).inflate(R.layout.layout_calendar, null, false);
+                new CalendarViewGestureDetector(view);
                 view.setViewModel(viewModel);
                 container.addView(view);
                 return view;
