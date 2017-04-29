@@ -4,7 +4,6 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
-import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -20,8 +19,6 @@ import butterknife.ButterKnife;
 
 public class DateView extends LinearLayout {
 
-    private DateViewModel viewModel;
-
     @BindView(R.id.month)
     TextView month;
 
@@ -31,20 +28,22 @@ public class DateView extends LinearLayout {
     @BindView(R.id.year)
     TextView year;
 
+    private DateViewModel viewModel;
+
     public DateView(@NonNull Context context) {
         this(context, null);
     }
 
     public DateView(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
-
-        setViewModel(new DateViewModel(GregorianCal.INSTANCE));
+        this.viewModel = new DateViewModel(GregorianCal.INSTANCE);
     }
 
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
         ButterKnife.bind(this);
+        modelChanged();
     }
 
     ViewModelChangeListener<DateViewModel> modelChangeListener = m -> modelChanged();
@@ -59,6 +58,7 @@ public class DateView extends LinearLayout {
         }
         this.viewModel = viewModel;
         this.viewModel.valueChangeEvent.add(modelChangeListener);
+        modelChanged();
     }
 
     void modelChanged() {

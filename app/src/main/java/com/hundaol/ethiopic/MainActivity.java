@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
                 new DateViewModel(GregorianCal.INSTANCE),
                 new CalendarViewModel(GregorianCal.INSTANCE),
                 new CalendarViewModel(EthiopicCal.INSTANCE),
-                new DateViewModel(GregorianCal.INSTANCE)
+                new DateViewModel(EthiopicCal.INSTANCE)
         };
 
         public MainPagerAdapter(Context context) {
