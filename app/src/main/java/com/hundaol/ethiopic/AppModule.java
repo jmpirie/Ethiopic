@@ -1,6 +1,8 @@
 package com.hundaol.ethiopic;
 
 import android.util.DisplayMetrics;
+import android.view.Display;
+import android.view.WindowManager;
 
 import com.google.firebase.analytics.FirebaseAnalytics;
 
@@ -8,6 +10,8 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
+
+import static android.content.Context.WINDOW_SERVICE;
 
 /**
  * Created by john.pirie on 2017-04-14.
@@ -37,5 +41,11 @@ public class AppModule {
     @Provides
     public DisplayMetrics provideDisplayMetrics(App app) {
         return app.getResources().getDisplayMetrics();
+    }
+
+    @Singleton
+    @Provides
+    public Display provideDisplay(App app) {
+        return ((WindowManager) app.getSystemService(WINDOW_SERVICE)).getDefaultDisplay();
     }
 }
