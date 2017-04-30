@@ -9,11 +9,12 @@ import com.hundaol.ethiopic.cal.ICal;
  */
 public class CalendarViewModel {
 
-    public ICal cal;
-    public float cellWidth;
-    public float offset;
-    public final RectF bounds = new RectF();
-    public float jdv;
+    private final RectF bounds = new RectF();
+
+    private ICal cal;
+    private float cellWidth;
+    private float offset;
+    private float jdv;
 
     public final ViewModelChangeEvent<CalendarViewModel> structureChangeEvent = new ViewModelChangeEvent<>();
     public final ViewModelChangeEvent<CalendarViewModel> valueChangeEvent = new ViewModelChangeEvent<>();
