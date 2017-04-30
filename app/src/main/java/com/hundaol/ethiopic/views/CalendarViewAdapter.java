@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.hundaol.ethiocal.R;
+import com.hundaol.ethiopic.cal.ICal;
 
 /**
  * Created by jmpirie on 2017-04-14
@@ -41,19 +42,22 @@ public class CalendarViewAdapter {
     }
 
     public View getDayView(int jdn) {
+        final ICal cal = viewModel.getCal();
+        final float cellWidth = viewModel.getCellWidth();
+
         if (dayView == null) {
             dayView = View.inflate(context, R.layout.layout_day, null);
             dayView.measure(
-                    View.MeasureSpec.makeMeasureSpec((int) viewModel.cellWidth, View.MeasureSpec.EXACTLY),
-                    View.MeasureSpec.makeMeasureSpec((int) viewModel.cellWidth, View.MeasureSpec.EXACTLY));
+                    View.MeasureSpec.makeMeasureSpec((int) cellWidth, View.MeasureSpec.EXACTLY),
+                    View.MeasureSpec.makeMeasureSpec((int) cellWidth, View.MeasureSpec.EXACTLY));
             dayView.layout(0, 0, dayView.getMeasuredWidth(), dayView.getMeasuredHeight());
             dayView.forceLayout();
         }
 
         TextView label = ((TextView) dayView.findViewById(R.id.day));
-        label.setText("" + viewModel.cal.getDay(jdn));
+        label.setText("" + cal.getDay(jdn));
         //label.setText("" + jdn);
-        if (viewModel.cal.getDayOfWeek(jdn) == 0 || viewModel.cal.getDayOfWeek(jdn) == 6) {
+        if (cal.getDayOfWeek(jdn) == 0 || cal.getDayOfWeek(jdn) == 6) {
             label.setBackgroundColor(ContextCompat.getColor(context, R.color.weekendBackground));
         } else {
             label.setBackgroundColor(ContextCompat.getColor(context, R.color.weekdayBackground));
@@ -62,16 +66,19 @@ public class CalendarViewAdapter {
     }
 
     public View getMonthView(int jdn) {
-        int weeksInMonth = viewModel.cal.getLastFullWeek(jdn) + 1;
-        String monthName = new String(viewModel.cal.getMonthName(jdn));
-        int year = viewModel.cal.getYear(jdn);
+        final ICal cal = viewModel.getCal();
+        final float cellWidth = viewModel.getCellWidth();
+
+        int weeksInMonth = cal.getLastFullWeek(jdn) + 1;
+        String monthName = new String(cal.getMonthName(jdn));
+        int year = cal.getYear(jdn);
 
         View view = labelViews[weeksInMonth];
         if (view == null) {
             view = View.inflate(context, R.layout.layout_month, null);
             view.measure(
-                    View.MeasureSpec.makeMeasureSpec((int) (weeksInMonth * viewModel.cellWidth), View.MeasureSpec.EXACTLY),
-                    View.MeasureSpec.makeMeasureSpec((int) viewModel.cellWidth, View.MeasureSpec.EXACTLY));
+                    View.MeasureSpec.makeMeasureSpec((int) (weeksInMonth * cellWidth), View.MeasureSpec.EXACTLY),
+                    View.MeasureSpec.makeMeasureSpec((int) cellWidth, View.MeasureSpec.EXACTLY));
             view.layout(0, 0, view.getMeasuredWidth(), view.getMeasuredHeight());
             view.forceLayout();
             labelViews[weeksInMonth] = view;

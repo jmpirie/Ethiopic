@@ -111,11 +111,13 @@ public class CalendarView extends View {
     public void draw(Canvas canvas) {
         super.draw(canvas);
 
+        final ICal cal = viewModel.getCal();
+
         int jdn = viewModel.getJdn();
 
-        jdn = viewModel.cal.firstOfMonth(jdn);
-        jdn = viewModel.cal.prevMonth(jdn);
-        jdn = viewModel.cal.prevMonth(jdn);
+        jdn = cal.firstOfMonth(jdn);
+        jdn = cal.prevMonth(jdn);
+        jdn = cal.prevMonth(jdn);
 
         while (true) {
             RectF dayBounds = viewModel.boundsFor(jdn);
@@ -141,7 +143,7 @@ public class CalendarView extends View {
 
             // month cell
 
-            if (viewModel.cal.getDay(jdn) == 1) {
+            if (cal.getDay(jdn) == 1) {
                 canvas.translate(viewModel.getCellWidth() * 8.0f, 0.0f);
 
                 View labelView = calendarViewAdapter.getMonthView(jdn);
