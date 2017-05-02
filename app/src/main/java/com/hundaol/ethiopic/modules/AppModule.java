@@ -1,10 +1,11 @@
-package com.hundaol.ethiopic;
+package com.hundaol.ethiopic.modules;
 
 import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.WindowManager;
 
 import com.google.firebase.analytics.FirebaseAnalytics;
+import com.hundaol.ethiopic.App;
 
 import javax.inject.Singleton;
 

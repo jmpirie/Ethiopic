@@ -1,5 +1,7 @@
-package com.hundaol.ethiopic;
+package com.hundaol.ethiopic.modules;
 
+import com.hundaol.ethiopic.App;
+import com.hundaol.ethiopic.MainActivity;
 import com.hundaol.ethiopic.views.CalendarView;
 
 import javax.inject.Singleton;
