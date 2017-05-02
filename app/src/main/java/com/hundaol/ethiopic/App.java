@@ -5,6 +5,9 @@ import android.app.Application;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.hundaol.ethiocal.BuildConfig;
 import com.hundaol.ethiopic.logging.EthioTree;
+import com.hundaol.ethiopic.modules.AppComponent;
+import com.hundaol.ethiopic.modules.AppModule;
+import com.hundaol.ethiopic.modules.DaggerAppComponent;
 
 import javax.inject.Inject;
 
