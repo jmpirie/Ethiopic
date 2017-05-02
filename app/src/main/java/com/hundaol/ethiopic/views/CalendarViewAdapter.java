@@ -58,9 +58,9 @@ public class CalendarViewAdapter {
         label.setText("" + cal.getDay(jdn));
         //label.setText("" + jdn);
         if (cal.getDayOfWeek(jdn) == 0 || cal.getDayOfWeek(jdn) == 6) {
-            label.setBackgroundColor(ContextCompat.getColor(context, R.color.weekendBackground));
+            label.setBackgroundColor(ContextCompat.getColor(context, R.color.day_background_weekend));
         } else {
-            label.setBackgroundColor(ContextCompat.getColor(context, R.color.weekdayBackground));
+            label.setBackgroundColor(ContextCompat.getColor(context, R.color.day_background_weekday));
         }
         return dayView;
     }

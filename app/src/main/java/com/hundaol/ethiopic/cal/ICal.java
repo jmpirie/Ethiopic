@@ -13,6 +13,8 @@ public interface ICal {
 
     int firstOfWeek(int jdn);
 
+    int lastOfMonth(int jdn);
+
     public int nextDay(int jdn);
 
     public int nextDay(int jdn, int days);
@@ -54,4 +56,8 @@ public interface ICal {
     public int getLastDayOfWeek(int jdn);
 
     public int getMonthsInYear();
+
+    public boolean isWeekend(int jdn);
+
+    public boolean isWeekday(int jdn);
 }

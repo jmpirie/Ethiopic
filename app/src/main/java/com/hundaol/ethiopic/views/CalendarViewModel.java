@@ -1,6 +1,8 @@
 package com.hundaol.ethiopic.views;
 
+import android.graphics.Path;
 import android.graphics.RectF;
+import android.graphics.drawable.shapes.Shape;
 
 import com.hundaol.ethiopic.cal.ICal;
 
@@ -71,11 +73,20 @@ public class CalendarViewModel {
         return (int) jdv;
     }
 
-    public RectF boundsFor(int jdn) {
+    public RectF boundsForDay(int jdn) {
         bounds.left = cellWidth * cal.getDayOfWeek(jdn);
-        bounds.top = cellWidth * cal.getWeekNumber(jdn) + offset - (jdv * cellWidth / 7.0f);
+        bounds.top = cellWidth * cal.getWeekNumber(jdn) + offset - (jdv * cellWidth / 7.0f); // todo: refactor to distance from float overflow
         bounds.right = bounds.left + cellWidth;
         bounds.bottom = bounds.top + cellWidth;
+        return bounds;
+    }
+
+    public RectF boundsForLabel(int jdn) {
+        jdn = cal.firstOfMonth(jdn);
+        bounds.left = cellWidth * 7;
+        bounds.top = cellWidth * cal.getWeekNumber(jdn) + offset - (jdv * cellWidth / 7.0f);
+        bounds.right = bounds.left + cellWidth;
+        bounds.bottom = bounds.top + (cellWidth * (cal.getLastFullWeek(jdn) + 1));
         return bounds;
     }
 
@@ -85,6 +96,44 @@ public class CalendarViewModel {
         bounds.right = 8 * cellWidth;
         bounds.bottom = bounds.top + cellWidth;
         return bounds;
+    }
+
+    public RectF boundsForMonth(int jdn) {
+        jdn = cal.firstOfMonth(jdn);
+        bounds.left = 0;
+        bounds.top = cellWidth * cal.getWeekNumber(jdn) + offset - (jdv * cellWidth / 7.0f);
+        bounds.right = 8 * cellWidth;
+        bounds.bottom = bounds.top + (cellWidth * (cal.getWeeksInMonth(jdn)));
+        return bounds;
+    }
+
+    public Path pathForMonth(int jdn) {
+        int d0 = cal.firstOfMonth(jdn);
+        int d1 = cal.getLastDayOfWeek(jdn);
+        int d2 = cal.firstOfWeek(d0 + 7);
+
+        int d5 = cal.lastOfMonth(jdn);
+        int d4 = cal.getFirstDayOfWeek(d5);
+        int d3 = cal.getLastDayOfWeek(d5-7);
+
+        Path path = new Path();
+        boundsForDay(d0);
+        path.moveTo(bounds.left, bounds.bottom);
+        path.lineTo(bounds.left, bounds.top);
+        boundsForDay(d1);
+        path.lineTo(bounds.right, bounds.top);
+        boundsForDay(d3);
+        path.lineTo(bounds.right, bounds.bottom);
+        boundsForDay(d5);
+        path.lineTo(bounds.right, bounds.top);
+        path.lineTo(bounds.right, bounds.bottom);
+        boundsForDay(d4);
+        path.lineTo(bounds.left, bounds.bottom);
+        boundsForDay(d2);
+        path.lineTo(bounds.left, bounds.top);
+        path.lineTo(bounds.right, bounds.top);
+
+        return path;
     }
 
     public float jdvFor(float y) {
