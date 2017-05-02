@@ -106,4 +106,17 @@ public abstract class AbstractCal implements ICal {
         return getFirstDayOfWeek(jdn) + 6;
     }
 
+    @Override
+    public boolean isWeekend(int jdn) {
+        int d = getDayOfWeek(jdn);
+        return d == 0 || d == 6;
+    }
+
+    public boolean isWeekday(int jdn) {
+        return !isWeekend(jdn);
+    }
+
+    public int lastOfMonth(int jdn) {
+        return firstOfMonth(jdn) + getDaysInMonth(jdn) - 1;
+    }
 }

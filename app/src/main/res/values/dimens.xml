@@ -3,4 +3,14 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
+
+    <dimen name="day_border_width">1dp</dimen>
+    <dimen name="day_text_size">16dp</dimen>
+
+    <dimen name="label_text_size">16dp</dimen>
+    <dimen name="label_border_width">2dp</dimen>
+
+    <dimen name="month_border_width">2dp</dimen>
+
+    <dimen name="offset_border_width">1dp</dimen>
 </resources>
