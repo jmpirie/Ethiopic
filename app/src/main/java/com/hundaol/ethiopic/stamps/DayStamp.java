@@ -23,6 +23,7 @@ public class DayStamp {
     public final Paint forePaint;
     public final Paint todayOverlayPaint;
     public final Paint currentOverlayPaint;
+    public final Paint weekendOverlayPaint;
     public final TextPaint textPaint;
 
     public int jdn;
@@ -48,6 +49,10 @@ public class DayStamp {
         currentOverlayPaint.setStyle(Paint.Style.FILL);
         currentOverlayPaint.setColor(context.getResources().getColor(R.color.day_background_current_overlay));
 
+        weekendOverlayPaint = new Paint();
+        weekendOverlayPaint.setStyle(Paint.Style.FILL);
+        weekendOverlayPaint.setColor(context.getResources().getColor(R.color.day_background_weekend_overlay));
+
         textPaint = new TextPaint();
         textPaint.setTextSize(context.getResources().getDimensionPixelSize(R.dimen.day_text_size));
         textPaint.setStyle(Paint.Style.STROKE);
@@ -65,6 +70,8 @@ public class DayStamp {
             canvas.drawRect(bounds, todayOverlayPaint);
         } else if (viewModel.isCurrent(jdn)) {
             canvas.drawRect(bounds, currentOverlayPaint);
+        } else if (viewModel.isWeekend(jdn)) {
+            canvas.drawRect(bounds, weekendOverlayPaint);
         }
 
         canvas.drawRect(bounds, forePaint);

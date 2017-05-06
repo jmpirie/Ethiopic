@@ -23,8 +23,6 @@ public class CalendarView extends View {
     private int viewHeight;
     private float cellWidth;
 
-    private final Paint offsetPaint;
-
     private CalendarViewModel viewModel;
 
     private MonthStamp monthStamp;
@@ -39,11 +37,6 @@ public class CalendarView extends View {
         App.getAppComponent().inject(this);
 
         setViewModel(new CalendarViewModel(GregorianCal.INSTANCE));
-
-        offsetPaint = new Paint();
-        offsetPaint.setColor(ContextCompat.getColor(getContext(), R.color.black_a25));
-        offsetPaint.setStyle(Paint.Style.FILL_AND_STROKE);
-        offsetPaint.setStrokeWidth(context.getResources().getDimensionPixelOffset(R.dimen.offset_border_width));
     }
 
     ViewModelChangeListener<CalendarViewModel> structureChangeListener = m -> {

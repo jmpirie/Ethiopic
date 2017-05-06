@@ -5,21 +5,44 @@
     <color name="offensive">#ff00ff</color>
 
     <color name="white">#ffffff</color>
-    <color name="white_a75">#c0ffffff</color>
-    <color name="white_a50">#80ffffff</color>
-    <color name="white_a25">#40ffffff</color>
+    <color name="white_a1">#10ffffff</color>
+    <color name="white_a2">#20ffffff</color>
+    <color name="white_a3">#30ffffff</color>
+    <color name="white_a4">#40ffffff</color>
+    <color name="white_a5">#50ffffff</color>
+    <color name="white_a6">#60ffffff</color>
+    <color name="white_a7">#70ffffff</color>
+    <color name="white_a8">#80ffffff</color>
+    <color name="white_a9">#90ffffff</color>
+    <color name="white_aa">#a0ffffff</color>
+    <color name="white_ab">#b0ffffff</color>
+    <color name="white_ac">#c0ffffff</color>
+    <color name="white_ad">#d0ffffff</color>
+    <color name="white_ae">#e0ffffff</color>
 
     <color name="black">#000000</color>
-    <color name="black_a75">#c0000000</color>
-    <color name="black_a50">#80000000</color>
-    <color name="black_a25">#40000000</color>
+    <color name="black_a1">#10000000</color>
+    <color name="black_a2">#20000000</color>
+    <color name="black_a3">#30000000</color>
+    <color name="black_a4">#40000000</color>
+    <color name="black_a5">#50000000</color>
+    <color name="black_a6">#60000000</color>
+    <color name="black_a7">#70000000</color>
+    <color name="black_a8">#80000000</color>
+    <color name="black_a9">#90000000</color>
+    <color name="black_aa">#a0000000</color>
+    <color name="black_ab">#b0000000</color>
+    <color name="black_ac">#c0000000</color>
+    <color name="black_ad">#d0000000</color>
+    <color name="black_ae">#e0000000</color>
 
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
 
-    <color name="day_background_today_overlay">@color/black_a25</color>
-    <color name="day_background_current_overlay">@color/white_a25</color>
+    <color name="day_background_today_overlay">@color/black_a4</color>
+    <color name="day_background_current_overlay">@color/white_a2</color>
+    <color name="day_background_weekend_overlay">@color/black_a1</color>
     <color name="day_background">@color/colorPrimary</color>
     <color name="day_foreground">@color/colorPrimaryDark</color>
     <color name="day_text">@color/colorAccent</color>
@@ -30,7 +53,6 @@
 
     <color name="month_foreground">@color/colorAccent</color>
 
-    <color name="overlay_background">@color/black_a25</color>
-    <color name="overlay_foreground">@color/black_a50</color>
-
+    <color name="overlay_background">@color/black_a1</color>
+    <color name="overlay_foreground">@color/black_a2</color>
 </resources>
