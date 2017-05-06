@@ -20,19 +20,6 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
 
-//    def keystorePropertiesFile = rootProject.file("keystore.properties")
-//    def keystoreProperties = new Properties()
-//    keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
-
-//    signingConfigs {
-//        release {
-//            keyAlias keystoreProperties['keyAlias']
-//            keyPassword keystoreProperties['keyPassword']
-//            storeFile file(keystoreProperties['storeFile'])
-//            storePassword keystoreProperties['storePassword']
-//        }
-//    }
-
     androidGitVersion {
         baseCode 1000
         codeFormat = 'MNNPPP'
