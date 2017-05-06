@@ -50,4 +50,12 @@ public class DateViewModel {
     public String getYear() {
         return Integer.toString(cal.getYear(jdn));
     }
+
+    public void decr() {
+        setJdn(getJdn() - 1);
+    }
+
+    public void incr() {
+        setJdn(getJdn() + 1);
+    }
 }

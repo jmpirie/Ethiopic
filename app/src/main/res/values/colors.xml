@@ -2,6 +2,8 @@
 <resources>
     <color name="transparent">#00000000</color>
 
+    <color name="offensive">#ff00ff</color>
+
     <color name="white">#ffffff</color>
     <color name="white_a75">#c0ffffff</color>
     <color name="white_a50">#80ffffff</color>

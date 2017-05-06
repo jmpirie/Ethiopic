@@ -4,6 +4,8 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
+import android.view.MotionEvent;
+import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -28,6 +30,12 @@ public class DateView extends LinearLayout {
     @BindView(R.id.year)
     TextView year;
 
+    @BindView(R.id.left)
+    View left;
+
+    @BindView(R.id.right)
+    View right;
+
     private DateViewModel viewModel;
 
     public DateView(@NonNull Context context) {
@@ -44,6 +52,14 @@ public class DateView extends LinearLayout {
         super.onFinishInflate();
         ButterKnife.bind(this);
         modelChanged();
+
+        left.setOnClickListener(v -> {
+            viewModel.decr();
+        });
+
+        right.setOnClickListener(v -> {
+            viewModel.incr();
+        });
     }
 
     ViewModelChangeListener<DateViewModel> modelChangeListener = m -> modelChanged();
