@@ -151,4 +151,8 @@ public class CalendarViewModel {
     public boolean isCurrent(int jdn) {
         return (int)jdv == jdn;
     }
+
+    public boolean isWeekend(int jdn) {
+        return cal.isWeekend(jdn);
+    }
 }
