@@ -32,6 +32,7 @@ public class DayStamp {
 
         backPaint = new Paint();
         backPaint.setStyle(Paint.Style.FILL);
+        backPaint.setColor(context.getResources().getColor(R.color.day_background));
 
         forePaint = new Paint();
         forePaint.setStyle(Paint.Style.STROKE);
@@ -50,10 +51,6 @@ public class DayStamp {
     }
 
     public void stamp(Canvas canvas) {
-        backPaint.setColor(viewModel.getCal().isWeekday(jdn)
-                ? context.getResources().getColor(R.color.day_background_weekday)
-                : context.getResources().getColor(R.color.day_background_weekend));
-
         canvas.drawRect(bounds, backPaint);
 
         canvas.drawRect(bounds, forePaint);
