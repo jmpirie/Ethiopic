@@ -1,1 +1,1 @@
-# EthioCal
+# Ethiopic
