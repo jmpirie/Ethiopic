@@ -41,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
         viewPager.setAdapter(pagerAdapter);
 
         pagerAdapter.setJdv(GregorianCal.INSTANCE.today());
+        viewPager.setCurrentItem(1);
     }
 
 }
