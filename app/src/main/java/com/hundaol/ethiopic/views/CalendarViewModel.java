@@ -132,6 +132,7 @@ public class CalendarViewModel {
         boundsForDay(d2);
         path.lineTo(bounds.left, bounds.top);
         path.lineTo(bounds.right, bounds.top);
+        path.close();
 
         return path;
     }
