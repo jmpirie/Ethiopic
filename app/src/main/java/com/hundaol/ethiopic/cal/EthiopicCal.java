@@ -8,19 +8,19 @@ public class EthiopicCal extends AbstractCal {
     public static final EthiopicCal INSTANCE = new EthiopicCal();
 
     public static final char[][] MONTH_NAMES = {
-            "M01".toCharArray(),
-            "M02".toCharArray(),
-            "M03".toCharArray(),
-            "M04".toCharArray(),
-            "M05".toCharArray(),
-            "M06".toCharArray(),
-            "M07".toCharArray(),
-            "M08".toCharArray(),
-            "M09".toCharArray(),
-            "M10".toCharArray(),
-            "M11".toCharArray(),
-            "M12".toCharArray(),
-            "M13".toCharArray()
+            "Mäskäräm".toCharArray(),
+            "Ṭəqəmt".toCharArray(),
+            "Ḫədar".toCharArray(),
+            "Taḫśaś".toCharArray(),
+            "Ṭərr".toCharArray(),
+            "Yäkatit".toCharArray(),
+            "Mägabit".toCharArray(),
+            "Miyazya".toCharArray(),
+            "Gənbot".toCharArray(),
+            "Säne".toCharArray(),
+            "Ḥamle".toCharArray(),
+            "Nähase".toCharArray(),
+            "Ṗagume".toCharArray()
     };
 
     private EthiopicCal() {
