@@ -1,4 +1,4 @@
-package com.hundaol.ethiopic.views;
+package com.hundaol.ethiopic.stamps;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -7,6 +7,7 @@ import android.graphics.RectF;
 import android.text.TextPaint;
 
 import com.hundaol.ethiocal.R;
+import com.hundaol.ethiopic.views.CalendarViewModel;
 
 /**
  * Created by john.pirie on 2017-04-30.
