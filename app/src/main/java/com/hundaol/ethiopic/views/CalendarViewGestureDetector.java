@@ -51,25 +51,21 @@ public class CalendarViewGestureDetector {
 
             @Override
             public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
-                if (Math.abs(velocityY) > Math.abs(velocityX)) {
-                    Handler handler = new Handler();
-                    Scroller scroller = new Scroller(view.getContext());
-                    scroller.setFriction(4 * 0.015f);
-                    scroller.fling(0, 0, 0, (int) velocityY, Integer.MIN_VALUE, Integer.MAX_VALUE, Integer.MIN_VALUE, Integer.MAX_VALUE);
-                    final float anchorJdv = view.getViewModel().getJdv();
-                    handler.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            if (scroller.computeScrollOffset()) {
-                                view.getViewModel().setJdv(anchorJdv + scroller.getCurrY() * 7 / view.getViewModel().getCellWidth());
-                                handler.postDelayed(this, 100);
-                            }
+                Handler handler = new Handler();
+                Scroller scroller = new Scroller(view.getContext());
+                scroller.setFriction(4 * 0.015f);
+                scroller.fling(0, 0, 0, (int) velocityY, Integer.MIN_VALUE, Integer.MAX_VALUE, Integer.MIN_VALUE, Integer.MAX_VALUE);
+                final float anchorJdv = view.getViewModel().getJdv();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (scroller.computeScrollOffset()) {
+                            view.getViewModel().setJdv(anchorJdv - scroller.getCurrY() * 7 / view.getViewModel().getCellWidth());
+                            handler.postDelayed(this, 100);
                         }
-                    }, 100);
-                    return true;
-                } else {
-                    return false;
-                }
+                    }
+                }, 100);
+                return true;
             }
         });
 
