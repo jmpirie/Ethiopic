@@ -6,24 +6,18 @@ import android.graphics.Paint;
 import android.graphics.RectF;
 import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
-import android.util.DisplayMetrics;
-import android.util.TypedValue;
 import android.view.View;
 
 import com.hundaol.ethiocal.R;
 import com.hundaol.ethiopic.App;
 import com.hundaol.ethiopic.cal.GregorianCal;
 import com.hundaol.ethiopic.cal.ICal;
-
-import javax.inject.Inject;
+import com.hundaol.ethiopic.stamps.MonthStamp;
 
 /**
  * Created by jmpirie on 2017-04-14
  */
 public class CalendarView extends View {
-
-    public static final int MIN = GregorianCal.INSTANCE.fromDate(1500, 1, 1);
-    public static final int MAX = GregorianCal.INSTANCE.fromDate(2400, 12, 31);
 
     private int viewWidth;
     private int viewHeight;

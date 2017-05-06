@@ -1,15 +1,13 @@
-package com.hundaol.ethiopic.views;
+package com.hundaol.ethiopic.stamps;
 
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Path;
-import android.graphics.RectF;
 
 import com.hundaol.ethiocal.R;
 import com.hundaol.ethiopic.cal.ICal;
-
-import timber.log.Timber;
+import com.hundaol.ethiopic.views.CalendarViewModel;
 
 /**
  * Created by john.pirie on 2017-05-01.
