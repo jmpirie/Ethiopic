@@ -11,9 +11,11 @@ import android.widget.TextView;
 
 import com.hundaol.ethiocal.R;
 import com.hundaol.ethiopic.cal.GregorianCal;
+import com.jakewharton.rxbinding2.view.RxView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.reactivex.disposables.CompositeDisposable;
 
 /**
  * Created by john.pirie on 2017-04-28.
@@ -38,6 +40,8 @@ public class DateView extends LinearLayout {
 
     private DateViewModel viewModel;
 
+    private final CompositeDisposable disposables = new CompositeDisposable();
+
     public DateView(@NonNull Context context) {
         this(context, null);
     }
@@ -51,15 +55,27 @@ public class DateView extends LinearLayout {
     protected void onFinishInflate() {
         super.onFinishInflate();
         ButterKnife.bind(this);
-        modelChanged();
+    }
 
-        left.setOnClickListener(v -> {
+    @Override
+    protected void onAttachedToWindow() {
+        super.onAttachedToWindow();
+
+        disposables.add(RxView.clicks(left).subscribe(v -> {
             viewModel.decr();
-        });
+        }));
 
-        right.setOnClickListener(v -> {
+        disposables.add(RxView.clicks(right).subscribe(v -> {
             viewModel.incr();
-        });
+        }));
+
+        modelChanged();
+    }
+
+    @Override
+    protected void onDetachedFromWindow() {
+        super.onDetachedFromWindow();
+        disposables.dispose();
     }
 
     ViewModelChangeListener<DateViewModel> modelChangeListener = m -> modelChanged();
