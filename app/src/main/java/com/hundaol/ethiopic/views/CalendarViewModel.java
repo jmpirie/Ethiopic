@@ -143,4 +143,12 @@ public class CalendarViewModel {
     public int jdnFor(float x, float y) {
         return -1 + (int) (((y - offset) / cellWidth) + jdv) + (int) (x / cellWidth);
     }
+
+    public boolean isToday(int jdn) {
+        return jdn == cal.today();
+    }
+
+    public boolean isCurrent(int jdn) {
+        return (int)jdv == jdn;
+    }
 }

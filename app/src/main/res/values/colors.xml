@@ -16,6 +16,8 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
 
+    <color name="day_background_today_overlay">@color/black_a25</color>
+    <color name="day_background_current_overlay">@color/white_a25</color>
     <color name="day_background">@color/colorPrimary</color>
     <color name="day_foreground">@color/colorPrimaryDark</color>
     <color name="day_text">@color/colorAccent</color>
@@ -26,7 +28,7 @@
 
     <color name="month_foreground">@color/colorAccent</color>
 
-    <color name="overlay_background">#88000000</color>
-    <color name="overlay_foreground">#44000000</color>
+    <color name="overlay_background">@color/black_a25</color>
+    <color name="overlay_foreground">@color/black_a50</color>
 
 </resources>

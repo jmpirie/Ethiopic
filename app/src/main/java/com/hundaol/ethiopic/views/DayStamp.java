@@ -8,8 +8,6 @@ import android.text.TextPaint;
 
 import com.hundaol.ethiocal.R;
 
-import timber.log.Timber;
-
 /**
  * Created by john.pirie on 2017-04-30.
  */
@@ -22,6 +20,8 @@ public class DayStamp {
 
     public final Paint backPaint;
     public final Paint forePaint;
+    public final Paint todayOverlayPaint;
+    public final Paint currentOverlayPaint;
     public final TextPaint textPaint;
 
     public int jdn;
@@ -39,6 +39,14 @@ public class DayStamp {
         forePaint.setColor(context.getResources().getColor(R.color.day_foreground));
         forePaint.setStrokeWidth(context.getResources().getDimensionPixelSize(R.dimen.day_border_width));
 
+        todayOverlayPaint = new Paint();
+        todayOverlayPaint.setStyle(Paint.Style.FILL);
+        todayOverlayPaint.setColor(context.getResources().getColor(R.color.day_background_today_overlay));
+
+        currentOverlayPaint = new Paint();
+        currentOverlayPaint.setStyle(Paint.Style.FILL);
+        currentOverlayPaint.setColor(context.getResources().getColor(R.color.day_background_current_overlay));
+
         textPaint = new TextPaint();
         textPaint.setTextSize(context.getResources().getDimensionPixelSize(R.dimen.day_text_size));
         textPaint.setStyle(Paint.Style.STROKE);
@@ -52,6 +60,11 @@ public class DayStamp {
 
     public void stamp(Canvas canvas) {
         canvas.drawRect(bounds, backPaint);
+        if (viewModel.isToday(jdn)) {
+            canvas.drawRect(bounds, todayOverlayPaint);
+        } else if (viewModel.isCurrent(jdn)) {
+            canvas.drawRect(bounds, currentOverlayPaint);
+        }
 
         canvas.drawRect(bounds, forePaint);
 
