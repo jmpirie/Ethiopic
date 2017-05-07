@@ -39,15 +39,26 @@ public final class DateModel {
         setJdv(dateSubject.getValue() - days);
     }
 
-    public static Predicate<Float> newJdnFilter() {
+    public static Predicate<Float> uniqueJdnFilter() {
         return new Predicate<Float>() {
-            int v = Integer.MIN_VALUE;
+            int p = Integer.MIN_VALUE;
             @Override
             public boolean test(@NonNull Float value) throws Exception {
                 int i = (int)value.floatValue();
-                return v != (v = i);
+                return p != (p = i);
             }
         };
     }
+    public static Predicate<Float> uniqueJdvFilter() {
+        return new Predicate<Float>() {
+            float p = Float.MIN_VALUE;
+            @Override
+            public boolean test(@NonNull Float value) throws Exception {
+                float v = value.floatValue();
+                return p != (p = v);
+            }
+        };
+    }
+
 
 }

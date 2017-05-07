@@ -20,7 +20,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.reactivex.disposables.CompositeDisposable;
 
-import static com.hundaol.ethiopic.domain.DateModel.newJdnFilter;
+import static com.hundaol.ethiopic.domain.DateModel.uniqueJdnFilter;
 
 /**
  * Created by john.pirie on 2017-04-28.
@@ -78,7 +78,7 @@ public class DateView extends LinearLayout {
             dateModel.nextDay(1);
         }));
 
-        disposables.add(dateModel.getDate().filter(newJdnFilter()).subscribe(jdv -> {
+        disposables.add(dateModel.getDate().filter(uniqueJdnFilter()).subscribe(jdv -> {
             viewModel.setJdn((int)jdv.floatValue());
             modelChanged();
         }));
