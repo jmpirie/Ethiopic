@@ -6,6 +6,8 @@ import android.view.MotionEvent;
 import android.view.ViewConfiguration;
 import android.widget.Scroller;
 
+import com.hundaol.ethiopic.DateModel;
+
 import timber.log.Timber;
 
 /**
@@ -16,9 +18,11 @@ public class CalendarViewGestureDetector {
 
     private final CalendarView view;
     private final GestureDetector gestureDetector;
+    private final DateModel dateModel;
 
-    public CalendarViewGestureDetector(CalendarView view) {
+    public CalendarViewGestureDetector(CalendarView view, DateModel dateModel) {
         this.view = view;
+        this.dateModel = dateModel;
 
         this.gestureDetector = new GestureDetector(view.getContext(), new GestureDetector.OnGestureListener() {
             @Override
@@ -40,7 +44,8 @@ public class CalendarViewGestureDetector {
             public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
                 float cellWidth = view.getViewModel().getCellWidth();
                 float jdv = view.getViewModel().getJdv();
-                view.getViewModel().setJdv(jdv + 7.0f * distanceY / cellWidth);
+                jdv = jdv + 7.0f * distanceY / cellWidth;
+                dateModel.setJdv(jdv);
                 return true;
             }
 

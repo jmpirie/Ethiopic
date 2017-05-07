@@ -2,17 +2,19 @@ package com.hundaol.ethiopic.views;
 
 import android.content.Context;
 import android.graphics.Canvas;
-import android.graphics.Paint;
 import android.graphics.RectF;
-import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.view.View;
 
-import com.hundaol.ethiocal.R;
 import com.hundaol.ethiopic.App;
+import com.hundaol.ethiopic.DateModel;
 import com.hundaol.ethiopic.cal.GregorianCal;
 import com.hundaol.ethiopic.cal.ICal;
 import com.hundaol.ethiopic.stamps.MonthStamp;
+
+import javax.inject.Inject;
+
+import io.reactivex.disposables.CompositeDisposable;
 
 /**
  * Created by jmpirie on 2017-04-14
@@ -27,6 +29,11 @@ public class CalendarView extends View {
 
     private MonthStamp monthStamp;
 
+    @Inject
+    DateModel dateModel;
+
+    private final CompositeDisposable disposables = new CompositeDisposable();
+
     public CalendarView(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
     }
@@ -39,25 +46,19 @@ public class CalendarView extends View {
         setViewModel(new CalendarViewModel(GregorianCal.INSTANCE));
     }
 
-    ViewModelChangeListener<CalendarViewModel> structureChangeListener = m -> {
-        requestLayout();
-        invalidate();
-    };
-
-    ViewModelChangeListener<CalendarViewModel> valueChangeListener = m -> {
-        invalidate();
-    };
-
     @Override
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
-        viewModel.structureChangeEvent.add(structureChangeListener);
+        disposables.add(dateModel.getDate().subscribe(jdv -> {
+            viewModel.setJdv(jdv);
+            invalidate();
+        }));
     }
 
     @Override
     protected void onDetachedFromWindow() {
         super.onDetachedFromWindow();
-        viewModel.structureChangeEvent.remove(structureChangeListener);
+        disposables.dispose();
     }
 
     public CalendarViewModel getViewModel() {
@@ -65,13 +66,8 @@ public class CalendarView extends View {
     }
 
     public void setViewModel(CalendarViewModel viewModel) {
-        if (this.viewModel != null) {
-            this.viewModel.structureChangeEvent.remove(structureChangeListener);
-        }
         monthStamp = new MonthStamp(getContext(), viewModel);
         this.viewModel = viewModel;
-        this.viewModel.structureChangeEvent.add(structureChangeListener);
-        this.viewModel.valueChangeEvent.add(valueChangeListener);
     }
 
     @Override

@@ -3,6 +3,8 @@ package com.hundaol.ethiopic.modules;
 import com.hundaol.ethiopic.App;
 import com.hundaol.ethiopic.MainActivity;
 import com.hundaol.ethiopic.views.CalendarView;
+import com.hundaol.ethiopic.views.DateView;
+import com.hundaol.ethiopic.views.DateViewModel;
 
 import javax.inject.Singleton;
 
@@ -18,6 +20,8 @@ public interface AppComponent {
     void inject(App o);
 
     void inject(MainActivity o);
+
+    void inject(DateView o);
 
     void inject(CalendarView o);
 }

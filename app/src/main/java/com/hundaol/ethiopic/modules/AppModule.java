@@ -6,6 +6,7 @@ import android.view.WindowManager;
 
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.hundaol.ethiopic.App;
+import com.hundaol.ethiopic.DateModel;
 
 import javax.inject.Singleton;
 
@@ -48,5 +49,11 @@ public class AppModule {
     @Provides
     public Display provideDisplay(App app) {
         return ((WindowManager) app.getSystemService(WINDOW_SERVICE)).getDefaultDisplay();
+    }
+
+    @Singleton
+    @Provides
+    public DateModel provideDateModel() {
+        return new DateModel();
     }
 }

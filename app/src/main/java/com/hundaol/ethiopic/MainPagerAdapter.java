@@ -24,6 +24,7 @@ public class MainPagerAdapter extends PagerAdapter {
 
     private final Context context;
     private final Display display;
+    private final DateModel dateModel;
 
     private float jdv;
     private final Object[] viewModels = new Object[]{
@@ -33,13 +34,14 @@ public class MainPagerAdapter extends PagerAdapter {
             new DateViewModel(EthiopicCal.INSTANCE)
     };
 
-    public MainPagerAdapter(Context context, Display display) {
+    public MainPagerAdapter(Context context, Display display, DateModel dateModel) {
         this.context = context;
         this.display = display;
-        ((DateViewModel) viewModels[0]).valueChangeEvent.add(m -> setJdv(m.getJdn()));
-        ((CalendarViewModel) viewModels[1]).valueChangeEvent.add(m -> setJdv(m.getJdv()));
-        ((CalendarViewModel) viewModels[2]).valueChangeEvent.add(m -> setJdv(m.getJdv()));
-        ((DateViewModel) viewModels[3]).valueChangeEvent.add(m -> setJdv(m.getJdn()));
+        this.dateModel = dateModel;
+//        ((DateViewModel) viewModels[0]).valueChangeEvent.add(m -> setJdv(m.getJdn()));
+//        ((CalendarViewModel) viewModels[1]).valueChangeEvent.add(m -> setJdv(m.getJdv()));
+//        ((CalendarViewModel) viewModels[2]).valueChangeEvent.add(m -> setJdv(m.getJdv()));
+//        ((DateViewModel) viewModels[3]).valueChangeEvent.add(m -> setJdv(m.getJdn()));
     }
 
     public void setJdv(float jdv) {
@@ -82,7 +84,7 @@ public class MainPagerAdapter extends PagerAdapter {
             CalendarViewModel viewModel = (CalendarViewModel) viewModels[position];
             viewModel.setJdv(jdv);
             CalendarView view = (CalendarView) LayoutInflater.from(context).inflate(R.layout.layout_calendar, null, false);
-            new CalendarViewGestureDetector(view);
+            new CalendarViewGestureDetector(view, dateModel);
             view.setViewModel(viewModel);
             container.addView(view);
             return view;
