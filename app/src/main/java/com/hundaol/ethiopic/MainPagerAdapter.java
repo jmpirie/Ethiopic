@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import com.hundaol.ethiocal.R;
 import com.hundaol.ethiopic.cal.EthiopicCal;
 import com.hundaol.ethiopic.cal.GregorianCal;
+import com.hundaol.ethiopic.domain.DateModel;
 import com.hundaol.ethiopic.views.CalendarView;
 import com.hundaol.ethiopic.views.CalendarViewGestureDetector;
 import com.hundaol.ethiopic.views.CalendarViewModel;

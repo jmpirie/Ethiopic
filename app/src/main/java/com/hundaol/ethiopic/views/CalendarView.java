@@ -7,7 +7,7 @@ import android.util.AttributeSet;
 import android.view.View;
 
 import com.hundaol.ethiopic.App;
-import com.hundaol.ethiopic.DateModel;
+import com.hundaol.ethiopic.domain.DateModel;
 import com.hundaol.ethiopic.cal.GregorianCal;
 import com.hundaol.ethiopic.cal.ICal;
 import com.hundaol.ethiopic.stamps.MonthStamp;

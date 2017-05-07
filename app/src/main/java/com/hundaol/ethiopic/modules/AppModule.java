@@ -6,7 +6,7 @@ import android.view.WindowManager;
 
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.hundaol.ethiopic.App;
-import com.hundaol.ethiopic.DateModel;
+import com.hundaol.ethiopic.domain.DateModel;
 
 import javax.inject.Singleton;
 

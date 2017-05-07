@@ -3,12 +3,9 @@ package com.hundaol.ethiopic.views;
 import android.os.Handler;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
-import android.view.ViewConfiguration;
 import android.widget.Scroller;
 
-import com.hundaol.ethiopic.DateModel;
-
-import timber.log.Timber;
+import com.hundaol.ethiopic.domain.DateModel;
 
 /**
  * Created by john.pirie on 2017-04-29.

@@ -1,4 +1,4 @@
-package com.hundaol.ethiopic;
+package com.hundaol.ethiopic.domain;
 
 import com.hundaol.ethiopic.cal.GregorianCal;
 
