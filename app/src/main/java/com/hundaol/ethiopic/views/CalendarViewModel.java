@@ -2,7 +2,6 @@ package com.hundaol.ethiopic.views;
 
 import android.graphics.Path;
 import android.graphics.RectF;
-import android.graphics.drawable.shapes.Shape;
 
 import com.hundaol.ethiopic.cal.ICal;
 
@@ -18,9 +17,6 @@ public class CalendarViewModel {
     private float offset;
     private float jdv;
 
-    public final ViewModelChangeEvent<CalendarViewModel> structureChangeEvent = new ViewModelChangeEvent<>();
-    public final ViewModelChangeEvent<CalendarViewModel> valueChangeEvent = new ViewModelChangeEvent<>();
-
     public CalendarViewModel(ICal cal) {
         this.cal = cal;
     }
@@ -30,10 +26,7 @@ public class CalendarViewModel {
     }
 
     public void setCal(ICal cal) {
-        if (this.cal != cal) {
-            this.cal = cal;
-            structureChangeEvent.modelChanged(this);
-        }
+        this.cal = cal;
     }
 
     public float getCellWidth() {
@@ -41,10 +34,7 @@ public class CalendarViewModel {
     }
 
     public void setCellWidth(float cellWidth) {
-        if (this.cellWidth != cellWidth) {
-            this.cellWidth = cellWidth;
-            structureChangeEvent.modelChanged(this);
-        }
+        this.cellWidth = cellWidth;
     }
 
     public float getOffset() {
@@ -52,10 +42,7 @@ public class CalendarViewModel {
     }
 
     public void setOffset(float offset) {
-        if (this.offset != offset) {
-            this.offset = offset;
-            structureChangeEvent.modelChanged(this);
-        }
+        this.offset = offset;
     }
 
     public float getJdv() {
@@ -63,10 +50,7 @@ public class CalendarViewModel {
     }
 
     public void setJdv(float jdv) {
-        if (this.jdv != jdv) {
-            this.jdv = jdv;
-            valueChangeEvent.modelChanged(this);
-        }
+        this.jdv = jdv;
     }
 
     public int getJdn() {
@@ -114,7 +98,7 @@ public class CalendarViewModel {
 
         int d5 = cal.lastOfMonth(jdn);
         int d4 = cal.getFirstDayOfWeek(d5);
-        int d3 = cal.getLastDayOfWeek(d5-7);
+        int d3 = cal.getLastDayOfWeek(d5 - 7);
 
         Path path = new Path();
         boundsForDay(d0);
@@ -149,7 +133,7 @@ public class CalendarViewModel {
     }
 
     public boolean isCurrent(int jdn) {
-        return (int)jdv == jdn;
+        return (int) jdv == jdn;
     }
 
     public boolean isWeekend(int jdn) {

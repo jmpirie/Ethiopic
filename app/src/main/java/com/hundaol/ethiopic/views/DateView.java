@@ -10,12 +10,19 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.hundaol.ethiocal.R;
+import com.hundaol.ethiopic.App;
+import com.hundaol.ethiopic.DateModel;
 import com.hundaol.ethiopic.cal.GregorianCal;
 import com.jakewharton.rxbinding2.view.RxView;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.reactivex.disposables.CompositeDisposable;
+import timber.log.Timber;
+
+import static com.hundaol.ethiopic.DateModel.newJdnFilter;
 
 /**
  * Created by john.pirie on 2017-04-28.
@@ -38,6 +45,9 @@ public class DateView extends LinearLayout {
     @BindView(R.id.right)
     View right;
 
+    @Inject
+    DateModel dateModel;
+
     private DateViewModel viewModel;
 
     private final CompositeDisposable disposables = new CompositeDisposable();
@@ -54,6 +64,7 @@ public class DateView extends LinearLayout {
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
+        App.getAppComponent().inject(this);
         ButterKnife.bind(this);
     }
 
@@ -62,14 +73,17 @@ public class DateView extends LinearLayout {
         super.onAttachedToWindow();
 
         disposables.add(RxView.clicks(left).subscribe(v -> {
-            viewModel.decr();
+            dateModel.prevDays(1);
         }));
 
         disposables.add(RxView.clicks(right).subscribe(v -> {
-            viewModel.incr();
+            dateModel.nextDay(1);
         }));
 
-        modelChanged();
+        disposables.add(dateModel.getDate().filter(newJdnFilter()).subscribe(jdv -> {
+            viewModel.setJdn((int)jdv.floatValue());
+            modelChanged();
+        }));
     }
 
     @Override
@@ -78,19 +92,13 @@ public class DateView extends LinearLayout {
         disposables.dispose();
     }
 
-    ViewModelChangeListener<DateViewModel> modelChangeListener = m -> modelChanged();
+    public void setViewModel(DateViewModel viewModel) {
+        this.viewModel = viewModel;
+        modelChanged();
+    }
 
     public DateViewModel getViewModel() {
         return viewModel;
-    }
-
-    public void setViewModel(DateViewModel viewModel) {
-        if (this.viewModel != null) {
-            this.viewModel.valueChangeEvent.remove(modelChangeListener);
-        }
-        this.viewModel = viewModel;
-        this.viewModel.valueChangeEvent.add(modelChangeListener);
-        modelChanged();
     }
 
     void modelChanged() {

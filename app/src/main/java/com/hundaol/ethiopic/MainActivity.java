@@ -25,6 +25,9 @@ public class MainActivity extends AppCompatActivity {
     @Inject
     Display display;
 
+    @Inject
+    DateModel dateModel;
+
     @BindView(R.id.view_pager)
     ViewPager viewPager;
 
@@ -45,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
 
         ButterKnife.bind(this);
 
-        pagerAdapter = new MainPagerAdapter(this, display);
+        pagerAdapter = new MainPagerAdapter(this, display, dateModel);
         viewPager.setAdapter(pagerAdapter);
 
         pagerAdapter.setJdv(GregorianCal.INSTANCE.today());

@@ -11,8 +11,6 @@ public class DateViewModel {
     private ICal cal;
     private int jdn;
 
-    public final ViewModelChangeEvent<DateViewModel> valueChangeEvent = new ViewModelChangeEvent<>();
-
     public DateViewModel(ICal cal) {
         this.cal = cal;
     }
@@ -22,10 +20,7 @@ public class DateViewModel {
     }
 
     public void setCal(ICal cal) {
-        if (this.cal != cal) {
-            this.cal = cal;
-            valueChangeEvent.modelChanged(this);
-        }
+        this.cal = cal;
     }
 
     public int getJdn() {
@@ -33,10 +28,7 @@ public class DateViewModel {
     }
 
     public void setJdn(int jdn) {
-        if (this.jdn != jdn) {
-            this.jdn = jdn;
-            valueChangeEvent.modelChanged(this);
-        }
+        this.jdn = jdn;
     }
 
     public String getMonth() {
@@ -49,13 +41,5 @@ public class DateViewModel {
 
     public String getYear() {
         return Integer.toString(cal.getYear(jdn));
-    }
-
-    public void decr() {
-        setJdn(getJdn() - 1);
-    }
-
-    public void incr() {
-        setJdn(getJdn() + 1);
     }
 }
