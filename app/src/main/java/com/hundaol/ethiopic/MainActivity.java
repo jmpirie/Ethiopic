@@ -9,6 +9,7 @@ import android.view.Display;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.hundaol.ethiocal.R;
 import com.hundaol.ethiopic.cal.GregorianCal;
+import com.hundaol.ethiopic.domain.DateModel;
 import com.jakewharton.rxbinding2.view.RxView;
 
 import javax.inject.Inject;

@@ -4,14 +4,13 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.hundaol.ethiocal.R;
 import com.hundaol.ethiopic.App;
-import com.hundaol.ethiopic.DateModel;
+import com.hundaol.ethiopic.domain.DateModel;
 import com.hundaol.ethiopic.cal.GregorianCal;
 import com.jakewharton.rxbinding2.view.RxView;
 
@@ -20,9 +19,8 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.reactivex.disposables.CompositeDisposable;
-import timber.log.Timber;
 
-import static com.hundaol.ethiopic.DateModel.newJdnFilter;
+import static com.hundaol.ethiopic.domain.DateModel.newJdnFilter;
 
 /**
  * Created by john.pirie on 2017-04-28.
