@@ -16,6 +16,8 @@ import javax.inject.Inject;
 
 import io.reactivex.disposables.CompositeDisposable;
 
+import static com.hundaol.ethiopic.domain.DateModel.uniqueJdvFilter;
+
 /**
  * Created by jmpirie on 2017-04-14
  */
@@ -49,7 +51,7 @@ public class CalendarView extends View {
     @Override
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
-        disposables.add(dateModel.getDate().subscribe(jdv -> {
+        disposables.add(dateModel.getDate().filter(uniqueJdvFilter()).subscribe(jdv -> {
             viewModel.setJdv(jdv);
             invalidate();
         }));
