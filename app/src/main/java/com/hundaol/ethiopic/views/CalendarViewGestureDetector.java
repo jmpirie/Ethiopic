@@ -62,7 +62,7 @@ public class CalendarViewGestureDetector {
                     @Override
                     public void run() {
                         if (scroller.computeScrollOffset()) {
-                            view.getViewModel().setJdv(anchorJdv - scroller.getCurrY() * 7 / view.getViewModel().getCellWidth());
+                            dateModel.setJdv(anchorJdv - scroller.getCurrY() * 7 / view.getViewModel().getCellWidth());
                             handler.postDelayed(this, 100);
                         }
                     }

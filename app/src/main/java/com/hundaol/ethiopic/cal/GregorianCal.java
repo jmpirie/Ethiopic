@@ -110,6 +110,6 @@ public class GregorianCal extends AbstractCal {
 
     @Override
     public char[] getMonthName(int jdn) {
-        return MONTH_NAMES[getMonth(jdn) - 1];
+        return MONTH_NAMES[(getMonth(jdn) - 1 + 12) % 12];
     }
 }

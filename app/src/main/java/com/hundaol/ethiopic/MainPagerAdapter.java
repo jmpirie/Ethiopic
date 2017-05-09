@@ -27,7 +27,7 @@ public class MainPagerAdapter extends PagerAdapter {
     private final Display display;
     private final DateModel dateModel;
 
-    private float jdv;
+//    private float jdv;
     private final Object[] viewModels = new Object[]{
             new DateViewModel(GregorianCal.INSTANCE),
             new CalendarViewModel(GregorianCal.INSTANCE),
@@ -45,13 +45,13 @@ public class MainPagerAdapter extends PagerAdapter {
 //        ((DateViewModel) viewModels[3]).valueChangeEvent.add(m -> setJdv(m.getJdn()));
     }
 
-    public void setJdv(float jdv) {
-        this.jdv = jdv;
-        ((DateViewModel) viewModels[0]).setJdn((int) jdv);
-        ((CalendarViewModel) viewModels[1]).setJdv(jdv);
-        ((CalendarViewModel) viewModels[2]).setJdv(jdv);
-        ((DateViewModel) viewModels[3]).setJdn((int) jdv);
-    }
+//    public void setJdv(float jdv) {
+//        this.jdv = jdv;
+//        ((DateViewModel) viewModels[0]).setJdn((int) jdv);
+//        ((CalendarViewModel) viewModels[1]).setJdv(jdv);
+//        ((CalendarViewModel) viewModels[2]).setJdv(jdv);
+//        ((DateViewModel) viewModels[3]).setJdn((int) jdv);
+//    }
 
     @Override
     public float getPageWidth(int position) {
@@ -76,14 +76,14 @@ public class MainPagerAdapter extends PagerAdapter {
     public Object instantiateItem(ViewGroup container, int position) {
         if (position == 0 || position == 3) {
             DateViewModel viewModel = (DateViewModel) viewModels[position];
-            viewModel.setJdn((int) jdv);
+//            viewModel.setJdn((int) jdv);
             DateView view = (DateView) LayoutInflater.from(context).inflate(R.layout.layout_date, null, false);
             view.setViewModel(viewModel);
             container.addView(view);
             return view;
         } else {
             CalendarViewModel viewModel = (CalendarViewModel) viewModels[position];
-            viewModel.setJdv(jdv);
+//            viewModel.setJdv(jdv);
             CalendarView view = (CalendarView) LayoutInflater.from(context).inflate(R.layout.layout_calendar, null, false);
             new CalendarViewGestureDetector(view, dateModel);
             view.setViewModel(viewModel);
