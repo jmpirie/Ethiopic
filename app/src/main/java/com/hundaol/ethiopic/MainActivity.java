@@ -52,7 +52,6 @@ public class MainActivity extends AppCompatActivity {
         pagerAdapter = new MainPagerAdapter(this, display, dateModel);
         viewPager.setAdapter(pagerAdapter);
 
-        pagerAdapter.setJdv(GregorianCal.INSTANCE.today());
         viewPager.setCurrentItem(1);
     }
 
@@ -61,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
 
         disposables.add(RxView.clicks(today).subscribe(v -> {
-            pagerAdapter.setJdv(GregorianCal.INSTANCE.today());
+            dateModel.setJdv(GregorianCal.INSTANCE.today());
         }));
     }
 

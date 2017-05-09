@@ -1,5 +1,9 @@
 package com.hundaol.ethiopic.cal;
 
+import java.util.Timer;
+
+import timber.log.Timber;
+
 /**
  * Created by jmpirie on 2017-04-14.
  */
@@ -100,6 +104,6 @@ public class EthiopicCal extends AbstractCal {
 
     @Override
     public char[] getMonthName(int jdn) {
-        return MONTH_NAMES[getMonth(jdn) - 1];
+        return MONTH_NAMES[(getMonth(jdn) - 1 + 13) % 13];
     }
 }
