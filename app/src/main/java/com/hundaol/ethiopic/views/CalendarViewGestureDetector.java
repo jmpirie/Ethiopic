@@ -13,14 +13,9 @@ import com.hundaol.ethiopic.domain.DateModel;
 
 public class CalendarViewGestureDetector {
 
-    private final CalendarView view;
     private final GestureDetector gestureDetector;
-    private final DateModel dateModel;
 
     public CalendarViewGestureDetector(CalendarView view, DateModel dateModel) {
-        this.view = view;
-        this.dateModel = dateModel;
-
         this.gestureDetector = new GestureDetector(view.getContext(), new GestureDetector.OnGestureListener() {
             @Override
             public boolean onDown(MotionEvent e) {
