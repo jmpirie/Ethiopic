@@ -5,59 +5,71 @@ package com.hundaol.ethiopic.cal;
  */
 public interface ICal {
 
+    // initialization
+
     int today();
 
     int fromDate(int year, int month, int day);
 
-    int firstOfMonth(int jdn);
+    // date
 
-    int firstOfWeek(int jdn);
+    int getYear(int jdn);
+
+    int getMonth(int jdn);
+
+    int getDay(int jdn);
+    
+    // day
+
+    int nextDay(int jdn);
+
+    int nextDay(int jdn, int days);
+
+    int prevDay(int jdn);
+
+    int prevDay(int jdn, int days);
+
+    // week
+
+    int getDayOfWeek(int jdn);
+
+    int getFirstDayOfWeek(int jdn);
+
+    int getLastDayOfWeek(int jdn);
+
+    boolean isWeekend(int jdn);
+
+    boolean isWeekday(int jdn);
+
+    // month
+
+    int firstOfMonth(int jdn);
 
     int lastOfMonth(int jdn);
 
-    public int nextDay(int jdn);
-
-    public int nextDay(int jdn, int days);
-
-    public int prevDay(int jdn);
-
-    public int prevDay(int jdn, int days);
-
-    public int nextMonth(int jdn);
+    int nextMonth(int jdn);
 
     int prevMonth(int jdn);
 
-    int getWeekNumber(int jdn);
-
-    public int getYear(int jdn);
-
-    public int getMonth(int jdn);
-
-    public int getDay(int jdn);
-
     char[] getMonthName(int jdn);
 
-    public int getFirstWeekDayOfMonth(int jdn);
+    int getDaysInMonth(int jdn);
 
-    public int getLastFullWeek(int jdn);
+    int getWeeksInMonth(int jdn);
 
-    public int getWeeksInMonth(int jdn);
+    int getWeekOfMonth(int jdn);
 
-    public int getLastWeekDayOfMonth(int jdn);
+    int getDayOfWeekOfFirstDayInMonth(int jdn);
 
-    public int getWeekOfMonth(int jdn);
+    int getDayOfWeekOfLastDayInMonth(int jdn);
 
-    public int getDayOfWeek(int jdn);
+    int getLastFullWeek(int jdn);
 
-    public int getDaysInMonth(int jdn);
+    // year
 
-    public int getFirstDayOfWeek(int jdn);
+    int getMonthsInYear();
 
-    public int getLastDayOfWeek(int jdn);
+    // week number
 
-    public int getMonthsInYear();
-
-    public boolean isWeekend(int jdn);
-
-    public boolean isWeekday(int jdn);
+    int getWeekNumber(int jdn);
 }

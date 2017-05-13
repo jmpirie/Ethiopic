@@ -94,7 +94,7 @@ public class CalendarViewModel {
     public Path pathForMonth(int jdn) {
         int d0 = cal.firstOfMonth(jdn);
         int d1 = cal.getLastDayOfWeek(jdn);
-        int d2 = cal.firstOfWeek(d0 + 7);
+        int d2 = cal.getFirstDayOfWeek(d0 + 7);
 
         int d5 = cal.lastOfMonth(jdn);
         int d4 = cal.getFirstDayOfWeek(d5);
