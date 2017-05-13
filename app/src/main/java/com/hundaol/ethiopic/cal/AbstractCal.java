@@ -58,45 +58,6 @@ public abstract class AbstractCal implements ICal {
     }
 
     @Override
-    public int firstOfWeek(int jdn) {
-        return jdn - getDayOfWeek(jdn);
-    }
-
-    public int getWeekNumber(int jdn) {
-        return (jdn + 1) / 7;
-    }
-
-    @Override
-    public int getFirstWeekDayOfMonth(int jdn) {
-        return (36 + getDayOfWeek(jdn) - getDay(jdn)) % 7;
-    }
-
-    @Override
-    public int getLastFullWeek(int jdn) {
-        return (getDaysInMonth(jdn) + getFirstWeekDayOfMonth(jdn)) / 7 - 1;
-    }
-
-    @Override
-    public int getWeeksInMonth(int jdn) {
-        return (getDaysInMonth(jdn) + getFirstWeekDayOfMonth(jdn)) / 7 + 1;
-    }
-
-    @Override
-    public int getLastWeekDayOfMonth(int jdn) {
-        return (getFirstWeekDayOfMonth(jdn) + getDaysInMonth(jdn) - 1) % 7;
-    }
-
-    @Override
-    public int getWeekOfMonth(int jdn) {
-        return (getDay(jdn) + getFirstWeekDayOfMonth(jdn) - 1) / 7;
-    }
-
-    @Override
-    public int getDayOfWeek(int jdn) {
-        return (((jdn - 2456775) % 7) + 7) % 7;
-    }
-
-    @Override
     public int getFirstDayOfWeek(int jdn){
         return jdn - getDayOfWeek(jdn);
     }
@@ -104,6 +65,40 @@ public abstract class AbstractCal implements ICal {
     @Override
     public int getLastDayOfWeek(int jdn){
         return getFirstDayOfWeek(jdn) + 6;
+    }
+
+    public int getWeekNumber(int jdn) {
+        return (jdn + 1) / 7;
+    }
+
+    @Override
+    public int getDayOfWeekOfFirstDayInMonth(int jdn) {
+        return (36 + getDayOfWeek(jdn) - getDay(jdn)) % 7;
+    }
+
+    @Override
+    public int getLastFullWeek(int jdn) {
+        return (getDaysInMonth(jdn) + getDayOfWeekOfFirstDayInMonth(jdn)) / 7 - 1;
+    }
+
+    @Override
+    public int getWeeksInMonth(int jdn) {
+        return (getDaysInMonth(jdn) + getDayOfWeekOfFirstDayInMonth(jdn)) / 7 + 1;
+    }
+
+    @Override
+    public int getDayOfWeekOfLastDayInMonth(int jdn) {
+        return (getDayOfWeekOfFirstDayInMonth(jdn) + getDaysInMonth(jdn) - 1) % 7;
+    }
+
+    @Override
+    public int getWeekOfMonth(int jdn) {
+        return (getDay(jdn) + getDayOfWeekOfFirstDayInMonth(jdn) - 1) / 7;
+    }
+
+    @Override
+    public int getDayOfWeek(int jdn) {
+        return (((jdn - 2456775) % 7) + 7) % 7;
     }
 
     @Override
