@@ -49,6 +49,50 @@
           "status": 2
         }
       }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:183343739285:android:e69ae707626622cb",
+        "android_client_info": {
+          "package_name": "com.hundaol.ethiocal.debug"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "183343739285-i6avqlk60tn4pn64cn3p6pc6b61be2lg.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.hundaol.ethiocal.debug",
+            "certificate_hash": "850d6dab8d678085855156ea8da14a2e6d706406"
+          }
+        },
+        {
+          "client_id": "183343739285-jrt18gijgpctiab4gc4n2c4hjtmsg15p.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBs8OyDhuodDNjdrSbCrl45jWtj_06c4y0"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "183343739285-jrt18gijgpctiab4gc4n2c4hjtmsg15p.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
     }
   ],
   "configuration_version": "1"

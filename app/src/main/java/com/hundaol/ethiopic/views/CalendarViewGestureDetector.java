@@ -43,7 +43,6 @@ public class CalendarViewGestureDetector {
 
             @Override
             public void onLongPress(MotionEvent e) {
-
             }
 
             @Override
