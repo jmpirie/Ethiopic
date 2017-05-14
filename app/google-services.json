@@ -1,21 +1,21 @@
 {
   "project_info": {
-    "project_number": "325541279103",
-    "firebase_url": "https://ethiocal-cbf41.firebaseio.com",
-    "project_id": "ethiocal-cbf41",
-    "storage_bucket": "ethiocal-cbf41.appspot.com"
+    "project_number": "183343739285",
+    "firebase_url": "https://ethiopic-6abb4.firebaseio.com",
+    "project_id": "ethiopic-6abb4",
+    "storage_bucket": "ethiopic-6abb4.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:325541279103:android:06c2a219dceef15e",
+        "mobilesdk_app_id": "1:183343739285:android:06c2a219dceef15e",
         "android_client_info": {
           "package_name": "com.hundaol.ethiocal"
         }
       },
       "oauth_client": [
         {
-          "client_id": "325541279103-nifvgm7pfua6ft00ququk3ppahru19dp.apps.googleusercontent.com",
+          "client_id": "183343739285-ibh6go56ua3ecish1lcl3tjja7kaalf7.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.hundaol.ethiocal",
@@ -23,13 +23,13 @@
           }
         },
         {
-          "client_id": "325541279103-7a1uljmddpsd1npimflour9pnlui5oa5.apps.googleusercontent.com",
+          "client_id": "183343739285-jrt18gijgpctiab4gc4n2c4hjtmsg15p.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyA1f6otD8cKfuivc0JdqG-ye-uFT97WIEQ"
+          "current_key": "AIzaSyBs8OyDhuodDNjdrSbCrl45jWtj_06c4y0"
         }
       ],
       "services": {
@@ -40,7 +40,7 @@
           "status": 2,
           "other_platform_oauth_client": [
             {
-              "client_id": "325541279103-7a1uljmddpsd1npimflour9pnlui5oa5.apps.googleusercontent.com",
+              "client_id": "183343739285-jrt18gijgpctiab4gc4n2c4hjtmsg15p.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
