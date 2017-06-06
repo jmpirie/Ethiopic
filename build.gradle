@@ -1,9 +1,9 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
 buildscript {
+    ext.kotlin_version = '1.1.2-4'
     ext.gradleBuildToolsVersion = '3.0.0-alpha2'
     ext.googlePlayServicesVersion = '3.0.0'
-    ext.retroLambdaVersion = '3.3.1'
     ext.hugoVersion = '1.2.1'
 
     repositories {
@@ -12,8 +12,8 @@ buildscript {
     dependencies {
         classpath group: "com.android.tools.build", name: "gradle", version: gradleBuildToolsVersion
         classpath group: "com.google.gms", name: "google-services", version: googlePlayServicesVersion
-        classpath group: "me.tatarka", name: "gradle-retrolambda", version: retroLambdaVersion
         classpath group: "com.jakewharton.hugo", name: "hugo-plugin", version: hugoVersion
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     }
 }
 

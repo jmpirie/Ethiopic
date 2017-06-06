@@ -1,8 +1,8 @@
 plugins {
     id 'com.gladed.androidgitversion' version '0.3.3'
 }
-apply plugin: 'me.tatarka.retrolambda'
 apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
 apply plugin: 'com.google.gms.google-services'
 
 android {
@@ -20,16 +20,15 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
 
+    kapt {
+        generateStubs = true
+    }
+
     androidGitVersion {
         baseCode 1000
         codeFormat = 'MNNPPP'
         format = '%tag%%.count%%.commit%'
         untrackedIsDirty = false
-    }
-
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
     }
 
     buildTypes {
@@ -68,20 +67,24 @@ dependencies {
 
     // view binding - butterknife
     compile group: "com.jakewharton", name: "butterknife", version: butterknifeVersion
-    annotationProcessor group: "com.jakewharton", name: "butterknife-compiler", version: butterknifeVersion
+    kapt group: "com.jakewharton", name: "butterknife-compiler", version: butterknifeVersion
 
     // dependency injection - dagger 2
     compile group: "com.google.dagger", name: "dagger", version: daggerVersion
-    annotationProcessor group: "com.google.dagger", name: "dagger-compiler", version: daggerVersion
+    kapt group: "com.google.dagger", name: "dagger-compiler", version: daggerVersion
 
     // rx bindings
     compile group: "io.reactivex.rxjava2", name: "rxjava", version: rxJavaVersion
     compile group: "io.reactivex.rxjava2", name: "rxandroid", version: rxAndroidVersion
 
     compile group: "com.jakewharton.rxbinding2", name: "rxbinding", version: rxBindingVersion
+    compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
 //    compile group: "com.jakewharton.rxbinding2", name: "rxbinding-support-v4", version: rxBindingVersion
 //    compile group: "com.jakewharton.rxbinding2", name: "rxbinding-appcompat-v7", version: rxBindingVersion
 //    compile group: "com.jakewharton.rxbinding2", name: "rxbinding-design", version: rxBindingVersion
 //    compile group: "com.jakewharton.rxbinding2", name: "rxbinding-recyclerview-v7", version: rxBindingVersion
 //    compile group: "com.jakewharton.rxbinding2", name: "rxbinding-leanback-v17", version: rxBindingVersion
+}
+repositories {
+    mavenCentral()
 }
