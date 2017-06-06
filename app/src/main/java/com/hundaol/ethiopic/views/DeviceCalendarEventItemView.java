@@ -9,6 +9,11 @@ import android.widget.TextView;
 import com.hundaol.ethiocal.R;
 import com.hundaol.ethiopic.viewmodels.DeviceCalendarEventViewModel;
 
+import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
+
+import java.text.SimpleDateFormat;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -53,6 +58,13 @@ public class DeviceCalendarEventItemView extends LinearLayout {
 
         indicatorImage.setBackground(viewModel.getBackgroundIndicator());
         title.setText(viewModel.getDeviceCalendar().getTitle());
-        time.setText(viewModel.getDeviceCalendar().getStart() + "-" + viewModel.getDeviceCalendar().getEnd());
+
+        if(!viewModel.getDeviceCalendar().isAllDayEvent()) {
+            time.setVisibility(VISIBLE);
+            SimpleDateFormat dateFormat = new SimpleDateFormat("hh:mm a");
+            time.setText(dateFormat.format(viewModel.getDeviceCalendar().getStart().toDate()) + " - " + dateFormat.format(viewModel.getDeviceCalendar().getEnd().toDate()));
+        } else {
+            time.setVisibility(GONE);
+        }
     }
 }

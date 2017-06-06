@@ -43,7 +43,7 @@ public class DateViewModel {
         return Integer.toString(cal.getYear(jdn));
     }
 
-    public Integer getMonth() {
-        return cal.getMonth(jdn);
+    public String getMonth() {
+        return Integer.toString(cal.getMonth(jdn));
     }
 }
