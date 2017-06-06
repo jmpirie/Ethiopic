@@ -2,6 +2,7 @@ package com.hundaol.ethiopic.stamps
 
 import android.graphics.Canvas
 import android.graphics.Paint
+import android.graphics.RectF
 import com.hundaol.ethiopic.cal.GregorianCal
 import com.hundaol.ethiopic.cal.ICal
 import com.hundaol.ethiopic.domain.ColorModel
@@ -34,6 +35,9 @@ class MonthStamp(var jdn : Int = 0,
             field = value
             dayStamp.colorModel = colorModel
         }
+
+    val bounds: RectF
+        get() = viewModel.boundsForMonth(dateModel, cal, jdn)
 
     val backPaint = Paint()
     val dayStamp = DayStamp()

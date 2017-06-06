@@ -105,20 +105,15 @@ class CalendarView @JvmOverloads constructor(context: Context, attrs: AttributeS
     override fun draw(canvas: Canvas): Unit {
         super.draw(canvas)
 
-        var jdn = dateModel.jdn
-        var monthBounds = viewModel.boundsForMonth(dateModel, cal, jdn)
+        monthStamp.jdn = dateModel.jdn
 
-        while (monthBounds.bottom > 0) {
-            jdn = cal.prevMonth(jdn)
-            monthBounds = viewModel.boundsForMonth(dateModel, cal, jdn)
+        while (monthStamp.bounds.bottom > 0) {
+             monthStamp.jdn = cal.prevMonth(monthStamp.jdn)
         }
 
-        while (monthBounds.top < vh) {
-            monthStamp.jdn = jdn
+        while (monthStamp.bounds.top < vh) {
             monthStamp.stamp(canvas)
-
-            jdn = cal.nextMonth(jdn)
-            monthBounds = viewModel.boundsForMonth(dateModel, cal, jdn)
+            monthStamp.jdn = cal.nextMonth(monthStamp.jdn)
         }
     }
 }
