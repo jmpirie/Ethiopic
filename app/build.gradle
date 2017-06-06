@@ -52,35 +52,36 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    compile 'com.android.support:appcompat-v7:25.2.0'
-    compile 'com.android.support:design:25.2.0'
+    compile group: "com.android.support", name: "appcompat-v7", version: supportVersion
+    compile group: "com.android.support", name: "design", version: supportVersion
 
-    testCompile 'junit:junit:4.12'
-    testCompile group: "org.hamcrest", name: "hamcrest-library", version: "1.4-atlassian-1"
+    testCompile group: "junit", name: "junit", version: junitVersion
+    testCompile group: "org.hamcrest", name: "hamcrest-library", version: hamcrestVersion
 
     // logging - timber
-    compile 'com.jakewharton.timber:timber:4.5.1'
+    compile group: "com.jakewharton.timber", name: "timber", version: timberVersion
 
     // firebase
-    compile group: "com.google.firebase", name: "firebase-analytics", version: "10.2.1"
-    compile group: "com.google.firebase", name: "firebase-crash", version: "10.2.1"
+    compile group: "com.google.firebase", name: "firebase-analytics", version: firebaseVersion
+    compile group: "com.google.firebase", name: "firebase-core", version: firebaseVersion
+    compile group: "com.google.firebase", name: "firebase-crash", version: firebaseVersion
 
     // view binding - butterknife
-    compile group: "com.jakewharton", name: "butterknife", version: "8.4.0"
-    annotationProcessor group: "com.jakewharton", name: "butterknife-compiler", version: "8.4.0"
+    compile group: "com.jakewharton", name: "butterknife", version: butterknifeVersion
+    annotationProcessor group: "com.jakewharton", name: "butterknife-compiler", version: butterknifeVersion
 
     // dependency injection - dagger 2
-    compile group: "com.google.dagger", name: "dagger", version: "2.8"
-    annotationProcessor group: "com.google.dagger", name: "dagger-compiler", version: "2.8"
+    compile group: "com.google.dagger", name: "dagger", version: daggerVersion
+    annotationProcessor group: "com.google.dagger", name: "dagger-compiler", version: daggerVersion
 
     // rx bindings
-    compile group: "io.reactivex.rxjava2", name: "rxjava", version: "2.0.6"
-    compile group: "io.reactivex.rxjava2", name: "rxandroid", version: "2.0.1"
+    compile group: "io.reactivex.rxjava2", name: "rxjava", version: rxJavaVersion
+    compile group: "io.reactivex.rxjava2", name: "rxandroid", version: rxAndroidVersion
 
-    compile group: "com.jakewharton.rxbinding2", name: "rxbinding", version: "2.0.0"
-//    compile group: "com.jakewharton.rxbinding2", name: "rxbinding-support-v4", version: "2.0.0"
-//    compile group: "com.jakewharton.rxbinding2", name: "rxbinding-appcompat-v7", version: "2.0.0"
-//    compile group: "com.jakewharton.rxbinding2", name: "rxbinding-design", version: "2.0.0"
-//    compile group: "com.jakewharton.rxbinding2", name: "rxbinding-recyclerview-v7", version: "2.0.0"
-//    compile group: "com.jakewharton.rxbinding2", name: "rxbinding-leanback-v17", version: "2.0.0"
+    compile group: "com.jakewharton.rxbinding2", name: "rxbinding", version: rxBindingVersion
+//    compile group: "com.jakewharton.rxbinding2", name: "rxbinding-support-v4", version: rxBindingVersion
+//    compile group: "com.jakewharton.rxbinding2", name: "rxbinding-appcompat-v7", version: rxBindingVersion
+//    compile group: "com.jakewharton.rxbinding2", name: "rxbinding-design", version: rxBindingVersion
+//    compile group: "com.jakewharton.rxbinding2", name: "rxbinding-recyclerview-v7", version: rxBindingVersion
+//    compile group: "com.jakewharton.rxbinding2", name: "rxbinding-leanback-v17", version: rxBindingVersion
 }
