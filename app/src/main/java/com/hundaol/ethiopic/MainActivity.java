@@ -1,7 +1,12 @@
 package com.hundaol.ethiopic;
 
+import android.Manifest;
+import android.app.Activity;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Display;
@@ -49,6 +54,10 @@ public class MainActivity extends AppCompatActivity {
 
         ButterKnife.bind(this);
 
+        if (!checkIfAlreadyHavePermission()) {
+            requestForSpecificPermission();
+        }
+
         pagerAdapter = new MainPagerAdapter(this, display, dateModel);
         viewPager.setAdapter(pagerAdapter);
 
@@ -58,10 +67,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-
-        disposables.add(RxView.clicks(today).subscribe(v -> {
-            dateModel.setJdv(GregorianCal.INSTANCE.today());
-        }));
+        disposables.add(RxView.clicks(today).subscribe(v -> dateModel.setJdv(GregorianCal.INSTANCE.today())));
     }
 
     @Override
@@ -69,4 +75,35 @@ public class MainActivity extends AppCompatActivity {
         super.onPause();
         disposables.dispose();
     }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        switch (requestCode) {
+            case 1:
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    //granted
+                } else {
+                    //not granted
+                }
+                break;
+            default:
+                super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        }
+    }
+
+    private void requestForSpecificPermission() {
+        ActivityCompat.requestPermissions(this,
+                new String[]{Manifest.permission.READ_CALENDAR},
+                1);
+    }
+
+    private boolean checkIfAlreadyHavePermission() {
+        int result = ContextCompat.checkSelfPermission(this, Manifest.permission.READ_CALENDAR);
+        if (result == PackageManager.PERMISSION_GRANTED) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
 }
