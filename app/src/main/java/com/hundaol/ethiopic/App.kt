@@ -4,10 +4,14 @@ import android.app.Application
 
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.hundaol.ethiocal.BuildConfig
+import com.hundaol.ethiopic.domain.ColorModel
+import com.hundaol.ethiopic.domain.DateModel
 import com.hundaol.ethiopic.logging.EthioTree
 import com.hundaol.ethiopic.modules.AppComponent
 import com.hundaol.ethiopic.modules.AppModule
 import com.hundaol.ethiopic.modules.DaggerAppComponent
+import io.reactivex.Observable
+import io.reactivex.subjects.BehaviorSubject
 
 import javax.inject.Inject
 
@@ -39,5 +43,11 @@ class App : Application() {
 
     companion object {
         lateinit var appComponent: AppComponent
+
+        private val colorModelSubject = BehaviorSubject.createDefault(ColorModel())
+        private val dateModelSubject = BehaviorSubject.createDefault(DateModel())
+
+        var colorModels = colorModelSubject as Observable<ColorModel>
+        var dateModels = colorModelSubject as Observable<DateModel>
     }
 }

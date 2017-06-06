@@ -2,6 +2,7 @@ package com.hundaol.ethiopic
 
 import android.os.Bundle
 import android.support.design.widget.FloatingActionButton
+import android.support.v4.view.PagerAdapter
 import android.support.v4.view.ViewPager
 import android.support.v7.app.AppCompatActivity
 import android.view.Display
@@ -29,7 +30,7 @@ class MainActivity : AppCompatActivity() {
     @BindView(R.id.today)
     lateinit var today: FloatingActionButton
 
-    //    MainPagerAdapter pagerAdapter;
+    lateinit var pagerAdapter : PagerAdapter
 
     private val disposables = CompositeDisposable()
 
@@ -42,9 +43,8 @@ class MainActivity : AppCompatActivity() {
 
         ButterKnife.bind(this)
 
-        //        pagerAdapter = new MainPagerAdapter(this, display, dateModel);
-        //        viewPager.setAdapter(pagerAdapter);
-
+        pagerAdapter = MainPagerAdapter(this, display)
+        viewPager.adapter = pagerAdapter
         viewPager.currentItem = 1
     }
 
