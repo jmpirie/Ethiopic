@@ -12,12 +12,13 @@ import com.hundaol.ethiopic.cal.EthiopicCal
 import com.hundaol.ethiopic.cal.GregorianCal
 import com.hundaol.ethiopic.views.CalendarView
 import com.hundaol.ethiopic.views.CalendarViewGestureDetector
+import com.hundaol.ethiopic.views.DateView
 
 /**
  * Created by john.pirie on 2017-06-06.
  */
 
-class MainPagerAdapter(val context : Context, val display : Display) : PagerAdapter() {
+class MainPagerAdapter(val context: Context, val display: Display) : PagerAdapter() {
 
     override fun getPageWidth(position: Int): Float {
         val metrics = DisplayMetrics()
@@ -28,7 +29,7 @@ class MainPagerAdapter(val context : Context, val display : Display) : PagerAdap
     }
 
     override fun getCount(): Int {
-        return 2
+        return 4
     }
 
     override fun isViewFromObject(view: View, `object`: Any): Boolean {
@@ -37,15 +38,25 @@ class MainPagerAdapter(val context : Context, val display : Display) : PagerAdap
 
     override fun instantiateItem(container: ViewGroup, position: Int): Any {
         if (position == 0) {
-            val view = LayoutInflater.from(context).inflate(R.layout.layout_calendar, null, false) as CalendarView
+            val view = LayoutInflater.from(context).inflate(R.layout.layout_date, null, false) as DateView
             view.cal = GregorianCal.INSTANCE
-            CalendarViewGestureDetector(view)
             container.addView(view)
             return view
         } else if (position == 1) {
             val view = LayoutInflater.from(context).inflate(R.layout.layout_calendar, null, false) as CalendarView
             view.cal = GregorianCal.INSTANCE
             CalendarViewGestureDetector(view)
+            container.addView(view)
+            return view
+        } else if (position == 2) {
+            val view = LayoutInflater.from(context).inflate(R.layout.layout_calendar, null, false) as CalendarView
+            view.cal = GregorianCal.INSTANCE
+            CalendarViewGestureDetector(view)
+            container.addView(view)
+            return view
+        } else if (position == 3) {
+            val view = LayoutInflater.from(context).inflate(R.layout.layout_date, null, false) as DateView
+            view.cal = GregorianCal.INSTANCE
             container.addView(view)
             return view
         } else {

@@ -3,6 +3,7 @@ package com.hundaol.ethiopic.modules
 import com.hundaol.ethiopic.App
 import com.hundaol.ethiopic.MainActivity
 import com.hundaol.ethiopic.views.CalendarView
+import com.hundaol.ethiopic.views.DateView
 
 import javax.inject.Singleton
 
@@ -20,4 +21,6 @@ interface AppComponent {
     fun inject(o: MainActivity)
 
     fun inject(o: CalendarView)
+
+    fun inject(o: DateView)
 }
