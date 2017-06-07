@@ -125,9 +125,9 @@ public class DateView extends LinearLayout {
         month.setText(viewModel.getMonthName());
         day.setText(viewModel.getDay());
         year.setText(viewModel.getYear());
-
+        
         if (ContextCompat.checkSelfPermission(context, Manifest.permission.READ_CALENDAR) == PackageManager.PERMISSION_GRANTED) {
-            adapter.setCalendars(Integer.valueOf(viewModel.getDay()), Integer.valueOf(viewModel.getMonth()), Integer.valueOf(viewModel.getYear()));
+            adapter.setCalendars(GregorianCal.INSTANCE.getDay(viewModel.getJdn()),GregorianCal.INSTANCE.getMonth(viewModel.getJdn()), GregorianCal.INSTANCE.getYear(viewModel.getJdn()));
         }
     }
 }
