@@ -76,21 +76,6 @@ public class MainActivity extends AppCompatActivity {
         disposables.dispose();
     }
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-        switch (requestCode) {
-            case 1:
-                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    //granted
-                } else {
-                    //not granted
-                }
-                break;
-            default:
-                super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        }
-    }
-
     private void requestForSpecificPermission() {
         ActivityCompat.requestPermissions(this,
                 new String[]{Manifest.permission.READ_CALENDAR},

@@ -53,6 +53,9 @@ public class DateView extends LinearLayout {
     @BindView(R.id.calendar_events)
     RecyclerView calendarEventsRecyclerView;
 
+    @BindView(R.id.calendar_message)
+    TextView calendarMessageView;
+
     @Inject
     DateModel dateModel;
 
@@ -127,7 +130,13 @@ public class DateView extends LinearLayout {
         year.setText(viewModel.getYear());
         
         if (ContextCompat.checkSelfPermission(context, Manifest.permission.READ_CALENDAR) == PackageManager.PERMISSION_GRANTED) {
+            calendarEventsRecyclerView.setVisibility(VISIBLE);
+            calendarMessageView.setVisibility(GONE);
             adapter.setCalendars(GregorianCal.INSTANCE.getDay(viewModel.getJdn()),GregorianCal.INSTANCE.getMonth(viewModel.getJdn()), GregorianCal.INSTANCE.getYear(viewModel.getJdn()));
+        } else {
+            calendarEventsRecyclerView.setVisibility(GONE);
+            calendarMessageView.setVisibility(VISIBLE);
+            calendarMessageView.setText("Hi, we don\'t seem to have permission to access you calendar events. Please go to the application properties and grant calendar access. Thank you.");
         }
     }
 }
