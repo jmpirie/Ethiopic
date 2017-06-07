@@ -8,6 +8,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.hundaol.ethiocal.R
+import com.hundaol.ethiopic.cal.EthiopicCal
+import com.hundaol.ethiopic.cal.GregorianCal
 import com.hundaol.ethiopic.views.CalendarView
 import com.hundaol.ethiopic.views.CalendarViewGestureDetector
 
@@ -34,8 +36,15 @@ class MainPagerAdapter(val context : Context, val display : Display) : PagerAdap
     }
 
     override fun instantiateItem(container: ViewGroup, position: Int): Any {
-        if (position == 0 || position == 1) {
+        if (position == 0) {
             val view = LayoutInflater.from(context).inflate(R.layout.layout_calendar, null, false) as CalendarView
+            view.cal = GregorianCal.INSTANCE
+            CalendarViewGestureDetector(view)
+            container.addView(view)
+            return view
+        } else if (position == 1) {
+            val view = LayoutInflater.from(context).inflate(R.layout.layout_calendar, null, false) as CalendarView
+            view.cal = GregorianCal.INSTANCE
             CalendarViewGestureDetector(view)
             container.addView(view)
             return view
