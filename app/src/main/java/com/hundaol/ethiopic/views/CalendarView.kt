@@ -7,6 +7,7 @@ import android.view.View
 
 import com.hundaol.ethiopic.App
 import com.hundaol.ethiopic.cal.GregorianCal
+import com.hundaol.ethiopic.cal.ICal
 import com.hundaol.ethiopic.domain.ColorModel
 import com.hundaol.ethiopic.domain.DateModel
 import com.hundaol.ethiopic.stamps.MonthStamp
@@ -43,7 +44,7 @@ class CalendarView @JvmOverloads constructor(context: Context, attrs: AttributeS
             invalidate()
         }
 
-    var cal = GregorianCal.INSTANCE
+    var cal : ICal = GregorianCal.INSTANCE
         get() = field
         set(value) {
             field = value
