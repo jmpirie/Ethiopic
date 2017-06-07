@@ -1,5 +1,6 @@
 package com.hundaol.ethiopic.stamps
 
+import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.RectF
@@ -20,6 +21,7 @@ class MonthStamp(var jdn : Int = 0,
         set(value) {
             field = value
             dayStamp.viewModel = viewModel
+            labelStamp.viewModel = viewModel
         }
 
     var dateModel = DateModel.default
@@ -27,6 +29,7 @@ class MonthStamp(var jdn : Int = 0,
         set(value) {
             field = value
             dayStamp.dateModel = dateModel
+            labelStamp.dateModel = dateModel
         }
 
     var colorModel = ColorModel.default
@@ -34,6 +37,7 @@ class MonthStamp(var jdn : Int = 0,
         set(value) {
             field = value
             dayStamp.colorModel = colorModel
+            labelStamp.colorModel = colorModel
         }
 
     val bounds: RectF
@@ -41,6 +45,7 @@ class MonthStamp(var jdn : Int = 0,
 
     val backPaint = Paint()
     val dayStamp = DayStamp()
+    val labelStamp = LabelStamp()
 
     init {
         backPaint.style = Paint.Style.FILL_AND_STROKE
@@ -48,6 +53,7 @@ class MonthStamp(var jdn : Int = 0,
 
     fun stamp(canvas: Canvas) {
         backPaint.color = colorModel.backgroundColorForMonth(cal, jdn)
+        canvas.drawPath(viewModel.pathForMonth(dateModel, cal, jdn), backPaint)
 
         var j = cal.firstOfMonth(jdn)
 
@@ -56,10 +62,8 @@ class MonthStamp(var jdn : Int = 0,
             dayStamp.stamp(canvas)
         }
 
-//        labelStamp.setJdn(j)
-//        labelStamp.stamp(canvas)
+        labelStamp.jdn = jdn
+        labelStamp.stamp(canvas)
 
-        val monthPath = viewModel.pathForMonth(dateModel, cal, j)
-        canvas.drawPath(monthPath, backPaint)
     }
 }
