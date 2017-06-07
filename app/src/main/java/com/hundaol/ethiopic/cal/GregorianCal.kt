@@ -86,17 +86,17 @@ class GregorianCal private constructor() : AbstractCal() {
         val INSTANCE = GregorianCal()
 
         val MONTH_NAMES = arrayOf<CharArray>(
-                "JANUARY".toCharArray(),
-                "FEBRUARY".toCharArray(),
-                "MARCH".toCharArray(),
-                "APRIL".toCharArray(),
-                "MAY".toCharArray(),
-                "JUNE".toCharArray(),
-                "JULY".toCharArray(),
-                "AUGUST".toCharArray(),
-                "SEPTEMBER".toCharArray(),
-                "OCTOBER".toCharArray(),
-                "NOVEMBER".toCharArray(),
-                "DECEMBER".toCharArray())
+                "January".toCharArray(),
+                "February".toCharArray(),
+                "March".toCharArray(),
+                "April".toCharArray(),
+                "May".toCharArray(),
+                "June".toCharArray(),
+                "July".toCharArray(),
+                "August".toCharArray(),
+                "September".toCharArray(),
+                "October".toCharArray(),
+                "November".toCharArray(),
+                "December".toCharArray())
     }
 }

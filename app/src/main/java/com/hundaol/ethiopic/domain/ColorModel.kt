@@ -61,19 +61,23 @@ data class ColorModel(@ColorInt val baseRgb: Int = 0) {
     @ColorInt fun foregroundColorForDay(cal: ICal, jdn: Int, result: FloatArray = this.result): Int {
         backgroundColorForMonth(cal, jdn, result)
         if (result[2] > 0.5f) {
-            return Color.BLACK
+            return withLightness(0.10f, result)
         } else {
-            return Color.WHITE
+            return withLightness(0.90f, result)
         }
     }
 
-    @ColorInt fun foregroundColorForLabel(cal: ICal, jdn: Int): Int {
+    @ColorInt fun foregroundColorForLabel(cal: ICal, jdn: Int, result: FloatArray = this.result): Int {
         backgroundColorForMonth(cal, jdn, result)
         if (result[2] > 0.5f) {
-            return Color.BLACK
+            return withLightness(0.10f, result)
         } else {
-            return Color.WHITE
+            return withLightness(0.90f, result)
         }
+    }
+
+    @ColorInt fun gridColor(cal: ICal, jdn: Int, result: FloatArray = this.result): Int {
+        return withLightness(0.50f, result)
     }
 
     companion object {
