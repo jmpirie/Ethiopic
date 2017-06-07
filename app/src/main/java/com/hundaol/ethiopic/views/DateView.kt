@@ -6,6 +6,7 @@ package com.hundaol.ethiopic.views
 import android.content.Context
 import android.util.AttributeSet
 import android.view.View
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 
@@ -29,6 +30,12 @@ import timber.log.Timber
  */
 
 class DateView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null) : LinearLayout(context, attrs) {
+
+    @BindView(R.id.image)
+    lateinit var image: ImageView
+
+    @BindView(R.id.image_overlay)
+    lateinit var imageOverlay: View
 
     @BindView(R.id.month)
     lateinit var month: TextView
@@ -56,7 +63,7 @@ class DateView @JvmOverloads constructor(context: Context, attrs: AttributeSet? 
         get() = field
         set(value) {
             field = value
-            invalidate()
+            validate()
         }
 
     var cal : ICal = GregorianCal.INSTANCE
@@ -115,6 +122,8 @@ class DateView @JvmOverloads constructor(context: Context, attrs: AttributeSet? 
         month.setText(String(cal.getMonthName(dateModel.jdn)))
         day.setText(cal.getDay(dateModel.jdn).toString())
         year.setText(cal.getYear(dateModel.jdn).toString())
+
+        imageOverlay.setBackgroundColor(colorModel.dateImageOverlay(cal, dateModel.jdn))
     }
 
     override fun onDetachedFromWindow() {
