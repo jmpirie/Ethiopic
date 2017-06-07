@@ -36,9 +36,9 @@
     <color name="black_ad">#d0000000</color>
     <color name="black_ae">#e0000000</color>
 
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorPrimary">#999999</color>
+    <color name="colorPrimaryDark">#555555</color>
+    <color name="colorAccent">@color/white</color>
 
     <color name="day_background_today_overlay">@color/black_a4</color>
     <color name="day_background_current_overlay">@color/white_a2</color>
