@@ -31,7 +31,7 @@ public class DateViewModel {
         this.jdn = jdn;
     }
 
-    public String getMonth() {
+    public String getMonthName() {
         return new String(cal.getMonthName(jdn));
     }
 
@@ -41,5 +41,9 @@ public class DateViewModel {
 
     public String getYear() {
         return Integer.toString(cal.getYear(jdn));
+    }
+
+    public String getMonth() {
+        return Integer.toString(cal.getMonth(jdn));
     }
 }

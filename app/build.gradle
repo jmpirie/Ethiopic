@@ -83,4 +83,10 @@ dependencies {
 //    compile group: "com.jakewharton.rxbinding2", name: "rxbinding-design", version: "2.0.0"
 //    compile group: "com.jakewharton.rxbinding2", name: "rxbinding-recyclerview-v7", version: "2.0.0"
 //    compile group: "com.jakewharton.rxbinding2", name: "rxbinding-leanback-v17", version: "2.0.0"
+
+    // time - joda time
+    compile group: "net.danlew", name: "android.joda", version: "2.9.5.1"
+
+    // recycler view
+    compile group: "com.android.support", name: "recyclerview-v7", version: "25.0.1"
 }

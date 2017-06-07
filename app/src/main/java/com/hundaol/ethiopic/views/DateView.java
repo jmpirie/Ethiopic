@@ -1,17 +1,27 @@
 package com.hundaol.ethiopic.views;
 
+import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.hundaol.ethiocal.BuildConfig;
 import com.hundaol.ethiocal.R;
 import com.hundaol.ethiopic.App;
-import com.hundaol.ethiopic.domain.DateModel;
+import com.hundaol.ethiopic.adapters.DeviceCalendarEventListAdapter;
 import com.hundaol.ethiopic.cal.GregorianCal;
+import com.hundaol.ethiopic.domain.DateModel;
 import com.jakewharton.rxbinding2.view.RxView;
 
 import javax.inject.Inject;
@@ -43,10 +53,18 @@ public class DateView extends LinearLayout {
     @BindView(R.id.right)
     View right;
 
+    @BindView(R.id.calendar_events)
+    RecyclerView calendarEventsRecyclerView;
+
+    @BindView(R.id.calendar_message)
+    TextView calendarMessageView;
+
     @Inject
     DateModel dateModel;
 
     private DateViewModel viewModel;
+    private Context context;
+    DeviceCalendarEventListAdapter adapter;
 
     private final CompositeDisposable disposables = new CompositeDisposable();
 
@@ -56,6 +74,7 @@ public class DateView extends LinearLayout {
 
     public DateView(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
+        this.context = context;
         this.viewModel = new DateViewModel(GregorianCal.INSTANCE);
     }
 
@@ -64,6 +83,15 @@ public class DateView extends LinearLayout {
         super.onFinishInflate();
         App.getAppComponent().inject(this);
         ButterKnife.bind(this);
+
+        adapter = new DeviceCalendarEventListAdapter(context);
+
+        LinearLayoutManager layoutManager = new LinearLayoutManager(context);
+        calendarEventsRecyclerView.setLayoutManager(layoutManager);
+        DividerItemDecoration mDividerItemDecoration = new DividerItemDecoration(calendarEventsRecyclerView.getContext(),
+                layoutManager.getOrientation());
+        calendarEventsRecyclerView.addItemDecoration(mDividerItemDecoration);
+        calendarEventsRecyclerView.setAdapter(adapter);
     }
 
     @Override
@@ -79,7 +107,7 @@ public class DateView extends LinearLayout {
         }));
 
         disposables.add(dateModel.getDate().filter(uniqueJdnFilter()).subscribe(jdv -> {
-            viewModel.setJdn((int)jdv.floatValue());
+            viewModel.setJdn((int) jdv.floatValue());
             modelChanged();
         }));
     }
@@ -100,8 +128,19 @@ public class DateView extends LinearLayout {
     }
 
     void modelChanged() {
-        month.setText(viewModel.getMonth());
+        month.setText(viewModel.getMonthName());
         day.setText(viewModel.getDay());
         year.setText(viewModel.getYear());
+        
+        if (ContextCompat.checkSelfPermission(context, Manifest.permission.READ_CALENDAR) == PackageManager.PERMISSION_GRANTED) {
+            calendarEventsRecyclerView.setVisibility(VISIBLE);
+            calendarMessageView.setVisibility(GONE);
+            adapter.setCalendars(GregorianCal.INSTANCE.getDay(viewModel.getJdn()),GregorianCal.INSTANCE.getMonth(viewModel.getJdn()), GregorianCal.INSTANCE.getYear(viewModel.getJdn()));
+        } else {
+            calendarEventsRecyclerView.setVisibility(GONE);
+            calendarMessageView.setVisibility(VISIBLE);
+            calendarMessageView.setText("Hi, we don\'t seem to have permission to access you calendar events. Please go to the application properties and grant calendar access. Thank you.");
+            calendarMessageView.setOnClickListener(v -> context.startActivity(new Intent(android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS, Uri.parse("package:" + BuildConfig.APPLICATION_ID))));
+        }
     }
 }
