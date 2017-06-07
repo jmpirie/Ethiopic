@@ -16,8 +16,8 @@ import com.hundaol.ethiopic.views.CalendarViewModel
  * Created by john.pirie on 2017-06-06.
  */
 
-class DayStamp(var jdn: Int = 0,
-               var cal: ICal = GregorianCal.INSTANCE) {
+class LabelStamp(var jdn: Int = 0,
+                 var cal: ICal = GregorianCal.INSTANCE) {
 
     var viewModel = CalendarViewModel()
     var dateModel: DateModel = DateModel.default
@@ -25,7 +25,7 @@ class DayStamp(var jdn: Int = 0,
     var colorModel: ColorModel = ColorModel.default
 
     val bounds: RectF
-        get() = viewModel.boundsForDay(dateModel, cal, jdn)
+        get() = viewModel.boundsForLabel(dateModel, cal, jdn)
 
     val backPaint = Paint()
     val textPaint = TextPaint()
@@ -39,15 +39,17 @@ class DayStamp(var jdn: Int = 0,
     fun stamp(canvas: Canvas) {
         val bounds = this.bounds
 
-        backPaint.color = colorModel.backgroundColorForDay(cal, jdn)
-        canvas.drawRect(bounds, backPaint)
+        backPaint.color = colorModel.backgroundColorForMonth(cal, jdn)
+        canvas.drawRect(viewModel.boundsForLabel(dateModel, cal, jdn), backPaint)
 
-        textPaint.color = colorModel.foregroundColorForDay(cal, jdn)
-        textPaint.textSize = viewModel.getTextSizeForDay(dateModel, cal, jdn)
+        textPaint.color = colorModel.foregroundColorForLabel(cal, jdn)
+        textPaint.textSize = viewModel.getTextSizeForLabel(dateModel, cal, jdn)
 
-        val s = Integer.toString(cal.getDay(jdn))
+        val s = String(cal.getMonthName(jdn)) + ", " + cal.getYear(jdn)
         val tw = textPaint.measureText(s)
         val th = textPaint.getTextSize()
+        canvas.rotate(90.0f, bounds.centerX(), bounds.centerY())
         canvas.drawText(s, bounds.left + (bounds.width() - tw) / 2.0f, bounds.top + (bounds.height() + th) / 2.0f, textPaint)
+        canvas.rotate(-90.0f, bounds.centerX(), bounds.centerY())
     }
 }

@@ -71,4 +71,12 @@ data class CalendarViewModel(val cellWidth: Float = 100.0f,
 
         return path
     }
+
+    fun getTextSizeForDay(dateModel: DateModel, cal: ICal, jdn : Int) : Float {
+        return cellWidth / 4.0f
+    }
+
+    fun getTextSizeForLabel(dateModel: DateModel, cal: ICal, jdn : Int) : Float {
+        return cellWidth / 4.0f
+    }
 }

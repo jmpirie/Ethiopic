@@ -22,6 +22,22 @@ data class ColorModel(@ColorInt val baseColor: Int = 0) {
         return ColorUtils.HSLToColor(hsl)
     }
 
+    @ColorInt fun backgroundColorForDay(cal: ICal, jdn: Int): Int {
+        if (cal.isWeekday(jdn)) {
+            return Color.argb(8, Color.red(baseColor), Color.green(baseColor), Color.blue(baseColor))
+        } else {
+            return Color.TRANSPARENT
+        }
+    }
+
+    @ColorInt fun foregroundColorForDay(cal: ICal, jdn: Int): Int {
+        return Color.BLACK
+    }
+
+    @ColorInt fun foregroundColorForLabel(cal: ICal, jdn: Int): Int {
+        return Color.BLACK
+    }
+
     companion object {
         val default = ColorModel()
     }
