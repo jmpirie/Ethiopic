@@ -14,7 +14,10 @@ import javax.inject.Inject
 
 import butterknife.BindView
 import butterknife.ButterKnife
+import com.hundaol.ethiopic.cal.GregorianCal
+import com.jakewharton.rxbinding2.view.RxView
 import io.reactivex.disposables.CompositeDisposable
+import timber.log.Timber
 
 class MainActivity : AppCompatActivity() {
 
@@ -28,9 +31,9 @@ class MainActivity : AppCompatActivity() {
     lateinit var viewPager: ViewPager
 
     @BindView(R.id.today)
-    lateinit var today: FloatingActionButton
+    lateinit var todayButton: FloatingActionButton
 
-    lateinit var pagerAdapter : PagerAdapter
+    lateinit var pagerAdapter: PagerAdapter
 
     private val disposables = CompositeDisposable()
 
@@ -50,10 +53,14 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-
-        //        disposables.add(RxView.clicks(today).subscribe(v -> {
-        //            dateModel.setJdv(GregorianCal.INSTANCE.today());
-        //        }));
+        disposables.add(RxView.clicks(todayButton).subscribe(
+                        { v ->
+                            App.setJdv(GregorianCal.INSTANCE.today().toFloat(), 1000L);
+                        },
+                        { error ->
+                            Timber.w(error, "error observed on todayButton clicks subscription")
+                        }
+        ))
     }
 
     override fun onPause() {
