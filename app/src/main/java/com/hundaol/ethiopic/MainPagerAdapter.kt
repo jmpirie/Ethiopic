@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.hundaol.ethiocal.R
 import com.hundaol.ethiopic.views.CalendarView
+import com.hundaol.ethiopic.views.CalendarViewGestureDetector
 
 /**
  * Created by john.pirie on 2017-06-06.
@@ -35,8 +36,7 @@ class MainPagerAdapter(val context : Context, val display : Display) : PagerAdap
     override fun instantiateItem(container: ViewGroup, position: Int): Any {
         if (position == 0 || position == 1) {
             val view = LayoutInflater.from(context).inflate(R.layout.layout_calendar, null, false) as CalendarView
-            //CalendarViewGestureDetector(view, dateModel)
-            //view.viewModel =
+            CalendarViewGestureDetector(view)
             container.addView(view)
             return view
         } else {

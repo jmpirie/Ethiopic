@@ -22,35 +22,31 @@ class CalendarView @JvmOverloads constructor(context: Context, attrs: AttributeS
 
     private val disposables = CompositeDisposable()
 
-    private var viewModel = CalendarViewModel()
+    var viewModel = CalendarViewModel()
         get() = field
         set(value) {
             field = value
-            monthStamp.viewModel = viewModel
             invalidate()
         }
 
-    private var dateModel = DateModel.default
+    var dateModel = DateModel.default
         get() = field
         set(value) {
             field = value
-            monthStamp.jdn = value.jdn
             invalidate()
         }
 
-    private var colorModel = ColorModel.default
+    var colorModel = ColorModel.default
         get() = field
         set(value) {
             field = value
-            monthStamp.colorModel = value
             invalidate()
         }
 
-    private var cal = GregorianCal.INSTANCE
+    var cal = GregorianCal.INSTANCE
         get() = field
         set(value) {
             field = value
-            monthStamp.cal = value
             invalidate()
         }
 
@@ -104,6 +100,11 @@ class CalendarView @JvmOverloads constructor(context: Context, attrs: AttributeS
 
     override fun draw(canvas: Canvas): Unit {
         super.draw(canvas)
+
+        monthStamp.viewModel = viewModel
+        monthStamp.colorModel = colorModel
+        monthStamp.dateModel = dateModel
+        monthStamp.cal = cal
 
         monthStamp.jdn = dateModel.jdn
 

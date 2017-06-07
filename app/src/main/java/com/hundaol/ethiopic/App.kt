@@ -49,6 +49,14 @@ class App : Application() {
         private val dateModelSubject = BehaviorSubject.createDefault(DateModel.default)
 
         var colorModels = colorModelSubject as Observable<ColorModel>
-        var dateModels = colorModelSubject as Observable<DateModel>
+        var dateModels = dateModelSubject as Observable<DateModel>
+
+        fun setJdv(jdv : Float) : Unit {
+            dateModelSubject.onNext(DateModel(jdv))
+        }
+
+        fun setColorModel(rgb : Int) : Unit {
+            colorModelSubject.onNext(ColorModel(rgb))
+        }
     }
 }
