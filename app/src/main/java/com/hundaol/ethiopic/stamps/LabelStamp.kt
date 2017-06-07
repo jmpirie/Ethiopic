@@ -29,11 +29,15 @@ class LabelStamp(var jdn: Int = 0,
 
     val backPaint = Paint()
     val textPaint = TextPaint()
+    val gridPaint = Paint()
 
     init {
         backPaint.style = Paint.Style.FILL_AND_STROKE
 
         textPaint.style = Paint.Style.STROKE
+
+        gridPaint.style = Paint.Style.STROKE
+        gridPaint.strokeWidth = 4.0f
     }
 
     fun stamp(canvas: Canvas) {
@@ -51,5 +55,8 @@ class LabelStamp(var jdn: Int = 0,
         canvas.rotate(90.0f, bounds.centerX(), bounds.centerY())
         canvas.drawText(s, bounds.left + (bounds.width() - tw) / 2.0f, bounds.top + (bounds.height() + th) / 2.0f, textPaint)
         canvas.rotate(-90.0f, bounds.centerX(), bounds.centerY())
+
+        gridPaint.color = colorModel.gridColor(cal, jdn)
+        canvas.drawRect(bounds, gridPaint)
     }
 }
