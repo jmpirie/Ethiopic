@@ -26,31 +26,53 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="vertical">
 
-            <View
-                android:id="@+id/left"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:clickable="true"/>
+            <!-- month -->
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:clickable="false"
-                android:orientation="vertical"
-                android:paddingBottom="64dp"
-                android:paddingTop="64dp">
+                android:orientation="horizontal">
+
+                <View
+                    android:id="@+id/left_month"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:clickable="true"/>
 
                 <TextView
                     android:id="@+id/month"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
+                    android:paddingTop="64dp"
                     android:textColor="@color/white"
                     android:textSize="18dp"
                     tools:text="July"/>
+
+                <View
+                    android:id="@+id/right_month"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:clickable="true"/>
+            </LinearLayout>
+
+            <!-- day -->
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <View
+                    android:id="@+id/left_day"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:clickable="true"/>
 
                 <TextView
                     android:id="@+id/day"
@@ -61,23 +83,45 @@
                     android:textSize="64dp"
                     tools:text="13"/>
 
+                <View
+                    android:id="@+id/right_day"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:clickable="true"/>
+            </LinearLayout>
+
+            <!-- year -->
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <View
+                    android:id="@+id/left_year"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:clickable="true"/>
+
                 <TextView
                     android:id="@+id/year"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
+                    android:paddingBottom="64dp"
                     android:textColor="@color/white"
                     android:textSize="18dp"
-                    tools:text="2017"/>
+                    tools:text="1993"/>
 
+                <View
+                    android:id="@+id/right_year"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:clickable="true"/>
             </LinearLayout>
-
-            <View
-                android:id="@+id/right"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:clickable="true"/>
 
         </LinearLayout>
 

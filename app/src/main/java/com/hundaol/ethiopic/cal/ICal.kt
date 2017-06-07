@@ -51,6 +51,10 @@ interface ICal {
 
     fun prevMonth(jdn: Int): Int
 
+    fun nextYear(jdn: Int): Int
+
+    fun prevYear(jdn: Int): Int
+
     fun getMonthName(jdn: Int): CharArray
 
     fun getDaysInMonth(jdn: Int): Int

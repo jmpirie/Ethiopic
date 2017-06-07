@@ -46,6 +46,20 @@ abstract class AbstractCal : ICal {
         }
     }
 
+    override fun nextYear(jdn: Int): Int {
+        val year = getYear(jdn)
+        val month = getMonth(jdn)
+        val day = getDay(jdn)
+        return fromDate(year + 1, month, day)
+    }
+
+    override fun prevYear(jdn: Int): Int {
+        val year = getYear(jdn)
+        val month = getMonth(jdn)
+        val day = getDay(jdn)
+        return fromDate(year - 1, month, day)
+    }
+
     override fun firstOfMonth(jdn: Int): Int {
         return jdn - getDay(jdn) + 1
     }

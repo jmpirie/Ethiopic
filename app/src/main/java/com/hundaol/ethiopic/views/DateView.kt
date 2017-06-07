@@ -40,17 +40,29 @@ class DateView @JvmOverloads constructor(context: Context, attrs: AttributeSet? 
     @BindView(R.id.month)
     lateinit var month: TextView
 
+    @BindView(R.id.left_month)
+    lateinit var leftMonth: View
+
+    @BindView(R.id.right_month)
+    lateinit var rightMonth: View
+
     @BindView(R.id.day)
     lateinit var day: TextView
+
+    @BindView(R.id.left_day)
+    lateinit var leftDay: View
+
+    @BindView(R.id.right_day)
+    lateinit var rightDay: View
 
     @BindView(R.id.year)
     lateinit var year: TextView
 
-    @BindView(R.id.left)
-    lateinit var left: View
+    @BindView(R.id.left_year)
+    lateinit var leftYear: View
 
-    @BindView(R.id.right)
-    lateinit var right: View
+    @BindView(R.id.right_year)
+    lateinit var rightYear: View
 
     var dateModel = DateModel.default
         get() = field
@@ -102,19 +114,47 @@ class DateView @JvmOverloads constructor(context: Context, attrs: AttributeSet? 
                 { error ->
                     Timber.w(error, "error observed on date model subscription")
                 }))
-        disposables.add(RxView.clicks(left).subscribe(
+        disposables.add(RxView.clicks(leftDay).subscribe(
                 { v ->
                     App.setJdv(dateModel.jdn - 1.0f)
                 },
                 { error ->
-                    Timber.w(error, "error observed on todayButton clicks subscription")
+                    Timber.w(error, "error observed on leftDay clicks subscription")
                 }))
-        disposables.add(RxView.clicks(right).subscribe(
+        disposables.add(RxView.clicks(rightDay).subscribe(
                 { v ->
                     App.setJdv(dateModel.jdn + 1.0f)
                 },
                 { error ->
-                    Timber.w(error, "error observed on todayButton clicks subscription")
+                    Timber.w(error, "error observed on rightDay clicks subscription")
+                }))
+        disposables.add(RxView.clicks(leftMonth).subscribe(
+                { v ->
+                    App.setJdv(cal.prevMonth(dateModel.jdn).toFloat())
+                },
+                { error ->
+                    Timber.w(error, "error observed on leftMonth clicks subscription")
+                }))
+        disposables.add(RxView.clicks(rightMonth).subscribe(
+                { v ->
+                    App.setJdv(cal.nextMonth(dateModel.jdn).toFloat())
+                },
+                { error ->
+                    Timber.w(error, "error observed on rightMonth clicks subscription")
+                }))
+        disposables.add(RxView.clicks(leftYear).subscribe(
+                { v ->
+                    App.setJdv(cal.prevYear(dateModel.jdn).toFloat())
+                },
+                { error ->
+                    Timber.w(error, "error observed on leftYear clicks subscription")
+                }))
+        disposables.add(RxView.clicks(rightYear).subscribe(
+                { v ->
+                    App.setJdv(cal.nextYear(dateModel.jdn).toFloat())
+                },
+                { error ->
+                    Timber.w(error, "error observed on rightYear clicks subscription")
                 }))
     }
 
