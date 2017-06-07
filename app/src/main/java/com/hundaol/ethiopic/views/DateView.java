@@ -2,7 +2,9 @@ package com.hundaol.ethiopic.views;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
@@ -14,6 +16,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.hundaol.ethiocal.BuildConfig;
 import com.hundaol.ethiocal.R;
 import com.hundaol.ethiopic.App;
 import com.hundaol.ethiopic.adapters.DeviceCalendarEventListAdapter;
@@ -137,6 +140,7 @@ public class DateView extends LinearLayout {
             calendarEventsRecyclerView.setVisibility(GONE);
             calendarMessageView.setVisibility(VISIBLE);
             calendarMessageView.setText("Hi, we don\'t seem to have permission to access you calendar events. Please go to the application properties and grant calendar access. Thank you.");
+            calendarMessageView.setOnClickListener(v -> context.startActivity(new Intent(android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS, Uri.parse("package:" + BuildConfig.APPLICATION_ID))));
         }
     }
 }
