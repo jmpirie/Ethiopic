@@ -130,28 +130,28 @@ class DateView @JvmOverloads constructor(context: Context, attrs: AttributeSet? 
                 }))
         disposables.add(RxView.clicks(leftMonth).subscribe(
                 { v ->
-                    App.setJdv(cal.prevMonth(dateModel.jdn).toFloat())
+                    App.setJdv(cal.prevMonth(dateModel.jdn).toFloat(), 200L)
                 },
                 { error ->
                     Timber.w(error, "error observed on leftMonth clicks subscription")
                 }))
         disposables.add(RxView.clicks(rightMonth).subscribe(
                 { v ->
-                    App.setJdv(cal.nextMonth(dateModel.jdn).toFloat())
+                    App.setJdv(cal.nextMonth(dateModel.jdn).toFloat(), 200L)
                 },
                 { error ->
                     Timber.w(error, "error observed on rightMonth clicks subscription")
                 }))
         disposables.add(RxView.clicks(leftYear).subscribe(
                 { v ->
-                    App.setJdv(cal.prevYear(dateModel.jdn).toFloat())
+                    App.setJdv(cal.prevYear(dateModel.jdn).toFloat(), 200L)
                 },
                 { error ->
                     Timber.w(error, "error observed on leftYear clicks subscription")
                 }))
         disposables.add(RxView.clicks(rightYear).subscribe(
                 { v ->
-                    App.setJdv(cal.nextYear(dateModel.jdn).toFloat())
+                    App.setJdv(cal.nextYear(dateModel.jdn).toFloat(), 200L)
                 },
                 { error ->
                     Timber.w(error, "error observed on rightYear clicks subscription")
