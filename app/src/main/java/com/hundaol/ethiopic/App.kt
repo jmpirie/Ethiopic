@@ -1,6 +1,7 @@
 package com.hundaol.ethiopic
 
 import android.app.Application
+import android.graphics.Color
 
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.hundaol.ethiocal.BuildConfig
@@ -44,8 +45,8 @@ class App : Application() {
     companion object {
         lateinit var appComponent: AppComponent
 
-        private val colorModelSubject = BehaviorSubject.createDefault(ColorModel())
-        private val dateModelSubject = BehaviorSubject.createDefault(DateModel())
+        private val colorModelSubject = BehaviorSubject.createDefault(ColorModel(Color.parseColor("#ffbdbdbd")))
+        private val dateModelSubject = BehaviorSubject.createDefault(DateModel.default)
 
         var colorModels = colorModelSubject as Observable<ColorModel>
         var dateModels = colorModelSubject as Observable<DateModel>
