@@ -8,34 +8,67 @@ import com.hundaol.ethiopic.cal.ICal
 /**
  * Created by john.pirie on 2017-06-06.
  */
-data class ColorModel(@ColorInt val baseColor: Int = 0) {
+data class ColorModel(@ColorInt val baseRgb: Int = 0) {
 
-    val hsl = floatArrayOf(0.0f, 0.0f, 0.0f)
+    private val baseHsl = floatArrayOf(0.0f, 0.0f, 0.0f)
     val result = floatArrayOf(0.0f, 0.0f, 0.0f)
 
     init {
-        ColorUtils.RGBToHSL(Color.red(baseColor), Color.green(baseColor), Color.blue(baseColor), hsl);
+        ColorUtils.RGBToHSL(Color.red(baseRgb), Color.green(baseRgb), Color.blue(baseRgb), baseHsl)
     }
 
-    @ColorInt fun backgroundColorForMonth(cal: ICal, jdn: Int): Int {
-        hsl[2] = (cal.getMonth(jdn) - 1).toFloat() / cal.monthsInYear.toFloat()
-        return ColorUtils.HSLToColor(hsl)
+    private @ColorInt fun colorFor(argb : Int, result: FloatArray = this.result): Int {
+        return colorFor(Color.alpha(argb), Color.red(argb), Color.green(argb), Color.blue(argb), result)
     }
 
-    @ColorInt fun backgroundColorForDay(cal: ICal, jdn: Int): Int {
+    private @ColorInt fun colorFor(a : Int, rgb : Int, result: FloatArray = this.result): Int {
+        return colorFor(a, Color.red(rgb), Color.green(rgb), Color.blue(rgb), result)
+    }
+
+    private @ColorInt fun colorFor(r: Int, g: Int, b: Int, result: FloatArray = this.result): Int {
+        return colorFor(255, r, g, b, result)
+    }
+
+    private @ColorInt fun colorFor(a: Int, r: Int, g: Int, b: Int, result: FloatArray = this.result): Int {
+        ColorUtils.RGBToHSL(r, g, b, result)
+        return Color.argb(a, r, g, b)
+    }
+
+    private @ColorInt fun withLightness(l : Float, result: FloatArray = this.result): Int {
+        result[0] = baseHsl[0]
+        result[1] = baseHsl[1]
+        result[2] = l
+        return ColorUtils.HSLToColor(result)
+    }
+
+    @ColorInt fun backgroundColorForMonth(cal: ICal, jdn: Int, result: FloatArray = this.result): Int {
+        return withLightness((cal.getMonth(jdn) - 1).toFloat() / cal.monthsInYear.toFloat())
+    }
+
+    @ColorInt fun backgroundColorForDay(cal: ICal, jdn: Int, result: FloatArray = this.result): Int {
         if (cal.isWeekday(jdn)) {
-            return Color.argb(8, Color.red(baseColor), Color.green(baseColor), Color.blue(baseColor))
+            return colorFor(8, baseRgb, result)
         } else {
             return Color.TRANSPARENT
         }
     }
 
-    @ColorInt fun foregroundColorForDay(cal: ICal, jdn: Int): Int {
-        return Color.BLACK
+    @ColorInt fun foregroundColorForDay(cal: ICal, jdn: Int, result: FloatArray = this.result): Int {
+        backgroundColorForMonth(cal, jdn, result)
+        if (result[2] > 0.5f) {
+            return Color.BLACK
+        } else {
+            return Color.WHITE
+        }
     }
 
     @ColorInt fun foregroundColorForLabel(cal: ICal, jdn: Int): Int {
-        return Color.BLACK
+        backgroundColorForDay(cal, jdn, result)
+        if (result[2] > 0.5f) {
+            return Color.BLACK
+        } else {
+            return Color.WHITE
+        }
     }
 
     companion object {
