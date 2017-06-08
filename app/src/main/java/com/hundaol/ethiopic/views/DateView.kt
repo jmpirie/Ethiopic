@@ -3,7 +3,16 @@
  */
 package com.hundaol.ethiopic.views
 
+import android.Manifest
 import android.content.Context
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.net.Uri
+import android.provider.Settings
+import android.support.v4.content.ContextCompat
+import android.support.v7.widget.DividerItemDecoration
+import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
 import android.util.AttributeSet
 import android.view.View
 import android.widget.ImageView
@@ -11,6 +20,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 
 import com.hundaol.ethiocal.R
+import com.hundaol.ethiocal.BuildConfig
 import com.hundaol.ethiopic.App
 import com.hundaol.ethiopic.domain.DateModel
 import com.hundaol.ethiopic.cal.GregorianCal
@@ -20,6 +30,7 @@ import javax.inject.Inject
 
 import butterknife.BindView
 import butterknife.ButterKnife
+import com.hundaol.ethiopic.adapters.DeviceCalendarEventListAdapter
 import com.hundaol.ethiopic.cal.ICal
 import com.hundaol.ethiopic.domain.ColorModel
 import io.reactivex.disposables.CompositeDisposable
@@ -64,6 +75,13 @@ class DateView @JvmOverloads constructor(context: Context, attrs: AttributeSet? 
     @BindView(R.id.right_year)
     lateinit var rightYear: View
 
+    @BindView(R.id.calendar_events)
+    lateinit var calendarEventsRecyclerView: RecyclerView
+
+    @BindView(R.id.calendar_message)
+    lateinit var calendarMessageView: TextView
+
+
     var dateModel = DateModel.default
         get() = field
         set(value) {
@@ -78,13 +96,14 @@ class DateView @JvmOverloads constructor(context: Context, attrs: AttributeSet? 
             validate()
         }
 
-    var cal : ICal = GregorianCal.INSTANCE
+    var cal: ICal = GregorianCal.INSTANCE
         get() = field
         set(value) {
             field = value
             validate()
         }
 
+    private val adapter = DeviceCalendarEventListAdapter(context)
     private val disposables = CompositeDisposable()
 
     init {
@@ -94,6 +113,12 @@ class DateView @JvmOverloads constructor(context: Context, attrs: AttributeSet? 
         super.onFinishInflate()
         App.appComponent.inject(this)
         ButterKnife.bind(this)
+
+        val layoutManager = LinearLayoutManager(context)
+        calendarEventsRecyclerView.setLayoutManager(layoutManager)
+        val dividerItemDecoration = DividerItemDecoration(calendarEventsRecyclerView.getContext(), layoutManager.getOrientation())
+        calendarEventsRecyclerView.addItemDecoration(dividerItemDecoration)
+        calendarEventsRecyclerView.setAdapter(adapter)
     }
 
     override fun onAttachedToWindow() {
@@ -164,6 +189,21 @@ class DateView @JvmOverloads constructor(context: Context, attrs: AttributeSet? 
         year.setText(cal.getYear(dateModel.jdn).toString())
 
         imageOverlay.setBackgroundColor(colorModel.dateImageOverlay(cal, dateModel.jdn))
+
+        if (ContextCompat.checkSelfPermission(context, Manifest.permission.READ_CALENDAR) == PackageManager.PERMISSION_GRANTED) {
+            calendarEventsRecyclerView.setVisibility(VISIBLE)
+            calendarMessageView.setVisibility(GONE)
+            adapter.setCalendars(GregorianCal.INSTANCE.getDay(dateModel.jdn), GregorianCal.INSTANCE.getMonth(dateModel.jdn), GregorianCal.INSTANCE.getYear(dateModel.jdn))
+        } else {
+            calendarEventsRecyclerView.setVisibility(GONE);
+            calendarMessageView.setVisibility(VISIBLE);
+            calendarMessageView.setText("Hi, we don\'t seem to have permission to access you calendar events. Please go to the application properties and grant calendar access. Thank you.")
+            calendarMessageView.setOnClickListener(
+                    { v ->
+                        context.startActivity(Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS, Uri.parse("package:" + BuildConfig.APPLICATION_ID)))
+                    })
+        }
+
     }
 
     override fun onDetachedFromWindow() {
