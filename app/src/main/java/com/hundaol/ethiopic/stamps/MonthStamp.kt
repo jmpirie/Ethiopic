@@ -13,8 +13,7 @@ import com.hundaol.ethiopic.views.CalendarViewModel
 /**
  * Created by john.pirie on 2017-06-06.
  */
-class MonthStamp(var jdn : Int = 0,
-                 var cal : ICal = GregorianCal.INSTANCE) {
+class MonthStamp(var jdn: Int = 0) {
 
     var viewModel = CalendarViewModel()
         get() = field
@@ -38,6 +37,14 @@ class MonthStamp(var jdn : Int = 0,
             field = value
             dayStamp.colorModel = colorModel
             labelStamp.colorModel = colorModel
+        }
+
+    var cal: ICal = GregorianCal.INSTANCE
+        get() = field
+        set(value) {
+            field = value
+            dayStamp.cal = value
+            labelStamp.cal = value
         }
 
     val bounds: RectF

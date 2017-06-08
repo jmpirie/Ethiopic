@@ -14,6 +14,11 @@ class EthiopicCalTest_20170513 {
     private val jdn = 2457887 // G: 2017, 5, 13 E: 2009, 9, 5
 
     @Test
+    fun sanity() {
+        assertThat(EthiopicCal.INSTANCE.fromDate(2009, 9, 5), Is(GregorianCal.INSTANCE.fromDate(2017, 5, 13)))
+    }
+
+    @Test
     fun fromDate() {
         assertThat(cal.fromDate(2009, 9, 5), Is(jdn))
     }
