@@ -71,6 +71,19 @@ class EthiopicCal private constructor() : AbstractCal() {
 
         val INSTANCE = EthiopicCal()
 
-        val MONTH_NAMES = arrayOf<CharArray>("Mäskäräm".toCharArray(), "Ṭəqəmt".toCharArray(), "Ḫədar".toCharArray(), "Taḫśaś".toCharArray(), "Ṭərr".toCharArray(), "Yäkatit".toCharArray(), "Mägabit".toCharArray(), "Miyazya".toCharArray(), "Gənbot".toCharArray(), "Säne".toCharArray(), "Ḥamle".toCharArray(), "Nähase".toCharArray(), "Ṗagume".toCharArray())
+        val MONTH_NAMES = arrayOf<CharArray>(
+                "Mäskäräm".toCharArray(),
+                "Ṭəqəmt".toCharArray(),
+                "Ḫədar".toCharArray(),
+                "Taḫśaś".toCharArray(),
+                "Ṭərr".toCharArray(),
+                "Yäkatit".toCharArray(),
+                "Mägabit".toCharArray(),
+                "Miyazya".toCharArray(),
+                "Gənbot".toCharArray(),
+                "Säne".toCharArray(),
+                "Ḥamle".toCharArray(),
+                "Nähase".toCharArray(),
+                "Ṗagume".toCharArray())
     }
 }
