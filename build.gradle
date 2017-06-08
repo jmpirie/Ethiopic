@@ -2,7 +2,7 @@
 
 buildscript {
     ext.kotlin_version = '1.1.2-4'
-    ext.gradleBuildToolsVersion = '3.0.0-alpha2'
+    ext.gradleBuildToolsVersion = '2.3.2'
     ext.googlePlayServicesVersion = '3.0.0'
     ext.hugoVersion = '1.2.1'
 
