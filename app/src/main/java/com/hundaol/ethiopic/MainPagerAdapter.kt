@@ -50,13 +50,13 @@ class MainPagerAdapter(val context: Context, val display: Display) : PagerAdapte
             return view
         } else if (position == 2) {
             val view = LayoutInflater.from(context).inflate(R.layout.layout_calendar, null, false) as CalendarView
-            view.cal = GregorianCal.INSTANCE
+            view.cal = EthiopicCal.INSTANCE
             CalendarViewGestureDetector(view)
             container.addView(view)
             return view
         } else if (position == 3) {
             val view = LayoutInflater.from(context).inflate(R.layout.layout_date, null, false) as DateView
-            view.cal = GregorianCal.INSTANCE
+            view.cal = EthiopicCal.INSTANCE
             container.addView(view)
             return view
         } else {

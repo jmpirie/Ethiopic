@@ -10,11 +10,7 @@ class EthiopicCal private constructor() : AbstractCal() {
     }
 
     override fun fromDate(year: Int, month: Int, day: Int): Int {
-        return 1723856 + 365
-        +(365 * (year - 1))
-        +(year / 4)
-        +(30 * month)
-        +(day - 31)
+        return (1723856 + 365) + (365 * (year - 1)) + (year / 4) + (30 * month) + (day - 31)
     }
 
 
