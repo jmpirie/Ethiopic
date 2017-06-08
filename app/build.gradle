@@ -53,6 +53,7 @@ dependencies {
     })
     compile group: "com.android.support", name: "appcompat-v7", version: supportVersion
     compile group: "com.android.support", name: "design", version: supportVersion
+    compile group: "com.android.support", name: "recyclerview-v7", version: supportVersion
 
     testCompile group: "junit", name: "junit", version: junitVersion
     testCompile group: "org.hamcrest", name: "hamcrest-library", version: hamcrestVersion
@@ -76,6 +77,9 @@ dependencies {
     // rx bindings
     compile group: "io.reactivex.rxjava2", name: "rxjava", version: rxJavaVersion
     compile group: "io.reactivex.rxjava2", name: "rxandroid", version: rxAndroidVersion
+
+    // time - joda time
+    compile group: "net.danlew", name: "android.joda", version: "2.9.5.1"
 
     compile group: "com.jakewharton.rxbinding2", name: "rxbinding", version: rxBindingVersion
     compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"

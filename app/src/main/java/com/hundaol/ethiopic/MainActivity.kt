@@ -1,7 +1,11 @@
 package com.hundaol.ethiopic
 
+import android.Manifest
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.support.design.widget.FloatingActionButton
+import android.support.v4.app.ActivityCompat
+import android.support.v4.content.ContextCompat
 import android.support.v4.view.PagerAdapter
 import android.support.v4.view.ViewPager
 import android.support.v7.app.AppCompatActivity
@@ -46,6 +50,10 @@ class MainActivity : AppCompatActivity() {
 
         ButterKnife.bind(this)
 
+        if (!hasPermissionReadCalendar()) {
+            requestPermissionReadCalendar()
+        }
+
         pagerAdapter = MainPagerAdapter(this, display)
         viewPager.adapter = pagerAdapter
         viewPager.currentItem = 1
@@ -54,12 +62,12 @@ class MainActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         disposables.add(RxView.clicks(todayButton).subscribe(
-                        { v ->
-                            App.setJdv(GregorianCal.INSTANCE.today().toFloat(), 1000L);
-                        },
-                        { error ->
-                            Timber.w(error, "error observed on todayButton clicks subscription")
-                        }
+                { v ->
+                    App.setJdv(GregorianCal.INSTANCE.today().toFloat(), 1000L);
+                },
+                { error ->
+                    Timber.w(error, "error observed on todayButton clicks subscription")
+                }
         ))
     }
 
@@ -67,4 +75,13 @@ class MainActivity : AppCompatActivity() {
         super.onPause()
         disposables.dispose()
     }
+
+    fun requestPermissionReadCalendar(): Unit {
+        ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.READ_CALENDAR), 1)
+    }
+
+    fun hasPermissionReadCalendar(): Boolean {
+        return ContextCompat.checkSelfPermission(this, Manifest.permission.READ_CALENDAR) == PackageManager.PERMISSION_GRANTED
+    }
 }
+
