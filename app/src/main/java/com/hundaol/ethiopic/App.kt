@@ -3,6 +3,7 @@ package com.hundaol.ethiopic
 import android.animation.ValueAnimator
 import android.app.Application
 import android.graphics.Color
+import android.support.v4.graphics.ColorUtils
 import android.view.animation.AccelerateDecelerateInterpolator
 
 import com.google.firebase.analytics.FirebaseAnalytics
@@ -49,6 +50,7 @@ class App : Application() {
         lateinit var appComponent: AppComponent
 
         private val colorModelSubject = BehaviorSubject.createDefault(ColorModel(Color.parseColor("#ffbdbdbd")))
+        //private val colorModelSubject = BehaviorSubject.createDefault(ColorModel(ColorUtils.HSLToColor(floatArrayOf(0.875f, 1.0f, 0.50f))))
         private val dateModelSubject = BehaviorSubject.createDefault(DateModel.default)
 
         var colorModels = colorModelSubject as Observable<ColorModel>

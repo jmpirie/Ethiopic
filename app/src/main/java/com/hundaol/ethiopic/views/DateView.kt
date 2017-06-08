@@ -33,8 +33,10 @@ import butterknife.ButterKnife
 import com.hundaol.ethiopic.adapters.DeviceCalendarEventListAdapter
 import com.hundaol.ethiopic.cal.ICal
 import com.hundaol.ethiopic.domain.ColorModel
+import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import timber.log.Timber
+import java.util.concurrent.TimeUnit
 
 /**
  * Created by john.pirie on 2017-04-28.
@@ -123,64 +125,90 @@ class DateView @JvmOverloads constructor(context: Context, attrs: AttributeSet? 
 
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
-        disposables.add(App.colorModels.subscribe(
-                { colorModel ->
-                    this.colorModel = colorModel
-                    invalidate()
-                },
-                { error ->
-                    Timber.w(error, "error observed on color model subscription")
-                }))
-        disposables.add(App.dateModels.subscribe(
-                { dateModel ->
-                    this.dateModel = dateModel
-                    invalidate()
-                },
-                { error ->
-                    Timber.w(error, "error observed on date model subscription")
-                }))
-        disposables.add(RxView.clicks(leftDay).subscribe(
-                { v ->
-                    App.setJdv(dateModel.jdn - 1.0f)
-                },
-                { error ->
-                    Timber.w(error, "error observed on leftDay clicks subscription")
-                }))
-        disposables.add(RxView.clicks(rightDay).subscribe(
-                { v ->
-                    App.setJdv(dateModel.jdn + 1.0f)
-                },
-                { error ->
-                    Timber.w(error, "error observed on rightDay clicks subscription")
-                }))
-        disposables.add(RxView.clicks(leftMonth).subscribe(
-                { v ->
-                    App.setJdv(cal.prevMonth(dateModel.jdn).toFloat(), 200L)
-                },
-                { error ->
-                    Timber.w(error, "error observed on leftMonth clicks subscription")
-                }))
-        disposables.add(RxView.clicks(rightMonth).subscribe(
-                { v ->
-                    App.setJdv(cal.nextMonth(dateModel.jdn).toFloat(), 200L)
-                },
-                { error ->
-                    Timber.w(error, "error observed on rightMonth clicks subscription")
-                }))
-        disposables.add(RxView.clicks(leftYear).subscribe(
-                { v ->
-                    App.setJdv(cal.prevYear(dateModel.jdn).toFloat(), 200L)
-                },
-                { error ->
-                    Timber.w(error, "error observed on leftYear clicks subscription")
-                }))
-        disposables.add(RxView.clicks(rightYear).subscribe(
-                { v ->
-                    App.setJdv(cal.nextYear(dateModel.jdn).toFloat(), 200L)
-                },
-                { error ->
-                    Timber.w(error, "error observed on rightYear clicks subscription")
-                }))
+        disposables.add(App.colorModels
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        { colorModel ->
+                            this.colorModel = colorModel
+                            invalidate()
+                        },
+                        { error ->
+                            Timber.w(error, "error observed on color model subscription")
+                        }))
+        disposables.add(App.dateModels
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        { dateModel ->
+                            this.dateModel = dateModel
+                            invalidate()
+                        },
+                        { error ->
+                            Timber.w(error, "error observed on date model subscription")
+                        }))
+        disposables.add(App.dateModels
+                .debounce(250L, TimeUnit.MILLISECONDS)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        { dateModel ->
+                            loadEvents()
+                        },
+                        { error ->
+                            Timber.w(error, "error observed on date model subscription")
+                        }))
+        disposables.add(RxView.clicks(leftDay)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        { v ->
+                            App.setJdv(dateModel.jdn - 1.0f)
+                        },
+                        { error ->
+                            Timber.w(error, "error observed on leftDay clicks subscription")
+                        }))
+        disposables.add(RxView.clicks(rightDay)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        { v ->
+                            App.setJdv(dateModel.jdn + 1.0f)
+                        },
+                        { error ->
+                            Timber.w(error, "error observed on rightDay clicks subscription")
+                        }))
+        disposables.add(RxView.clicks(leftMonth)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        { v ->
+                            App.setJdv(cal.prevMonth(dateModel.jdn).toFloat(), 200L)
+                        },
+                        { error ->
+                            Timber.w(error, "error observed on leftMonth clicks subscription")
+                        }))
+        disposables.add(RxView.clicks(rightMonth)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        { v ->
+                            App.setJdv(cal.nextMonth(dateModel.jdn).toFloat(), 200L)
+                        },
+                        { error ->
+                            Timber.w(error, "error observed on rightMonth clicks subscription")
+                        }))
+        disposables.add(RxView.clicks(leftYear)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        { v ->
+                            App.setJdv(cal.prevYear(dateModel.jdn).toFloat(), 200L)
+                        },
+                        { error ->
+                            Timber.w(error, "error observed on leftYear clicks subscription")
+                        }))
+        disposables.add(RxView.clicks(rightYear)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        { v ->
+                            App.setJdv(cal.nextYear(dateModel.jdn).toFloat(), 200L)
+                        },
+                        { error ->
+                            Timber.w(error, "error observed on rightYear clicks subscription")
+                        }))
     }
 
     private fun validate() {
@@ -189,7 +217,9 @@ class DateView @JvmOverloads constructor(context: Context, attrs: AttributeSet? 
         year.setText(cal.getYear(dateModel.jdn).toString())
 
         imageOverlay.setBackgroundColor(colorModel.dateImageOverlay(cal, dateModel.jdn))
+    }
 
+    private fun loadEvents() {
         if (ContextCompat.checkSelfPermission(context, Manifest.permission.READ_CALENDAR) == PackageManager.PERMISSION_GRANTED) {
             calendarEventsRecyclerView.setVisibility(VISIBLE)
             calendarMessageView.setVisibility(GONE)

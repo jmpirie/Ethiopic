@@ -1,10 +1,7 @@
 package com.hundaol.ethiopic.adapters
 
-import android.content.ContentResolver
 import android.content.ContentUris
 import android.content.Context
-import android.database.Cursor
-import android.net.Uri
 import android.provider.CalendarContract
 import android.support.v4.content.ContextCompat
 import android.support.v7.widget.RecyclerView
@@ -12,8 +9,8 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 
 import com.hundaol.ethiocal.R
-import com.hundaol.ethiopic.domain.DeviceCalendar
-import com.hundaol.ethiopic.domain.DeviceCalendarList
+import com.hundaol.ethiopic.domain.CalendarEvent
+import com.hundaol.ethiopic.domain.CalendarEventList
 import com.hundaol.ethiopic.viewmodels.DeviceCalendarEventViewModel
 import com.hundaol.ethiopic.viewmodels.HeaderItemViewModel
 import com.hundaol.ethiopic.views.DeviceCalendarEventItemView
@@ -37,7 +34,7 @@ class DeviceCalendarEventListAdapter(private val context: Context) : RecyclerVie
     private val viewModels = ArrayList<Any>()
     private val viewTypes = ArrayList<Int>()
 
-    private var calendarList: DeviceCalendarList? = null
+    private var calendarEventList: List<CalendarEvent> = ArrayList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         if (viewType == CALENDAR_HEADER) {
@@ -65,9 +62,7 @@ class DeviceCalendarEventListAdapter(private val context: Context) : RecyclerVie
     }
 
     fun setCalendars(day: Int, month: Int, year: Int) {
-        val deviceCalendarList = DeviceCalendarList()
-        deviceCalendarList.deviceCalendarList = getCalendars(day, month, year)
-        this.calendarList = deviceCalendarList
+        this.calendarEventList = getCalendars(day, month, year)
         validateViewModels()
     }
 
@@ -75,17 +70,19 @@ class DeviceCalendarEventListAdapter(private val context: Context) : RecyclerVie
         viewModels.clear()
         viewTypes.clear()
 
-        val displayNames = calendarList!!.uniqueDisplayNames
+        val eventsByName = calendarEventList.groupBy({e -> e.displayName})
 
-        for (displayName in displayNames) {
+        for (name in eventsByName.keys.sorted()){
+            val events = eventsByName[name]
+
             val headerItemViewModel = HeaderItemViewModel()
-            headerItemViewModel.text = displayName
+            headerItemViewModel.text = name
             headerItemViewModel.textColor = ContextCompat.getColor(context, R.color.white)
             headerItemViewModel.backgroundColor = ContextCompat.getColor(context, R.color.black_a9)
             viewModels.add(headerItemViewModel)
             viewTypes.add(CALENDAR_HEADER)
-            for (deviceCalendar in calendarList!!.getDeviceCalendarsByDisplayName(displayName)) {
-                val deviceCalendarEventViewModel = DeviceCalendarEventViewModel(context, deviceCalendar)
+            for (event in events!!) {
+                val deviceCalendarEventViewModel = DeviceCalendarEventViewModel(context, event)
                 viewModels.add(deviceCalendarEventViewModel)
                 viewTypes.add(CALENDAR_ITEM)
             }
@@ -98,8 +95,7 @@ class DeviceCalendarEventListAdapter(private val context: Context) : RecyclerVie
         return viewModels[position]
     }
 
-    fun getCalendars(day: Int, month: Int, year: Int): List<DeviceCalendar> {
-
+    fun getCalendars(day: Int, month: Int, year: Int): List<CalendarEvent> {
         val beginTime = Calendar.getInstance()
         beginTime.set(year, month, day, 0, 0)
         val endTime = Calendar.getInstance()
@@ -110,13 +106,13 @@ class DeviceCalendarEventListAdapter(private val context: Context) : RecyclerVie
         ContentUris.appendId(uriBuilder, endTime.timeInMillis)
         val uri = uriBuilder.build()
 
-        val googleCalendarList = ArrayList<DeviceCalendar>()
+        val googleCalendarList = ArrayList<CalendarEvent>()
 
         val cursor = context.contentResolver.query(uri, FIELDS, null, null, null)
         try {
             if (cursor.count > 0) {
                 while (cursor.moveToNext()) {
-                    val googleCalendar = DeviceCalendar()
+                    val googleCalendar = CalendarEvent()
 
                     googleCalendar.displayName = cursor.getString(cursor.getColumnIndex(CalendarContract.Instances.CALENDAR_DISPLAY_NAME))
                     googleCalendar.title = cursor.getString(cursor.getColumnIndex(CalendarContract.Instances.TITLE))

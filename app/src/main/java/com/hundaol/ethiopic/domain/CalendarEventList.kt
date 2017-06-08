@@ -7,22 +7,22 @@ import java.util.HashSet
  * Created by abinet on 6/6/17.
  */
 
-class DeviceCalendarList {
+class CalendarEventList {
 
-    var deviceCalendarList: List<DeviceCalendar>? = null
+    var calendarEventList: List<CalendarEvent>? = null
 
     val uniqueDisplayNames: List<String>
         get() {
             val uniqueList = HashSet<String>()
-            for (deviceCalendar in deviceCalendarList!!) {
+            for (deviceCalendar in calendarEventList!!) {
                 uniqueList.add(deviceCalendar.displayName)
             }
             return ArrayList(uniqueList)
         }
 
-    fun getDeviceCalendarsByDisplayName(displayName: String): List<DeviceCalendar> {
-        val deviceCalendars = ArrayList<DeviceCalendar>()
-        for (deviceCalendar in deviceCalendarList!!) {
+    fun getDeviceCalendarsByDisplayName(displayName: String): List<CalendarEvent> {
+        val deviceCalendars = ArrayList<CalendarEvent>()
+        for (deviceCalendar in calendarEventList!!) {
             if (deviceCalendar.displayName == displayName) {
                 deviceCalendars.add(deviceCalendar)
             }

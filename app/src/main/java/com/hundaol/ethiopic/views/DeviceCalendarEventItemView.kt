@@ -10,14 +10,11 @@ import android.widget.TextView
 import com.hundaol.ethiocal.R
 import com.hundaol.ethiopic.viewmodels.DeviceCalendarEventViewModel
 
-import org.joda.time.DateTime
-import org.joda.time.DateTimeZone
-
 import java.text.SimpleDateFormat
 
 import butterknife.BindView
 import butterknife.ButterKnife
-import com.hundaol.ethiopic.domain.DeviceCalendar
+import com.hundaol.ethiopic.domain.CalendarEvent
 
 /**
  * Created by abinet on 6/6/17.
@@ -34,7 +31,7 @@ class DeviceCalendarEventItemView(context: Context, attrs: AttributeSet) : Linea
     @BindView(R.id.time)
     lateinit var time: TextView
 
-    internal var viewModel: DeviceCalendarEventViewModel = DeviceCalendarEventViewModel(context, DeviceCalendar())
+    internal var viewModel: DeviceCalendarEventViewModel = DeviceCalendarEventViewModel(context, CalendarEvent())
 
     override fun onFinishInflate() {
         super.onFinishInflate()
@@ -53,12 +50,12 @@ class DeviceCalendarEventItemView(context: Context, attrs: AttributeSet) : Linea
         }
 
         indicatorImage.background = viewModel.backgroundIndicator
-        title.setText(viewModel.deviceCalendar.title)
+        title.setText(viewModel.calendarEvent.title)
 
-        if (!viewModel.deviceCalendar.isAllDayEvent) {
+        if (!viewModel.calendarEvent.isAllDayEvent) {
             time.visibility = View.VISIBLE
             val dateFormat = SimpleDateFormat("hh:mm a")
-            time.text = dateFormat.format(viewModel!!.deviceCalendar.start.toDate()) + " - " + dateFormat.format(viewModel!!.deviceCalendar.end.toDate())
+            time.text = dateFormat.format(viewModel!!.calendarEvent.start.toDate()) + " - " + dateFormat.format(viewModel!!.calendarEvent.end.toDate())
         } else {
             time.visibility = View.GONE
         }
