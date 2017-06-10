@@ -31,6 +31,10 @@ android {
         untrackedIsDirty = false
     }
 
+    packagingOptions {
+        exclude 'META-INF/rxjava.properties'
+    }
+
     buildTypes {
         debug {
             minifyEnabled false
@@ -81,8 +85,11 @@ dependencies {
     // time - joda time
     compile group: "net.danlew", name: "android.joda", version: "2.9.5.1"
 
+    // sql-brite
+    compile group: "com.squareup.sqlbrite", name: "sqlbrite", version: sqlbriteVersion
+
     compile group: "com.jakewharton.rxbinding2", name: "rxbinding", version: rxBindingVersion
-    compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
+    compile group: "org.jetbrains.kotlin", name: "kotlin-stdlib-jre7", version: kotlinVersion
 //    compile group: "com.jakewharton.rxbinding2", name: "rxbinding-support-v4", version: rxBindingVersion
 //    compile group: "com.jakewharton.rxbinding2", name: "rxbinding-appcompat-v7", version: rxBindingVersion
 //    compile group: "com.jakewharton.rxbinding2", name: "rxbinding-design", version: rxBindingVersion

@@ -26,12 +26,11 @@ import com.hundaol.ethiopic.domain.DateModel
 import com.hundaol.ethiopic.cal.GregorianCal
 import com.jakewharton.rxbinding2.view.RxView
 
-import javax.inject.Inject
-
 import butterknife.BindView
 import butterknife.ButterKnife
 import com.hundaol.ethiopic.adapters.DeviceCalendarEventListAdapter
 import com.hundaol.ethiopic.cal.ICal
+import com.hundaol.ethiopic.calendar.CalendarEvent
 import com.hundaol.ethiopic.domain.ColorModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -77,12 +76,14 @@ class DateView @JvmOverloads constructor(context: Context, attrs: AttributeSet? 
     @BindView(R.id.right_year)
     lateinit var rightYear: View
 
-    @BindView(R.id.calendar_events)
-    lateinit var calendarEventsRecyclerView: RecyclerView
+    @BindView(R.id.event_list)
+    lateinit var calendarEventsList: RecyclerView
 
-    @BindView(R.id.calendar_message)
-    lateinit var calendarMessageView: TextView
+    @BindView(R.id.no_permissions_message)
+    lateinit var noPermissionsMessage: TextView
 
+    @BindView(R.id.no_events_message)
+    lateinit var noEventsMessage: TextView
 
     var dateModel = DateModel.default
         get() = field
@@ -117,14 +118,20 @@ class DateView @JvmOverloads constructor(context: Context, attrs: AttributeSet? 
         ButterKnife.bind(this)
 
         val layoutManager = LinearLayoutManager(context)
-        calendarEventsRecyclerView.setLayoutManager(layoutManager)
-        val dividerItemDecoration = DividerItemDecoration(calendarEventsRecyclerView.getContext(), layoutManager.getOrientation())
-        calendarEventsRecyclerView.addItemDecoration(dividerItemDecoration)
-        calendarEventsRecyclerView.setAdapter(adapter)
+        calendarEventsList.setLayoutManager(layoutManager)
+        val dividerItemDecoration = DividerItemDecoration(calendarEventsList.getContext(), layoutManager.getOrientation())
+        calendarEventsList.addItemDecoration(dividerItemDecoration)
+        calendarEventsList.setAdapter(adapter)
     }
 
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
+
+        noPermissionsMessage.setOnClickListener(
+                { v ->
+                    context.startActivity(Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS, Uri.parse("package:" + BuildConfig.APPLICATION_ID)))
+                })
+
         disposables.add(App.colorModels
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
@@ -145,16 +152,16 @@ class DateView @JvmOverloads constructor(context: Context, attrs: AttributeSet? 
                         { error ->
                             Timber.w(error, "error observed on date model subscription")
                         }))
-        disposables.add(App.dateModels
-                .debounce(250L, TimeUnit.MILLISECONDS)
+        disposables.add(App.events
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
-                        { dateModel ->
-                            loadEvents()
+                        { events ->
+                            setEvents(events)
                         },
                         { error ->
-                            Timber.w(error, "error observed on date model subscription")
+                            Timber.w(error, "error observed on events subscription")
                         }))
+
         disposables.add(RxView.clicks(leftDay)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
@@ -162,7 +169,7 @@ class DateView @JvmOverloads constructor(context: Context, attrs: AttributeSet? 
                             App.setJdv(dateModel.jdn - 1.0f)
                         },
                         { error ->
-                            Timber.w(error, "error observed on leftDay clicks subscription")
+                            Timber.w(error, "error observed on left day clicks subscription")
                         }))
         disposables.add(RxView.clicks(rightDay)
                 .observeOn(AndroidSchedulers.mainThread())
@@ -171,8 +178,9 @@ class DateView @JvmOverloads constructor(context: Context, attrs: AttributeSet? 
                             App.setJdv(dateModel.jdn + 1.0f)
                         },
                         { error ->
-                            Timber.w(error, "error observed on rightDay clicks subscription")
+                            Timber.w(error, "error observed on right day clicks subscription")
                         }))
+
         disposables.add(RxView.clicks(leftMonth)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
@@ -180,7 +188,7 @@ class DateView @JvmOverloads constructor(context: Context, attrs: AttributeSet? 
                             App.setJdv(cal.prevMonth(dateModel.jdn).toFloat(), 200L)
                         },
                         { error ->
-                            Timber.w(error, "error observed on leftMonth clicks subscription")
+                            Timber.w(error, "error observed on left month clicks subscription")
                         }))
         disposables.add(RxView.clicks(rightMonth)
                 .observeOn(AndroidSchedulers.mainThread())
@@ -189,8 +197,9 @@ class DateView @JvmOverloads constructor(context: Context, attrs: AttributeSet? 
                             App.setJdv(cal.nextMonth(dateModel.jdn).toFloat(), 200L)
                         },
                         { error ->
-                            Timber.w(error, "error observed on rightMonth clicks subscription")
+                            Timber.w(error, "error observed on right month clicks subscription")
                         }))
+
         disposables.add(RxView.clicks(leftYear)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
@@ -198,7 +207,7 @@ class DateView @JvmOverloads constructor(context: Context, attrs: AttributeSet? 
                             App.setJdv(cal.prevYear(dateModel.jdn).toFloat(), 200L)
                         },
                         { error ->
-                            Timber.w(error, "error observed on leftYear clicks subscription")
+                            Timber.w(error, "error observed on left year clicks subscription")
                         }))
         disposables.add(RxView.clicks(rightYear)
                 .observeOn(AndroidSchedulers.mainThread())
@@ -207,7 +216,7 @@ class DateView @JvmOverloads constructor(context: Context, attrs: AttributeSet? 
                             App.setJdv(cal.nextYear(dateModel.jdn).toFloat(), 200L)
                         },
                         { error ->
-                            Timber.w(error, "error observed on rightYear clicks subscription")
+                            Timber.w(error, "error observed on right year clicks subscription")
                         }))
     }
 
@@ -219,21 +228,21 @@ class DateView @JvmOverloads constructor(context: Context, attrs: AttributeSet? 
         imageOverlay.setBackgroundColor(colorModel.dateImageOverlay(cal, dateModel.jdn))
     }
 
-    private fun loadEvents() {
-        if (ContextCompat.checkSelfPermission(context, Manifest.permission.READ_CALENDAR) == PackageManager.PERMISSION_GRANTED) {
-            calendarEventsRecyclerView.setVisibility(VISIBLE)
-            calendarMessageView.setVisibility(GONE)
-            adapter.setCalendars(GregorianCal.INSTANCE.getDay(dateModel.jdn), GregorianCal.INSTANCE.getMonth(dateModel.jdn), GregorianCal.INSTANCE.getYear(dateModel.jdn))
+    private fun setEvents(events: List<CalendarEvent>) {
+        adapter.setEvents(events)
+        if (events.isNotEmpty()) {
+            calendarEventsList.setVisibility(VISIBLE)
+            noPermissionsMessage.setVisibility(GONE)
+            noEventsMessage.setVisibility(GONE)
+        } else if (ContextCompat.checkSelfPermission(context, Manifest.permission.READ_CALENDAR) == PackageManager.PERMISSION_GRANTED) {
+            calendarEventsList.setVisibility(GONE);
+            noPermissionsMessage.setVisibility(GONE);
+            noEventsMessage.setVisibility(VISIBLE)
         } else {
-            calendarEventsRecyclerView.setVisibility(GONE);
-            calendarMessageView.setVisibility(VISIBLE);
-            calendarMessageView.setText("Hi, we don\'t seem to have permission to access you calendar events. Please go to the application properties and grant calendar access. Thank you.")
-            calendarMessageView.setOnClickListener(
-                    { v ->
-                        context.startActivity(Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS, Uri.parse("package:" + BuildConfig.APPLICATION_ID)))
-                    })
+            calendarEventsList.setVisibility(GONE);
+            noPermissionsMessage.setVisibility(VISIBLE);
+            noEventsMessage.setVisibility(GONE)
         }
-
     }
 
     override fun onDetachedFromWindow() {

@@ -9,8 +9,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 
 import com.hundaol.ethiocal.R
-import com.hundaol.ethiopic.domain.CalendarEvent
-import com.hundaol.ethiopic.domain.CalendarEventList
+import com.hundaol.ethiopic.calendar.CalendarEvent
 import com.hundaol.ethiopic.viewmodels.DeviceCalendarEventViewModel
 import com.hundaol.ethiopic.viewmodels.HeaderItemViewModel
 import com.hundaol.ethiopic.views.DeviceCalendarEventItemView
@@ -61,11 +60,6 @@ class DeviceCalendarEventListAdapter(private val context: Context) : RecyclerVie
         return viewModels.size
     }
 
-    fun setCalendars(day: Int, month: Int, year: Int) {
-        this.calendarEventList = getCalendars(day, month, year)
-        validateViewModels()
-    }
-
     fun validateViewModels() {
         viewModels.clear()
         viewTypes.clear()
@@ -95,41 +89,9 @@ class DeviceCalendarEventListAdapter(private val context: Context) : RecyclerVie
         return viewModels[position]
     }
 
-    fun getCalendars(day: Int, month: Int, year: Int): List<CalendarEvent> {
-        val beginTime = Calendar.getInstance()
-        beginTime.set(year, month, day, 0, 0)
-        val endTime = Calendar.getInstance()
-        endTime.set(year, month, day, 23, 59)
-
-        val uriBuilder = CalendarContract.Instances.CONTENT_URI.buildUpon()
-        ContentUris.appendId(uriBuilder, beginTime.timeInMillis)
-        ContentUris.appendId(uriBuilder, endTime.timeInMillis)
-        val uri = uriBuilder.build()
-
-        val googleCalendarList = ArrayList<CalendarEvent>()
-
-        val cursor = context.contentResolver.query(uri, FIELDS, null, null, null)
-        try {
-            if (cursor.count > 0) {
-                while (cursor.moveToNext()) {
-                    val googleCalendar = CalendarEvent()
-
-                    googleCalendar.displayName = cursor.getString(cursor.getColumnIndex(CalendarContract.Instances.CALENDAR_DISPLAY_NAME))
-                    googleCalendar.title = cursor.getString(cursor.getColumnIndex(CalendarContract.Instances.TITLE))
-
-                    val begin = cursor.getString(cursor.getColumnIndex(CalendarContract.Instances.BEGIN))
-                    val end = cursor.getString(cursor.getColumnIndex(CalendarContract.Instances.END))
-                    googleCalendar.start = DateTime(java.lang.Long.valueOf(begin), DateTimeZone.UTC)
-                    googleCalendar.end = DateTime(java.lang.Long.valueOf(end), DateTimeZone.UTC)
-
-                    googleCalendarList.add(googleCalendar)
-                }
-            }
-        } catch (ex: AssertionError) {
-            Timber.e(ex)
-        }
-
-        return googleCalendarList
+    fun setEvents(events: List<CalendarEvent>) : Unit {
+        calendarEventList = events
+        validateViewModels()
     }
 
     companion object {

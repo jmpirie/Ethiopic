@@ -7,7 +7,8 @@
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_weight="0">
 
         <ImageView
             android:id="@+id/image"
@@ -127,27 +128,36 @@
 
     </FrameLayout>
 
-    <!-- calendar events -->
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/calendar_events"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="0dp"
+        android:layout_weight="1">
+        <!-- calendar events -->
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center">
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/event_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
 
         <TextView
-            android:id="@+id/calendar_message"
-            android:layout_width="match_parent"
+            android:id="@+id/no_permissions_message"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center"
+            android:layout_gravity="center"
             android:padding="@dimen/content_padding"
             android:textSize="@dimen/day_text_size"
             android:textStyle="bold"
-            tools:text="This is the test meesage"/>
-    </LinearLayout>
+            android:text="@string/no_permissions_message"/>
+
+        <TextView
+            android:id="@+id/no_events_message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:padding="@dimen/content_padding"
+            android:textSize="@dimen/day_text_size"
+            android:textStyle="bold"
+            android:text="@string/no_events_message"/>
+    </FrameLayout>
 
 </com.hundaol.ethiopic.views.DateView>
