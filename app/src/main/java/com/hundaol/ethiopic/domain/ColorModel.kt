@@ -55,7 +55,8 @@ data class ColorModel(@ColorInt val baseRgb: Int = 0) {
     }
 
     @ColorInt fun dateImageOverlay(cal: ICal, jdn: Int, result: FloatArray = this.result): Int {
-        return colorFor(160, 0, 0, 0, result)
+        val v = (cal.getMonth(jdn) -1) / cal.monthsInYear.toFloat()
+        return colorFor((256 * (0.55f + 0.30f * (v))).toInt(), baseRgb, result)
     }
 
     @ColorInt fun foregroundColorForDay(cal: ICal, jdn: Int, result: FloatArray = this.result): Int {
