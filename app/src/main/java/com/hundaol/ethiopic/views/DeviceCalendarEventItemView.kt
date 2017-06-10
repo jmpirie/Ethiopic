@@ -14,7 +14,7 @@ import java.text.SimpleDateFormat
 
 import butterknife.BindView
 import butterknife.ButterKnife
-import com.hundaol.ethiopic.domain.CalendarEvent
+import com.hundaol.ethiopic.calendar.CalendarEvent
 
 /**
  * Created by abinet on 6/6/17.

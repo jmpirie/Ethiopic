@@ -1,4 +1,4 @@
-package com.hundaol.ethiopic.domain
+package com.hundaol.ethiopic.calendar
 
 import org.joda.time.DateTime
 
