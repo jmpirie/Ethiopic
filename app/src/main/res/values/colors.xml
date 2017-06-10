@@ -58,4 +58,8 @@
 
     <color name="overlay_background">@color/black_a1</color>
     <color name="overlay_foreground">@color/black_a2</color>
+
+
+    <color name="text_dark_grey">#ff333333</color>
+    <color name="text_med_grey">#ff666666</color>
 </resources>
