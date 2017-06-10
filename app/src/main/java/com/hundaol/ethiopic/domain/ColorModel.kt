@@ -43,7 +43,7 @@ data class ColorModel(@ColorInt val baseRgb: Int = 0) {
 
     @ColorInt fun backgroundColorForMonth(cal: ICal, jdn: Int, result: FloatArray = this.result): Int {
         val v = (cal.getMonth(jdn) -1) / cal.monthsInYear.toFloat()
-        return withLightness(0.35f + 0.30f * (1.0f - v), result)
+        return withLightness(0.55f + 0.30f * (1.0f - v), result)
     }
 
     @ColorInt fun backgroundColorForDay(cal: ICal, jdn: Int, result: FloatArray = this.result): Int {
