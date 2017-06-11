@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.hundaol.ethiopic.views.DateView xmlns:android="http://schemas.android.com/apk/res/android"
-                                     xmlns:tools="http://schemas.android.com/tools"
-                                     android:layout_width="match_parent"
-                                     android:layout_height="match_parent"
-                                     android:orientation="vertical">
+<com.hundaol.ethiopic.views.date.DateView xmlns:android="http://schemas.android.com/apk/res/android"
+                                          xmlns:tools="http://schemas.android.com/tools"
+                                          android:layout_width="match_parent"
+                                          android:layout_height="match_parent"
+                                          android:orientation="vertical">
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -11,7 +11,7 @@
         android:layout_weight="0">
 
         <ImageView
-            android:id="@+id/image"
+            android:id="@+id/banner_image"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/white"
@@ -19,7 +19,7 @@
             android:src="@drawable/default_date_image"/>
 
         <FrameLayout
-            android:id="@+id/image_overlay"
+            android:id="@+id/banner_image_overlay"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="#aa000000"/>
@@ -158,4 +158,4 @@
             android:text="@string/no_events_message"/>
     </FrameLayout>
 
-</com.hundaol.ethiopic.views.DateView>
+</com.hundaol.ethiopic.views.date.DateView>

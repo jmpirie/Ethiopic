@@ -1,4 +1,4 @@
-package com.hundaol.ethiopic.views
+package com.hundaol.ethiopic.views.calendar
 
 import android.graphics.Path
 import android.graphics.RectF

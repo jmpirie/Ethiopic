@@ -1,6 +1,5 @@
 package com.hundaol.ethiopic.adapters
 
-import android.content.ContentUris
 import android.content.Context
 import android.provider.CalendarContract
 import android.support.v4.content.ContextCompat
@@ -9,46 +8,41 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 
 import com.hundaol.ethiocal.R
-import com.hundaol.ethiopic.calendar.CalendarEvent
-import com.hundaol.ethiopic.viewmodels.DeviceCalendarEventViewModel
-import com.hundaol.ethiopic.viewmodels.HeaderItemViewModel
-import com.hundaol.ethiopic.views.DeviceCalendarEventItemView
-import com.hundaol.ethiopic.views.DeviceCalendarEventItemViewHolder
-import com.hundaol.ethiopic.views.HeaderItemView
-import com.hundaol.ethiopic.views.HeaderItemViewHolder
-
-import org.joda.time.DateTime
-import org.joda.time.DateTimeZone
-import timber.log.Timber
+import com.hundaol.ethiopic.calendar.DiaryEntry
+import com.hundaol.ethiopic.viewmodels.DiaryEntryItemViewModel
+import com.hundaol.ethiopic.viewmodels.DiaryHeaderItemViewModel
+import com.hundaol.ethiopic.views.date.DiaryEntryItemView
+import com.hundaol.ethiopic.views.date.DiaryEntryItemViewHolder
+import com.hundaol.ethiopic.views.date.DiaryHeaderItemView
+import com.hundaol.ethiopic.views.date.DiaryHeaderItemViewHolder
 
 import java.util.ArrayList
-import java.util.Calendar
 
 /**
  * Created by abinet on 6/6/17.
  */
 
-class DeviceCalendarEventListAdapter(private val context: Context) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class DiaryEntriesListAdapter(private val context: Context) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private val viewModels = ArrayList<Any>()
     private val viewTypes = ArrayList<Int>()
 
-    private var calendarEventList: List<CalendarEvent> = ArrayList()
+    private var diaryEntryList: List<DiaryEntry> = ArrayList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         if (viewType == CALENDAR_HEADER) {
-            return HeaderItemViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.layout_calendar_header_item_view, parent, false) as HeaderItemView)
+            return DiaryHeaderItemViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.layout_diary_header_item, parent, false) as DiaryHeaderItemView)
         } else {
-            return DeviceCalendarEventItemViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.layout_calendar_event_item, parent, false) as DeviceCalendarEventItemView)
+            return DiaryEntryItemViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.layout_diary_entry_item, parent, false) as DiaryEntryItemView)
         }
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val viewType = getItemViewType(position)
         if (viewType == CALENDAR_HEADER) {
-            (holder as HeaderItemViewHolder).setViewModel(getViewModel(position) as HeaderItemViewModel)
+            (holder as DiaryHeaderItemViewHolder).setViewModel(getViewModel(position) as DiaryHeaderItemViewModel)
         } else {
-            (holder as DeviceCalendarEventItemViewHolder).setViewModel(getViewModel(position) as DeviceCalendarEventViewModel)
+            (holder as DiaryEntryItemViewHolder).setViewModel(getViewModel(position) as DiaryEntryItemViewModel)
         }
     }
 
@@ -64,19 +58,19 @@ class DeviceCalendarEventListAdapter(private val context: Context) : RecyclerVie
         viewModels.clear()
         viewTypes.clear()
 
-        val eventsByName = calendarEventList.groupBy({e -> e.displayName})
+        val eventsByName = diaryEntryList.groupBy({ e -> e.displayName})
 
         for (name in eventsByName.keys.sorted()){
             val events = eventsByName[name]
 
-            val headerItemViewModel = HeaderItemViewModel()
+            val headerItemViewModel = DiaryHeaderItemViewModel()
             headerItemViewModel.text = name
             headerItemViewModel.textColor = ContextCompat.getColor(context, R.color.white)
             headerItemViewModel.backgroundColor = ContextCompat.getColor(context, R.color.black_a9)
             viewModels.add(headerItemViewModel)
             viewTypes.add(CALENDAR_HEADER)
             for (event in events!!) {
-                val deviceCalendarEventViewModel = DeviceCalendarEventViewModel(context, event)
+                val deviceCalendarEventViewModel = DiaryEntryItemViewModel(context, event)
                 viewModels.add(deviceCalendarEventViewModel)
                 viewTypes.add(CALENDAR_ITEM)
             }
@@ -89,8 +83,8 @@ class DeviceCalendarEventListAdapter(private val context: Context) : RecyclerVie
         return viewModels[position]
     }
 
-    fun setEvents(events: List<CalendarEvent>) : Unit {
-        calendarEventList = events
+    fun setEvents(events: List<DiaryEntry>) : Unit {
+        diaryEntryList = events
         validateViewModels()
     }
 

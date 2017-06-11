@@ -1,6 +1,5 @@
 package com.hundaol.ethiopic.stamps
 
-import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.RectF
@@ -8,7 +7,7 @@ import com.hundaol.ethiopic.cal.GregorianCal
 import com.hundaol.ethiopic.cal.ICal
 import com.hundaol.ethiopic.domain.ColorModel
 import com.hundaol.ethiopic.domain.DateModel
-import com.hundaol.ethiopic.views.CalendarViewModel
+import com.hundaol.ethiopic.views.calendar.CalendarViewModel
 
 /**
  * Created by john.pirie on 2017-06-06.

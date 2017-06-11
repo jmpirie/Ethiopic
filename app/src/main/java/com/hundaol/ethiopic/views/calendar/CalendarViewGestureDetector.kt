@@ -1,10 +1,11 @@
-package com.hundaol.ethiopic.views
+package com.hundaol.ethiopic.views.calendar
 
 import android.os.Handler
 import android.view.GestureDetector
 import android.view.MotionEvent
 import android.widget.Scroller
 import com.hundaol.ethiopic.App
+import com.hundaol.ethiopic.views.calendar.CalendarView
 
 /**
  * Created by john.pirie on 2017-04-29.
@@ -32,7 +33,7 @@ class CalendarViewGestureDetector(val view: CalendarView) {
                 val cellWidth = view.viewModel.cellWidth
                 var jdv = view.dateModel.jdv
                 jdv = jdv + 7.0f * distanceY / cellWidth
-                App.setJdv(jdv)
+                App.Companion.setJdv(jdv)
                 return true
             }
 
@@ -47,7 +48,7 @@ class CalendarViewGestureDetector(val view: CalendarView) {
                 handler.postDelayed(object : Runnable {
                     override fun run() {
                         if (scroller.computeScrollOffset()) {
-                            App.setJdv(anchorJdv - scroller.currY * 7 / view.viewModel.cellWidth)
+                            App.Companion.setJdv(anchorJdv - scroller.currY * 7 / view.viewModel.cellWidth)
                             handler.postDelayed(this, 100)
                         }
                     }

@@ -1,4 +1,4 @@
-package com.hundaol.ethiopic.views
+package com.hundaol.ethiopic.views.date
 
 import android.content.Context
 import android.util.AttributeSet
@@ -8,19 +8,19 @@ import android.widget.LinearLayout
 import android.widget.TextView
 
 import com.hundaol.ethiocal.R
-import com.hundaol.ethiopic.viewmodels.DeviceCalendarEventViewModel
+import com.hundaol.ethiopic.viewmodels.DiaryEntryItemViewModel
 
 import java.text.SimpleDateFormat
 
 import butterknife.BindView
 import butterknife.ButterKnife
-import com.hundaol.ethiopic.calendar.CalendarEvent
+import com.hundaol.ethiopic.calendar.DiaryEntry
 
 /**
  * Created by abinet on 6/6/17.
  */
 
-class DeviceCalendarEventItemView(context: Context, attrs: AttributeSet) : LinearLayout(context, attrs) {
+class DiaryEntryItemView(context: Context, attrs: AttributeSet) : LinearLayout(context, attrs) {
 
     @BindView(R.id.indicator)
     lateinit var indicatorImage: ImageView
@@ -31,14 +31,14 @@ class DeviceCalendarEventItemView(context: Context, attrs: AttributeSet) : Linea
     @BindView(R.id.time)
     lateinit var time: TextView
 
-    internal var viewModel: DeviceCalendarEventViewModel = DeviceCalendarEventViewModel(context, CalendarEvent())
+    internal var viewModel: DiaryEntryItemViewModel = DiaryEntryItemViewModel(context, DiaryEntry())
 
     override fun onFinishInflate() {
         super.onFinishInflate()
         ButterKnife.bind(this)
     }
 
-    fun bindTo(viewModel: DeviceCalendarEventViewModel) {
+    fun bindTo(viewModel: DiaryEntryItemViewModel) {
         this.viewModel = viewModel
         validateView()
         requestLayout()
@@ -50,12 +50,12 @@ class DeviceCalendarEventItemView(context: Context, attrs: AttributeSet) : Linea
         }
 
         indicatorImage.background = viewModel.backgroundIndicator
-        title.setText(viewModel.calendarEvent.title)
+        title.setText(viewModel.diaryEntry.title)
 
-        if (!viewModel.calendarEvent.isAllDayEvent) {
+        if (!viewModel.diaryEntry.isAllDayEvent) {
             time.visibility = View.VISIBLE
             val dateFormat = SimpleDateFormat("hh:mm a")
-            time.text = dateFormat.format(viewModel!!.calendarEvent.start.toDate()) + " - " + dateFormat.format(viewModel!!.calendarEvent.end.toDate())
+            time.text = dateFormat.format(viewModel!!.diaryEntry.start.toDate()) + " - " + dateFormat.format(viewModel!!.diaryEntry.end.toDate())
         } else {
             time.visibility = View.GONE
         }

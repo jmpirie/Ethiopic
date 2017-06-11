@@ -3,15 +3,14 @@ package com.hundaol.ethiopic
 import android.animation.ValueAnimator
 import android.app.Application
 import android.content.Context
-import android.graphics.Color
 import android.provider.CalendarContract
 import android.view.animation.AccelerateDecelerateInterpolator
 
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.hundaol.ethiocal.BuildConfig
 import com.hundaol.ethiocal.R
-import com.hundaol.ethiopic.adapters.DeviceCalendarEventListAdapter
-import com.hundaol.ethiopic.calendar.CalendarEvent
+import com.hundaol.ethiopic.adapters.DiaryEntriesListAdapter
+import com.hundaol.ethiopic.calendar.DiaryEntry
 import com.hundaol.ethiopic.domain.ColorModel
 import com.hundaol.ethiopic.domain.DateModel
 import com.hundaol.ethiopic.logging.EthioTree
@@ -101,17 +100,17 @@ class App : Application() {
                             getEventsFor(dateModel)
                         })
 
-        private fun getEventsFor(dateModel: DateModel): List<CalendarEvent> {
+        private fun getEventsFor(dateModel: DateModel): List<DiaryEntry> {
             val uri = CalendarContract.Instances.CONTENT_BY_DAY_URI.buildUpon()
                     .appendEncodedPath(dateModel.jdn.toString())
                     .appendEncodedPath(dateModel.jdn.toString())
                     .build()
 
-            val events = ArrayList<CalendarEvent>()
-            val cursor = context.contentResolver.query(uri, DeviceCalendarEventListAdapter.FIELDS, null, null, null)
+            val events = ArrayList<DiaryEntry>()
+            val cursor = context.contentResolver.query(uri, DiaryEntriesListAdapter.FIELDS, null, null, null)
             if (cursor.count > 0) {
                 while (cursor.moveToNext()) {
-                    val event = CalendarEvent()
+                    val event = DiaryEntry()
                     event.displayName = cursor.getString(cursor.getColumnIndex(CalendarContract.Instances.CALENDAR_DISPLAY_NAME))
                     event.title = cursor.getString(cursor.getColumnIndex(CalendarContract.Instances.TITLE))
 

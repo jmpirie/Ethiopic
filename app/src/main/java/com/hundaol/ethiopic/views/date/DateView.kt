@@ -1,7 +1,7 @@
 /**
  * Created by john.pirie on 2017-06-07.
  */
-package com.hundaol.ethiopic.views
+package com.hundaol.ethiopic.views.date
 
 import android.Manifest
 import android.content.Context
@@ -28,14 +28,13 @@ import com.jakewharton.rxbinding2.view.RxView
 
 import butterknife.BindView
 import butterknife.ButterKnife
-import com.hundaol.ethiopic.adapters.DeviceCalendarEventListAdapter
+import com.hundaol.ethiopic.adapters.DiaryEntriesListAdapter
 import com.hundaol.ethiopic.cal.ICal
-import com.hundaol.ethiopic.calendar.CalendarEvent
+import com.hundaol.ethiopic.calendar.DiaryEntry
 import com.hundaol.ethiopic.domain.ColorModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import timber.log.Timber
-import java.util.concurrent.TimeUnit
 
 /**
  * Created by john.pirie on 2017-04-28.
@@ -43,11 +42,11 @@ import java.util.concurrent.TimeUnit
 
 class DateView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null) : LinearLayout(context, attrs) {
 
-    @BindView(R.id.image)
-    lateinit var image: ImageView
+    @BindView(R.id.banner_image)
+    lateinit var bannerImage: ImageView
 
-    @BindView(R.id.image_overlay)
-    lateinit var imageOverlay: View
+    @BindView(R.id.banner_image_overlay)
+    lateinit var bannderImageOverlay: View
 
     @BindView(R.id.month)
     lateinit var month: TextView
@@ -89,24 +88,24 @@ class DateView @JvmOverloads constructor(context: Context, attrs: AttributeSet? 
         get() = field
         set(value) {
             field = value
-            validate()
+            onModelsChanged()
         }
 
     var colorModel = ColorModel.default
         get() = field
         set(value) {
             field = value
-            validate()
+            onModelsChanged()
         }
 
     var cal: ICal = GregorianCal.INSTANCE
         get() = field
         set(value) {
             field = value
-            validate()
+            onModelsChanged()
         }
 
-    private val adapter = DeviceCalendarEventListAdapter(context)
+    private val adapter = DiaryEntriesListAdapter(context)
     private val disposables = CompositeDisposable()
 
     init {
@@ -220,15 +219,20 @@ class DateView @JvmOverloads constructor(context: Context, attrs: AttributeSet? 
                         }))
     }
 
-    private fun validate() {
+    override fun onDetachedFromWindow() {
+        super.onDetachedFromWindow()
+        disposables.dispose()
+    }
+
+    private fun onModelsChanged() {
         month.setText(String(cal.getMonthName(dateModel.jdn)))
         day.setText(cal.getDay(dateModel.jdn).toString())
         year.setText(cal.getYear(dateModel.jdn).toString())
 
-        imageOverlay.setBackgroundColor(colorModel.dateImageOverlay(cal, dateModel.jdn))
+        bannderImageOverlay.setBackgroundColor(colorModel.dateImageOverlay(cal, dateModel.jdn))
     }
 
-    private fun setEvents(events: List<CalendarEvent>) {
+    private fun setEvents(events: List<DiaryEntry>) {
         adapter.setEvents(events)
         if (events.isNotEmpty()) {
             calendarEventsList.setVisibility(VISIBLE)
@@ -243,10 +247,5 @@ class DateView @JvmOverloads constructor(context: Context, attrs: AttributeSet? 
             noPermissionsMessage.setVisibility(VISIBLE);
             noEventsMessage.setVisibility(GONE)
         }
-    }
-
-    override fun onDetachedFromWindow() {
-        super.onDetachedFromWindow()
-        disposables.dispose()
     }
 }

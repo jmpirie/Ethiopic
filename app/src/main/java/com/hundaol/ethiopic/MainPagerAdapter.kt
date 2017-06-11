@@ -10,9 +10,9 @@ import android.view.ViewGroup
 import com.hundaol.ethiocal.R
 import com.hundaol.ethiopic.cal.EthiopicCal
 import com.hundaol.ethiopic.cal.GregorianCal
-import com.hundaol.ethiopic.views.CalendarView
-import com.hundaol.ethiopic.views.CalendarViewGestureDetector
-import com.hundaol.ethiopic.views.DateView
+import com.hundaol.ethiopic.views.calendar.CalendarView
+import com.hundaol.ethiopic.views.calendar.CalendarViewGestureDetector
+import com.hundaol.ethiopic.views.date.DateView
 
 /**
  * Created by john.pirie on 2017-06-06.

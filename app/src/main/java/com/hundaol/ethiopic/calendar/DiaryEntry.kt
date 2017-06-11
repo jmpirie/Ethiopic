@@ -8,10 +8,10 @@ import java.text.SimpleDateFormat
  * Created by abinet on 6/6/17.
  */
 
-data class CalendarEvent(var displayName: String = "",
-                         var title: String = "",
-                         var start: DateTime = minDate,
-                         var end: DateTime = maxDate) {
+data class DiaryEntry(var displayName: String = "",
+                      var title: String = "",
+                      var start: DateTime = minDate,
+                      var end: DateTime = maxDate) {
 
     val isAllDayEvent: Boolean
         get() {

@@ -1,4 +1,4 @@
-package com.hundaol.ethiopic.views
+package com.hundaol.ethiopic.views.calendar
 
 import android.content.Context
 import android.graphics.Canvas
@@ -13,7 +13,6 @@ import com.hundaol.ethiopic.domain.DateModel
 import com.hundaol.ethiopic.stamps.MonthStamp
 
 import io.reactivex.disposables.CompositeDisposable
-import org.reactivestreams.Subscriber
 import timber.log.Timber
 
 /**

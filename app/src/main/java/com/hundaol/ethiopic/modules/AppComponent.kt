@@ -2,8 +2,8 @@ package com.hundaol.ethiopic.modules
 
 import com.hundaol.ethiopic.App
 import com.hundaol.ethiopic.MainActivity
-import com.hundaol.ethiopic.views.CalendarView
-import com.hundaol.ethiopic.views.DateView
+import com.hundaol.ethiopic.views.calendar.CalendarView
+import com.hundaol.ethiopic.views.date.DateView
 
 import javax.inject.Singleton
 
