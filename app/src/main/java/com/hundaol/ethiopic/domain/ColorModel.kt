@@ -47,10 +47,12 @@ data class ColorModel(@ColorInt val baseRgb: Int = 0) {
     }
 
     @ColorInt fun backgroundColorForDay(cal: ICal, jdn: Int, result: FloatArray = this.result): Int {
-        if (cal.isWeekday(jdn)) {
-            return colorFor(8, baseRgb, result)
+        if (jdn == cal.today()) {
+            return withLightness(0.35f, result)
+        } else if (cal.isWeekend(jdn)) {
+            return backgroundColorForMonth(cal, jdn, result)
         } else {
-            return Color.TRANSPARENT
+            return backgroundColorForMonth(cal, jdn, result)
         }
     }
 
@@ -60,7 +62,7 @@ data class ColorModel(@ColorInt val baseRgb: Int = 0) {
     }
 
     @ColorInt fun foregroundColorForDay(cal: ICal, jdn: Int, result: FloatArray = this.result): Int {
-        backgroundColorForMonth(cal, jdn, result)
+        backgroundColorForDay(cal, jdn, result)
         if (result[2] > 0.5f) {
             return withLightness(0.10f, result)
         } else {
