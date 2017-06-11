@@ -46,9 +46,11 @@ data class ColorModel(@ColorInt val baseRgb: Int = 0) {
         return withLightness(0.55f + 0.30f * (1.0f - v), result)
     }
 
-    @ColorInt fun backgroundColorForDay(cal: ICal, jdn: Int, result: FloatArray = this.result): Int {
+    @ColorInt fun backgroundColorForDay(dateModel: DateModel, cal: ICal, jdn: Int, result: FloatArray = this.result): Int {
         if (jdn == cal.today()) {
-            return withLightness(0.35f, result)
+            return withLightness(0.25f, result)
+        } else if (jdn == dateModel.jdn) {
+            return withLightness(0.45f, result)
         } else if (cal.isWeekend(jdn)) {
             return backgroundColorForMonth(cal, jdn, result)
         } else {
@@ -61,8 +63,8 @@ data class ColorModel(@ColorInt val baseRgb: Int = 0) {
         return colorFor((256 * (0.55f + 0.30f * (v))).toInt(), baseRgb, result)
     }
 
-    @ColorInt fun foregroundColorForDay(cal: ICal, jdn: Int, result: FloatArray = this.result): Int {
-        backgroundColorForDay(cal, jdn, result)
+    @ColorInt fun foregroundColorForDay(dateModel: DateModel, cal: ICal, jdn: Int, result: FloatArray = this.result): Int {
+        backgroundColorForDay(dateModel, cal, jdn, result)
         if (result[2] > 0.5f) {
             return withLightness(0.10f, result)
         } else {
@@ -80,7 +82,7 @@ data class ColorModel(@ColorInt val baseRgb: Int = 0) {
     }
 
     @ColorInt fun gridColor(cal: ICal, jdn: Int, result: FloatArray = this.result): Int {
-        return withLightness(0.50f, result)
+        return withLightness(0.80f, result)
     }
 
     companion object {

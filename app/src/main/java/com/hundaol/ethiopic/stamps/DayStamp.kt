@@ -35,16 +35,16 @@ class DayStamp(var jdn: Int = 0,
         textPaint.style = Paint.Style.STROKE
 
         gridPaint.style = Paint.Style.STROKE
-        gridPaint.strokeWidth = 4.0f
+        gridPaint.strokeWidth = 2.0f
     }
 
     fun stamp(canvas: Canvas) {
         val bounds = this.bounds
 
-        backPaint.color = colorModel.backgroundColorForDay(cal, jdn)
+        backPaint.color = colorModel.backgroundColorForDay(dateModel, cal, jdn)
         canvas.drawRect(bounds, backPaint)
 
-        textPaint.color = colorModel.foregroundColorForDay(cal, jdn)
+        textPaint.color = colorModel.foregroundColorForDay(dateModel, cal, jdn)
         textPaint.textSize = viewModel.getTextSizeForDay(dateModel, cal, jdn)
 
         val s = Integer.toString(cal.getDay(jdn))
