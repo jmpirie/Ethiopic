@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.hundaol.ethiopic.views.date.DateView xmlns:android="http://schemas.android.com/apk/res/android"
-                                          xmlns:tools="http://schemas.android.com/tools"
-                                          android:layout_width="match_parent"
-                                          android:layout_height="match_parent"
-                                          android:orientation="vertical">
+<com.hundaol.ethiopic.views.date.DateView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -37,7 +38,7 @@
                 android:orientation="horizontal">
 
                 <View
-                    android:id="@+id/left_month"
+                    android:id="@+id/prev_month"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -54,7 +55,7 @@
                     tools:text="July"/>
 
                 <View
-                    android:id="@+id/right_month"
+                    android:id="@+id/next_month"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -69,7 +70,7 @@
                 android:orientation="horizontal">
 
                 <View
-                    android:id="@+id/left_day"
+                    android:id="@+id/prev_day"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -85,7 +86,7 @@
                     tools:text="13"/>
 
                 <View
-                    android:id="@+id/right_day"
+                    android:id="@+id/next_day"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -100,7 +101,7 @@
                 android:orientation="horizontal">
 
                 <View
-                    android:id="@+id/left_year"
+                    android:id="@+id/prev_year"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -117,7 +118,7 @@
                     tools:text="1993"/>
 
                 <View
-                    android:id="@+id/right_year"
+                    android:id="@+id/next_year"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"

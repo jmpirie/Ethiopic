@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!--<color name="default_theme">#ffbdbdbd</color>-->
-    <color name="default_theme">#ff0000ff</color>
+    <color name="default_theme">#ffbdbdbd</color>
+    <!--<color name="default_theme">#ff0000ff</color>-->
 
     <color name="transparent">#00000000</color>
 

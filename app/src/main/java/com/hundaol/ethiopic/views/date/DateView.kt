@@ -51,29 +51,29 @@ class DateView @JvmOverloads constructor(context: Context, attrs: AttributeSet? 
     @BindView(R.id.month)
     lateinit var month: TextView
 
-    @BindView(R.id.left_month)
-    lateinit var leftMonth: View
+    @BindView(R.id.prev_month)
+    lateinit var prevMonth: View
 
-    @BindView(R.id.right_month)
-    lateinit var rightMonth: View
+    @BindView(R.id.next_month)
+    lateinit var nextMonth: View
 
     @BindView(R.id.day)
     lateinit var day: TextView
 
-    @BindView(R.id.left_day)
-    lateinit var leftDay: View
+    @BindView(R.id.prev_day)
+    lateinit var prevDay: View
 
-    @BindView(R.id.right_day)
-    lateinit var rightDay: View
+    @BindView(R.id.next_day)
+    lateinit var nextDay: View
 
     @BindView(R.id.year)
     lateinit var year: TextView
 
-    @BindView(R.id.left_year)
-    lateinit var leftYear: View
+    @BindView(R.id.prev_year)
+    lateinit var prevYear: View
 
-    @BindView(R.id.right_year)
-    lateinit var rightYear: View
+    @BindView(R.id.next_year)
+    lateinit var nextYear: View
 
     @BindView(R.id.event_list)
     lateinit var calendarEventsList: RecyclerView
@@ -161,61 +161,61 @@ class DateView @JvmOverloads constructor(context: Context, attrs: AttributeSet? 
                             Timber.w(error, "error observed on events subscription")
                         }))
 
-        disposables.add(RxView.clicks(leftDay)
+        disposables.add(RxView.clicks(prevDay)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                         { v ->
                             App.setJdv(dateModel.jdn - 1.0f)
                         },
                         { error ->
-                            Timber.w(error, "error observed on left day clicks subscription")
+                            Timber.w(error, "error observed on prev day clicks subscription")
                         }))
-        disposables.add(RxView.clicks(rightDay)
+        disposables.add(RxView.clicks(nextDay)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                         { v ->
                             App.setJdv(dateModel.jdn + 1.0f)
                         },
                         { error ->
-                            Timber.w(error, "error observed on right day clicks subscription")
+                            Timber.w(error, "error observed on next day clicks subscription")
                         }))
 
-        disposables.add(RxView.clicks(leftMonth)
+        disposables.add(RxView.clicks(prevMonth)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                         { v ->
                             App.setJdv(cal.prevMonth(dateModel.jdn).toFloat(), 200L)
                         },
                         { error ->
-                            Timber.w(error, "error observed on left month clicks subscription")
+                            Timber.w(error, "error observed on prev month clicks subscription")
                         }))
-        disposables.add(RxView.clicks(rightMonth)
+        disposables.add(RxView.clicks(nextMonth)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                         { v ->
                             App.setJdv(cal.nextMonth(dateModel.jdn).toFloat(), 200L)
                         },
                         { error ->
-                            Timber.w(error, "error observed on right month clicks subscription")
+                            Timber.w(error, "error observed on next month clicks subscription")
                         }))
 
-        disposables.add(RxView.clicks(leftYear)
+        disposables.add(RxView.clicks(prevYear)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                         { v ->
                             App.setJdv(cal.prevYear(dateModel.jdn).toFloat(), 200L)
                         },
                         { error ->
-                            Timber.w(error, "error observed on left year clicks subscription")
+                            Timber.w(error, "error observed on prev year clicks subscription")
                         }))
-        disposables.add(RxView.clicks(rightYear)
+        disposables.add(RxView.clicks(nextYear)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                         { v ->
                             App.setJdv(cal.nextYear(dateModel.jdn).toFloat(), 200L)
                         },
                         { error ->
-                            Timber.w(error, "error observed on right year clicks subscription")
+                            Timber.w(error, "error observed on next year clicks subscription")
                         }))
     }
 
